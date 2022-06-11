@@ -8,6 +8,7 @@ namespace Consolidados.Web.Data
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<Contract> Contracts { get; set; }
+        public DbSet<Container> Containers { get; set; }
         public DbSet<State> States { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -19,6 +20,10 @@ namespace Consolidados.Web.Data
 
             modelBuilder.Entity<State>()
                 .HasIndex(t => t.Name)
+                .IsUnique();
+
+            modelBuilder.Entity<Container>()
+                .HasIndex(t => t.ContainerName)
                 .IsUnique();
         }
     }

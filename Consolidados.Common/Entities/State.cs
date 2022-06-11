@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Consolidados.Common.Entities
+﻿namespace Consolidados.Common.Entities
 {
+    using System.ComponentModel.DataAnnotations;
+
     public class State
     {
         public int Id { get; set; }

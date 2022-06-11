@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Consolidados.Common.Entities
+﻿namespace Consolidados.Common.Entities
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Text.Json.Serialization;
+
     public class Contract
     {
         public int Id { get; set; }
@@ -25,15 +24,19 @@ namespace Consolidados.Common.Entities
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime StartingDate { get; set; }
 
         [Required]
         [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime ArrivedDate { get; set; }
 
         [MaxLength(20, ErrorMessage = "El campo {0} no puede tener más de {1} caracteres")]
-        public List<State> StateList { get; set; }
+        public ICollection<State> States { get; set; }
+
+        public ICollection<Container> Containers { get; set; }
+
+        public int ContainerNumber => Containers == null ? 0 : Containers.Count;
     }
 }

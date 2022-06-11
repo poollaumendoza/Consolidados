@@ -1,29 +1,29 @@
-﻿@model Consolidados.Common.Entities.Contract
+﻿@model Consolidados.Common.Entities.Container
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "AddContainer";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>AddContainer</h1>
 
-<h4>Contract</h4>
+<h4>Container</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="AddContainer">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdContract"/>
             
-            <partial name="_Contract"/>
+            <partial name="_Container"/>
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-success">Back to List</a>
             </div>
         </form>
     </div>
 </div>
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
