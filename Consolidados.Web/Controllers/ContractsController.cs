@@ -153,6 +153,8 @@ namespace Consolidados.Web.Controllers
             }
 
             Contract contract = await _context.Contracts
+                .Include(c => c.Containers)
+                .ThenInclude(d => d.States)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (contract == null)
             {
@@ -206,7 +208,7 @@ namespace Consolidados.Web.Controllers
                     contract.Containers.Add(container);
                     _context.Update(contract);
                     await _context.SaveChangesAsync();
-                    return Redirect(String.Format("{0}/{1}", "~/Contracts/Details", contract.Id));
+                    return Redirect(string.Format("{0}/{1}", "~/Contracts/Details", contract.Id));
 
                 }
                 catch (DbUpdateException dbUpdateException)
@@ -226,6 +228,79 @@ namespace Consolidados.Web.Controllers
                 }
             }
             return View(container);
+        }
+
+        public async Task<IActionResult> EditContainer(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Container container = await _context.Containers.FindAsync(id);
+            if (container == null)
+            {
+                return NotFound();
+            }
+
+            Contract contract = await _context.Contracts.FirstOrDefaultAsync(c => c.Containers.FirstOrDefault(d => d.Id == container.Id) != null);
+            container.IdContract = contract.Id;
+            return View(container);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditContainer(Container container)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(container);
+                    await _context.SaveChangesAsync();
+                    //return RedirectToAction($"{nameof(Details)}/{container.IdContract}");
+                    return Redirect(string.Format("{0}/{1}", nameof(Details), container.IdContract));
+
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "There are a record with the same name.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+            }
+            return View(container);
+        }
+
+        public async Task<IActionResult> DeleteContainer(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Container container = await _context.Containers
+                .Include(d => d.States)
+                .FirstOrDefaultAsync(m => m.Id == id);
+            if (container == null)
+            {
+                return NotFound();
+            }
+
+            Contract contract = await _context.Contracts.FirstOrDefaultAsync(c => c.Containers.FirstOrDefault(d => d.Id == container.Id) != null);
+            _context.Containers.Remove(container);
+            await _context.SaveChangesAsync();
+            //return RedirectToAction($"{nameof(Details)}/{country.Id}");
+            return Redirect(string.Format("{0}/{1}", "~/Contracts/Details", contract.Id));
         }
     }
 }
