@@ -1,27 +1,28 @@
 ﻿using Consolidados.DataLayer.Properties;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Consolidados.DataLayer
 {
-    public class TipoDocumento
+    public class ContratoLote
     {
-        public List<EntityLayer.TipoDocumento> Listar()
+        public List<EntityLayer.ContratoLote> Listar()
         {
-            List<EntityLayer.TipoDocumento> lista = new List<EntityLayer.TipoDocumento>();
+            List<EntityLayer.ContratoLote> lista = new List<EntityLayer.ContratoLote>();
 
             try
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
                     string query =
-                        "Select td.IdTipoDocumento, ctd.IdClasificacionTipoDocumento, ctd.NombreClasificacionTipoDocumento, td.NombreTipoDocumento, td.IdEstado, e.NombreEstado from TipoDocumento td join ClasificacionTipoDocumento ctd on td.IdClasificacionTipoDocumento = ctd.IdClasificacionTipoDocumento join Estado e on td.IdEstado = e.IdEstado where ctd.IdClasificacionTipoDocumento = 1";
-
+                        "Select cl.IdContratoLote, cl.IdContrato, c.NroLote[NroContratoLote], cl.IdLote, l.NroLote, cl.Cantidad, " +
+                        "cl.IdEstado, e.NombreEstado from ContratoLote cl join contrato c on cl.IdContrato = c.IdContrato join " +
+                        "Lote l on cl.IdLote = l.IdLote join estado e on cl.IdEstado = e.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -29,15 +30,20 @@ namespace Consolidados.DataLayer
                     {
                         while (Dr.Read())
                         {
-                            lista.Add(new EntityLayer.TipoDocumento()
+                            lista.Add(new EntityLayer.ContratoLote()
                             {
-                                IdTipoDocumento = Convert.ToInt32(Dr["IdTipoDocumento"]),
-                                NombreTipoDocumento = Dr["NombreTipoDocumento"].ToString(),
-                                oClasificacionTipoDocumento = new EntityLayer.ClasificacionTipoDocumento()
+                                IdContratoLote = Convert.ToInt32(Dr["IdContratoLote"]),
+                                oContrato = new EntityLayer.Contrato()
                                 {
-                                    IdClasificacionTipoDocumento = Convert.ToInt32(Dr["IdClasificacionTipoDocumento"]),
-                                    NombreClasificacionTipoDocumento = Dr["NombreClasificacionTipoDocumento"].ToString()
+                                    IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                    NroContrato = Dr["NroContratoLote"].ToString()
                                 },
+                                oLote = new EntityLayer.Lote()
+                                {
+                                    IdLote = Convert.ToInt32(Dr["IdLote"]),
+                                    NroLote = Dr["NroLote"].ToString()
+                                },
+                                Cantidad = Convert.ToInt32(Dr["Cantidad"]),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -48,16 +54,15 @@ namespace Consolidados.DataLayer
                     }
                 }
             }
-            catch(Exception ex)
+            catch
             {
-                string mensaje = ex.Message;
-                lista = new List<EntityLayer.TipoDocumento>();
+                lista = new List<EntityLayer.ContratoLote>();
             }
 
             return lista;
         }
 
-        public int Registrar(EntityLayer.TipoDocumento obj, out string Mensaje)
+        public int Registrar(EntityLayer.ContratoLote obj, out string Mensaje)
         {
             int IdAutogenerado = 0;
 
@@ -66,8 +71,10 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_TipoDocumento_Registrar", Cnx);
-                    Cmd.Parameters.AddWithValue("NombreTipoDocumento", obj.NombreTipoDocumento);
+                    SqlCommand Cmd = new SqlCommand("sp_ContratoLote_Registrar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
+                    Cmd.Parameters.AddWithValue("IdLote", obj.oLote.IdLote);
+                    Cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -89,7 +96,7 @@ namespace Consolidados.DataLayer
             return IdAutogenerado;
         }
 
-        public bool Editar(EntityLayer.TipoDocumento obj, out string Mensaje)
+        public bool Editar(EntityLayer.ContratoLote obj, out string Mensaje)
         {
             bool resultado = false;
             Mensaje = string.Empty;
@@ -98,9 +105,11 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_TipoDocumento_Editar", Cnx);
-                    Cmd.Parameters.AddWithValue("IdTipoDocumento", obj.IdTipoDocumento);
-                    Cmd.Parameters.AddWithValue("NombreTipoDocumento", obj.NombreTipoDocumento);
+                    SqlCommand Cmd = new SqlCommand("sp_ContratoLote_Editar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdContratoLote", obj.IdContratoLote);
+                    Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
+                    Cmd.Parameters.AddWithValue("IdLote", obj.oLote.IdLote);
+                    Cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -130,8 +139,8 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("Delete TipoDocumento where IdTipoDocumento = @IdTipoDocumento", Cnx);
-                    Cmd.Parameters.AddWithValue("@IdTipoDocumento", id);
+                    SqlCommand Cmd = new SqlCommand("sp_ContratoLote_Eliminar", Cnx);
+                    Cmd.Parameters.AddWithValue("@IdContratoLote", id);
                     Cmd.CommandType = CommandType.Text;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;

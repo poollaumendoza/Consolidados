@@ -1,27 +1,28 @@
 ﻿using Consolidados.DataLayer.Properties;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Consolidados.DataLayer
 {
-    public class TipoDocumento
+    public class Contrato
     {
-        public List<EntityLayer.TipoDocumento> Listar()
+        public List<EntityLayer.Contrato> Listar()
         {
-            List<EntityLayer.TipoDocumento> lista = new List<EntityLayer.TipoDocumento>();
+            List<EntityLayer.Contrato> lista = new List<EntityLayer.Contrato>();
 
             try
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
                     string query =
-                        "Select td.IdTipoDocumento, ctd.IdClasificacionTipoDocumento, ctd.NombreClasificacionTipoDocumento, td.NombreTipoDocumento, td.IdEstado, e.NombreEstado from TipoDocumento td join ClasificacionTipoDocumento ctd on td.IdClasificacionTipoDocumento = ctd.IdClasificacionTipoDocumento join Estado e on td.IdEstado = e.IdEstado where ctd.IdClasificacionTipoDocumento = 1";
-
+                        "Select c.IdContrato, c.IdEmpresa, em.RazonSocial, c.NroContrato, c.NroLote, c.FechaContrato, " +
+                        "c.FechaCarga, c.FechaDescarga, c.LugarCarga, c.LugarDescarga, c.IdEstado, es.NombreEstado from " +
+                        "Contrato c join Empresa em on c.IdEmpresa = em.IdEmpresa join Estado es on c.IdEstado = es.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -29,15 +30,21 @@ namespace Consolidados.DataLayer
                     {
                         while (Dr.Read())
                         {
-                            lista.Add(new EntityLayer.TipoDocumento()
+                            lista.Add(new EntityLayer.Contrato()
                             {
-                                IdTipoDocumento = Convert.ToInt32(Dr["IdTipoDocumento"]),
-                                NombreTipoDocumento = Dr["NombreTipoDocumento"].ToString(),
-                                oClasificacionTipoDocumento = new EntityLayer.ClasificacionTipoDocumento()
+                                IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                oEmpresa = new EntityLayer.Empresa()
                                 {
-                                    IdClasificacionTipoDocumento = Convert.ToInt32(Dr["IdClasificacionTipoDocumento"]),
-                                    NombreClasificacionTipoDocumento = Dr["NombreClasificacionTipoDocumento"].ToString()
+                                    IdEmpresa = Convert.ToInt32(Dr["IdEmpresa"]),
+                                    RazonSocial = Dr["RazonSocial"].ToString()
                                 },
+                                NroContrato = Dr["NroContrato"].ToString(),
+                                NroLote = Dr["NroLote"].ToString(),
+                                FechaContrato = Convert.ToDateTime(Dr["FechaContrato"]),
+                                FechaCarga = Convert.ToDateTime(Dr["FechaCarga"]),
+                                LugarCarga = Dr["LugarCarga"].ToString(),
+                                FechaDescarga = Convert.ToDateTime(Dr["FechaDescarga"]),
+                                LugarDescarga = Dr["LugarDescarga"].ToString(),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -48,16 +55,15 @@ namespace Consolidados.DataLayer
                     }
                 }
             }
-            catch(Exception ex)
+            catch
             {
-                string mensaje = ex.Message;
-                lista = new List<EntityLayer.TipoDocumento>();
+                lista = new List<EntityLayer.Contrato>();
             }
 
             return lista;
         }
 
-        public int Registrar(EntityLayer.TipoDocumento obj, out string Mensaje)
+        public int Registrar(EntityLayer.Contrato obj, out string Mensaje)
         {
             int IdAutogenerado = 0;
 
@@ -66,8 +72,15 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_TipoDocumento_Registrar", Cnx);
-                    Cmd.Parameters.AddWithValue("NombreTipoDocumento", obj.NombreTipoDocumento);
+                    SqlCommand Cmd = new SqlCommand("sp_Contrato_Registrar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdEmpresa", obj.oEmpresa.IdEmpresa);
+                    Cmd.Parameters.AddWithValue("NroContrato", obj.NroContrato);
+                    Cmd.Parameters.AddWithValue("NroLote", obj.NroLote);
+                    Cmd.Parameters.AddWithValue("FechaContrato", obj.FechaContrato);
+                    Cmd.Parameters.AddWithValue("FechaCarga", obj.FechaCarga);
+                    Cmd.Parameters.AddWithValue("LugarCarga", obj.LugarCarga);
+                    Cmd.Parameters.AddWithValue("FechaDescarga", obj.FechaDescarga);
+                    Cmd.Parameters.AddWithValue("LugarDescarga", obj.LugarDescarga);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -89,7 +102,7 @@ namespace Consolidados.DataLayer
             return IdAutogenerado;
         }
 
-        public bool Editar(EntityLayer.TipoDocumento obj, out string Mensaje)
+        public bool Editar(EntityLayer.Contrato obj, out string Mensaje)
         {
             bool resultado = false;
             Mensaje = string.Empty;
@@ -98,9 +111,16 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_TipoDocumento_Editar", Cnx);
-                    Cmd.Parameters.AddWithValue("IdTipoDocumento", obj.IdTipoDocumento);
-                    Cmd.Parameters.AddWithValue("NombreTipoDocumento", obj.NombreTipoDocumento);
+                    SqlCommand Cmd = new SqlCommand("sp_Contrato_Editar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdContrato", obj.IdContrato);
+                    Cmd.Parameters.AddWithValue("IdEmpresa", obj.oEmpresa.IdEmpresa);
+                    Cmd.Parameters.AddWithValue("NroContrato", obj.NroContrato);
+                    Cmd.Parameters.AddWithValue("NroLote", obj.NroLote);
+                    Cmd.Parameters.AddWithValue("FechaContrato", obj.FechaContrato);
+                    Cmd.Parameters.AddWithValue("FechaCarga", obj.FechaCarga);
+                    Cmd.Parameters.AddWithValue("LugarCarga", obj.LugarCarga);
+                    Cmd.Parameters.AddWithValue("FechaDescarga", obj.FechaDescarga);
+                    Cmd.Parameters.AddWithValue("LugarDescarga", obj.LugarDescarga);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -130,8 +150,8 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("Delete TipoDocumento where IdTipoDocumento = @IdTipoDocumento", Cnx);
-                    Cmd.Parameters.AddWithValue("@IdTipoDocumento", id);
+                    SqlCommand Cmd = new SqlCommand("sp_Contrato_Eliminar", Cnx);
+                    Cmd.Parameters.AddWithValue("@IdContrato", id);
                     Cmd.CommandType = CommandType.Text;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;

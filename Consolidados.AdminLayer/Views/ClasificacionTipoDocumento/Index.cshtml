@@ -6,7 +6,7 @@
 
 <ol class="breadcrumb mb-4 mt-4">
     <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Mantenimiento</a></li>
-    <li class="breadcrumb-item active">Categoria</li>
+    <li class="breadcrumb-item active">Clasificación del Tipo de Documento</li>
 </ol>
 
 <div class="card">
@@ -37,7 +37,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Categoría</h5>
+                <h5 class="modal-title" id="exampleModalLabel">ClasificacionTipoDocumento</h5>
                 <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -49,7 +49,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label for="exampleFormControlInput1" class="form-label">Activo</label>
-                        <select id="cboactivo" class="form-select"></select>
+                        <select id="cboestado" class="form-select"></select>
                     </div>
                 </div>
                 <div class="row mt-2">
@@ -67,7 +67,8 @@
         </div>
     </div>
 </div>
-@section scripts{
+@section scripts
+    {
     <script>
         var tabladata;
         var filaSeleccionada;
@@ -76,19 +77,15 @@
             responsive: true,
             ordering: false,
             "ajax": {
-                url: '@Url.Action("ListarCategorias", "Mantenimiento")',
+                url: '@Url.Action("ListarClasificacionTipoDocumento", "ClasificacionTipoDocumento")',
                 type: "GET",
                 dataType: "json"
             },
             "columns": [
-                { "data": "Descripcion" },
+                { "data": "NombreClasificacionTipoDocumento" },
                 {
-                    "data": "Activo", "render": function (valor) {
-                        if (valor) {
-                            return '<span class="badge bg-success">Sí</span>'
-                        } else {
-                            return '<span class="badge bg-danger">No</span>'
-                        }
+                    "data": "oEstado", "render": function (data) {
+                        return data.NombreEstado
                     }
                 },
                 {
@@ -104,15 +101,36 @@
             }
         });
 
+        /*Control de Lista Desplegable: Estado*/
+        jQuery.ajax({
+            url: '@Url.Action("ListarEstados", "Estado")',
+            type: "GET",
+            data: null,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboestado");
+                $.each(data.data, function (index, item) {
+                    $("<option>").attr({ "value": item.IdEstado }).text(item.NombreEstado).appendTo("#cboestado");
+                })
+            },
+            error: function(error) {
+                console.log(error)
+            },
+            beforeSend: function () {
+
+            },
+        });
+
         function abrirModal(json) {
             $("#txtid").val(0);
-            $("#txtdescripcion").val("");
+            $("#txtnombreclasificaciontipodocumento").val("");
             $("#mensajeError").hide();
 
             if (json != null) {
-                $("#txtid").val(json.IdCategoria);
-                $("#txtdescripcion").val(json.Descripcion);
-                $("#cboactivo").val(json.Activo == true ? 1 : 0)
+                $("#txtid").val(json.IdClasificacionTipoDocumento);
+                $("#txtnombreclasificaciontipodocumento").val(json.NombreClasificacionTipoDocumento);
+                $("#cboestado").val(json.Activo == true ? 1 : 0)
             }
             $("#FormModal").modal("show");
         }
@@ -124,11 +142,11 @@
         })
 
         $("#tabla tbody").on("click", '.btn-eliminar', function () {
-            var categoriaseleccionada = $(this).closest("tr");
-            var data = tabladata.row(categoriaseleccionada).data();
+            var clasificaciontipodocumentoseleccionado = $(this).closest("tr");
+            var data = tabladata.row(clasificaciontipodocumentoseleccionado).data();
 
             swal({
-                title: "Sistema de ventas",
+                title: "Consolidados",
                 text: "¿Desea eliminar este registro?",
                 type: "warning",
                 showCancelButton: "true",
@@ -140,14 +158,14 @@
             },
                 function () {
                     jQuery.ajax({
-                        url: '@Url.Action("EliminarCategoria", "Mantenimiento")',
+                        url: '@Url.Action("EliminarClasificacionTipoDocumento", "ClasificacionTipoDocumento")',
                         type: "POST",
-                        data: JSON.stringify({ id: data.IdCategoria }),
+                        data: JSON.stringify({ id: data.IdClasificacionTipoDocumento }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (data) {
                             debugger;
                             if (data.resultado) {
-                                tabladata.row(categoriaseleccionada).remove().draw();
+                                tabladata.row(clasificaciontipodocumentoseleccionado).remove().draw();
                             } else {
                                 swal("No se pudo eliminar el registro", data.mensaje, "error")
                             }
@@ -165,24 +183,27 @@
         })
 
         function Guardar() {
-            var Categoria = {
-                IdCategoria: $("#txtid").val(),
-                Descripcion: $("#txtdescripcion").val(),
-                Activo: $("#cboactivo").val() == 1 ? true : false
+            var ClasificacionTipoDocumento = {
+                IdClasificacionTipoDocumento: $("#txtid").val(),
+                NombreClasificacionTipoDocumento: $("#txtnombreclasificaciontipodocumento").val(),
+                oEstado: {
+                    IdEstado: $("#cboestado option:selected").val(),
+                    NombreEstado: $("#cboestado option:selected").text()
+        },
             }
 
             jQuery.ajax({
-                url: '@Url.Action("GuardarCategoria", "Mantenimiento")',
+                url: '@Url.Action("GuardarClasificacionTipoDocumento", "ClasificacionTipoDocumento")',
                 type: "POST",
-                data: JSON.stringify({ objeto: Categoria }),
+                data: JSON.stringify({ objeto: ClasificacionTipoDocumento }),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     $(".modal-body").LoadingOverlay("hide");
-                    if (Categoria.IdCategoria == 0) {
+                    if (ClasificacionTipoDocumento.IdClasificacionTipoDocumento == 0) {
                         if (data.resultado != 0) {
-                            Categoria.IdCategoria = data.resultado;
-                            tabladata.row.add(Categoria).draw(false);
+                            ClasificacionTipoDocumento.IdClasificacionTipoDocumento = data.resultado;
+                            tabladata.row.add(ClasificacionTipoDocumento).draw(false);
                             $("#FormModal").modal("hide");
                         } else {
                             $(".modal-body").LoadingOverlay("hide");
@@ -191,7 +212,7 @@
                         }
                     } else {
                         if (data.resultado) {
-                            tabladata.row(filaSeleccionada).data(Categoria).draw(false);
+                            tabladata.row(filaSeleccionada).data(ClasificacionTipoDocumento).draw(false);
                             filaSeleccionada = null;
                             $("#FormModal").modal("hide");
                         } else {

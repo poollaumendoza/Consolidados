@@ -63,6 +63,7 @@ namespace Consolidados.DataLayer
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Almacen_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("NombreAlmacen", obj.NombreAlmacen);
+                    Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     Cmd.CommandType = CommandType.StoredProcedure;

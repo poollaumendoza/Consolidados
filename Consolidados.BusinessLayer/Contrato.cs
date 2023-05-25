@@ -1,0 +1,81 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Consolidados.BusinessLayer
+{
+    public class Contrato
+    {
+        DataLayer.Contrato dContrato = new DataLayer.Contrato();
+
+        public List<EntityLayer.Contrato> Listar()
+        {
+            return dContrato.Listar();
+        }
+
+        public int Registrar(EntityLayer.Contrato obj, out string Mensaje)
+        {
+            Mensaje = string.Empty;
+
+            if (obj.oEmpresa.IdEmpresa != 0)
+                Mensaje = "Debe seleccionar una empresa";
+            else if (string.IsNullOrEmpty(obj.NroContrato) || string.IsNullOrWhiteSpace(obj.NroContrato))
+                Mensaje = "El número de contrato no puede ser vacío";
+            else if (string.IsNullOrEmpty(obj.NroLote) || string.IsNullOrWhiteSpace(obj.NroLote))
+                Mensaje = "El número de lote no puede ser vacío";
+            else if (obj.FechaContrato == new DateTime(0, 0, 0))
+                Mensaje = "Debe seleccionar una fecha de contrato";
+            else if (obj.FechaCarga == new DateTime(0, 0, 0))
+                Mensaje = "Debe seleccionar una fecha de carga";
+            else if (string.IsNullOrEmpty(obj.LugarCarga) || string.IsNullOrWhiteSpace(obj.LugarCarga))
+                Mensaje = "El lugar de carga no puede ser vacío";
+            else if (obj.FechaDescarga == new DateTime(0, 0, 0))
+                Mensaje = "Debe seleccionar una fecha de descarga";
+            else if (string.IsNullOrEmpty(obj.LugarDescarga) || string.IsNullOrWhiteSpace(obj.LugarDescarga))
+                Mensaje = "El lugar de descarga no puede ser vacío";
+            else if (obj.oEstado.IdEstado == 0)
+                Mensaje = "Debe seleccionar un estado para este Contrato";
+
+            if (string.IsNullOrEmpty(Mensaje))
+                return dContrato.Registrar(obj, out Mensaje);
+            else
+                return 0;
+        }
+
+        public bool Editar(EntityLayer.Contrato obj, out string Mensaje)
+        {
+            Mensaje = string.Empty;
+
+            if (obj.oEmpresa.IdEmpresa != 0)
+                Mensaje = "Debe seleccionar una empresa";
+            else if (string.IsNullOrEmpty(obj.NroContrato) || string.IsNullOrWhiteSpace(obj.NroContrato))
+                Mensaje = "El número de contrato no puede ser vacío";
+            else if (string.IsNullOrEmpty(obj.NroLote) || string.IsNullOrWhiteSpace(obj.NroLote))
+                Mensaje = "El número de lote no puede ser vacío";
+            else if (obj.FechaContrato == new DateTime(0, 0, 0))
+                Mensaje = "Debe seleccionar una fecha de contrato";
+            else if (obj.FechaCarga == new DateTime(0, 0, 0))
+                Mensaje = "Debe seleccionar una fecha de carga";
+            else if (string.IsNullOrEmpty(obj.LugarCarga) || string.IsNullOrWhiteSpace(obj.LugarCarga))
+                Mensaje = "El lugar de carga no puede ser vacío";
+            else if (obj.FechaDescarga == new DateTime(0, 0, 0))
+                Mensaje = "Debe seleccionar una fecha de descarga";
+            else if (string.IsNullOrEmpty(obj.LugarDescarga) || string.IsNullOrWhiteSpace(obj.LugarDescarga))
+                Mensaje = "El lugar de descarga no puede ser vacío";
+            else if (obj.oEstado.IdEstado == 0)
+                Mensaje = "Debe seleccionar un estado para este Contrato";
+
+            if (string.IsNullOrEmpty(Mensaje))
+                return dContrato.Editar(obj, out Mensaje);
+            else
+                return false;
+        }
+
+        public bool Eliminar(int id, out string Mensaje)
+        {
+            return dContrato.Eliminar(id, out Mensaje);
+        }
+    }
+}

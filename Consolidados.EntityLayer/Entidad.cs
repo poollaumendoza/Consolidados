@@ -12,8 +12,8 @@ namespace Consolidados.EntityLayer
         public TipoDocumento oTipoDocumento { get; set; }
         public string NroDocumento { get; set; }
         public string RazonSocial { get; set; }
-        public string Dirección { get; set; }
-        public string Teléfono { get; set;}
+        public string Direccion { get; set; }
+        public string Telefono { get; set;}
         public string Email { get; set; }
         public Estado oEstado { get; set; }
     }

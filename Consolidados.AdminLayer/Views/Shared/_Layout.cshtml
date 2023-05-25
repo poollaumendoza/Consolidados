@@ -51,6 +51,7 @@
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="@Url.Action("Index", "Estado")">Estado</a>
+                                <a class="nav-link" href="@Url.Action("Index", "ClasificacionTipoDocumento")">Clas. TipoDocumento</a>
                                 <a class="nav-link" href="@Url.Action("Index", "TipoDocumento")">TipoDocumento</a>
                                 <a class="nav-link" href="@Url.Action("Index", "Almacen")">Almacen</a>
                                 <a class="nav-link" href="@Url.Action("Index", "TipoMovimiento")">TipoMovimiento</a>
@@ -71,33 +72,37 @@
                                 <a class="nav-link" href="@Url.Action("Index", "Usuario")">Usuario</a>
                             </nav>
                         </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
+                        @*<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Operaciones
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>*@
+                        @*<div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                
+                                <a class="nav-link" href="@Url.Action("Index", "LlenadoContenedor")">Llenado de Contenedores</a>
+                            </nav>
+                        </div>*@
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Operaciones
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
-                        <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
-                            <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="@Url.Action("Index", "Contrato")">Contrato</a>
-                                <a class="nav-link" href="@Url.Action("Index", "LlenadoContenedor")">Llenado de Contenedores</a>
-                            </nav>
-                        </div>
-                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Reportes
-                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link" href="@Url.Action("Index", "Contrato")">Contrato</a>
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Authentication
+                                    Llenado de Contenedores
                                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                                 </a>
                                 <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="register.html">Register</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
+                                        <a class="nav-link" href="@Url.Action("Index", "ContratoLote")">Lotes</a>
+                                        <a class="nav-link" href="@Url.Action("Index", "ContratoContenedor")">Contenedores</a>
+                                        <a class="nav-link" href="@Url.Action("Index", "LlenadoContenedor")">Llenado</a>
+                                        <a class="nav-link" href="@Url.Action("Index", "ContratoFoto")">Fotos</a>
+                                        <a class="nav-link" href="@Url.Action("Index", "ContratoPeso")">Pesos</a>
+                                        <a class="nav-link" href="@Url.Action("Index", "ContratoPrecinto")">Precintos</a>
                                     </nav>
                                 </div>
                                 <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
