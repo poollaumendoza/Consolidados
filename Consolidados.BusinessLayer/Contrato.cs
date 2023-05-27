@@ -19,19 +19,19 @@ namespace Consolidados.BusinessLayer
         {
             Mensaje = string.Empty;
 
-            if (obj.oEmpresa.IdEmpresa != 0)
+            if (obj.oEmpresa.IdEmpresa == 0)
                 Mensaje = "Debe seleccionar una empresa";
             else if (string.IsNullOrEmpty(obj.NroContrato) || string.IsNullOrWhiteSpace(obj.NroContrato))
                 Mensaje = "El número de contrato no puede ser vacío";
-            else if (string.IsNullOrEmpty(obj.NroLote) || string.IsNullOrWhiteSpace(obj.NroLote))
+            else if (string.IsNullOrEmpty(obj.NroContratoLote) || string.IsNullOrWhiteSpace(obj.NroContratoLote))
                 Mensaje = "El número de lote no puede ser vacío";
-            else if (obj.FechaContrato == new DateTime(0, 0, 0))
+            else if (obj.FechaContrato == string.Empty)
                 Mensaje = "Debe seleccionar una fecha de contrato";
-            else if (obj.FechaCarga == new DateTime(0, 0, 0))
+            else if (obj.FechaCarga == string.Empty)
                 Mensaje = "Debe seleccionar una fecha de carga";
             else if (string.IsNullOrEmpty(obj.LugarCarga) || string.IsNullOrWhiteSpace(obj.LugarCarga))
                 Mensaje = "El lugar de carga no puede ser vacío";
-            else if (obj.FechaDescarga == new DateTime(0, 0, 0))
+            else if (obj.FechaDescarga == string.Empty)
                 Mensaje = "Debe seleccionar una fecha de descarga";
             else if (string.IsNullOrEmpty(obj.LugarDescarga) || string.IsNullOrWhiteSpace(obj.LugarDescarga))
                 Mensaje = "El lugar de descarga no puede ser vacío";
@@ -52,15 +52,15 @@ namespace Consolidados.BusinessLayer
                 Mensaje = "Debe seleccionar una empresa";
             else if (string.IsNullOrEmpty(obj.NroContrato) || string.IsNullOrWhiteSpace(obj.NroContrato))
                 Mensaje = "El número de contrato no puede ser vacío";
-            else if (string.IsNullOrEmpty(obj.NroLote) || string.IsNullOrWhiteSpace(obj.NroLote))
+            else if (string.IsNullOrEmpty(obj.NroContratoLote) || string.IsNullOrWhiteSpace(obj.NroContratoLote))
                 Mensaje = "El número de lote no puede ser vacío";
-            else if (obj.FechaContrato == new DateTime(0, 0, 0))
+            else if (obj.FechaContrato == string.Empty)
                 Mensaje = "Debe seleccionar una fecha de contrato";
-            else if (obj.FechaCarga == new DateTime(0, 0, 0))
+            else if (obj.FechaCarga == string.Empty)
                 Mensaje = "Debe seleccionar una fecha de carga";
             else if (string.IsNullOrEmpty(obj.LugarCarga) || string.IsNullOrWhiteSpace(obj.LugarCarga))
                 Mensaje = "El lugar de carga no puede ser vacío";
-            else if (obj.FechaDescarga == new DateTime(0, 0, 0))
+            else if (obj.FechaDescarga == string.Empty)
                 Mensaje = "Debe seleccionar una fecha de descarga";
             else if (string.IsNullOrEmpty(obj.LugarDescarga) || string.IsNullOrWhiteSpace(obj.LugarDescarga))
                 Mensaje = "El lugar de descarga no puede ser vacío";

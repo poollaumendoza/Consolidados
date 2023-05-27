@@ -6,56 +6,56 @@ using System.Threading.Tasks;
 
 namespace Consolidados.BusinessLayer
 {
-    public class ContratoLote
+    public class LlenadoContenedor
     {
-        DataLayer.ContratoLote dContratoLote = new DataLayer.ContratoLote();
+        DataLayer.LlenadoContenedor dLlenadoContenedor = new DataLayer.LlenadoContenedor();
 
-        public List<EntityLayer.ContratoLote> Listar()
+        public List<EntityLayer.LlenadoContenedor> Listar()
         {
-            return dContratoLote.Listar();
+            return dLlenadoContenedor.Listar();
         }
 
-        public int Registrar(EntityLayer.ContratoLote obj, out string Mensaje)
+        public int Registrar(EntityLayer.LlenadoContenedor obj, out string Mensaje)
         {
             Mensaje = string.Empty;
 
             if (obj.oContrato.IdContrato == 0)
                 Mensaje = "Debe seleccionar un contrato";
+            else if (obj.oContratoContenedor.IdContratoContenedor == 0)
+                Mensaje = "Debe seleccionar un contenedor";
             else if (obj.oLote.IdLote == 0)
                 Mensaje = "Debe seleccionar un lote";
-            else if (obj.Cantidad == 0)
-                Mensaje = "La cantidad no puede ser cero";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado";
 
             if (string.IsNullOrEmpty(Mensaje))
-                return dContratoLote.Registrar(obj, out Mensaje);
+                return dLlenadoContenedor.Registrar(obj, out Mensaje);
             else
                 return 0;
         }
 
-        public bool Editar(EntityLayer.ContratoLote obj, out string Mensaje)
+        public bool Editar(EntityLayer.LlenadoContenedor obj, out string Mensaje)
         {
             Mensaje = string.Empty;
 
-            if (obj.oContrato.IdContrato != 0)
+            if (obj.oContrato.IdContrato == 0)
                 Mensaje = "Debe seleccionar un contrato";
+            else if (obj.oContratoContenedor.IdContratoContenedor == 0)
+                Mensaje = "Debe seleccionar un contenedor";
             else if (obj.oLote.IdLote == 0)
                 Mensaje = "Debe seleccionar un lote";
-            else if (obj.Cantidad == 0)
-                Mensaje = "La cantidad no puede ser cero";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado";
 
             if (string.IsNullOrEmpty(Mensaje))
-                return dContratoLote.Editar(obj, out Mensaje);
+                return dLlenadoContenedor.Editar(obj, out Mensaje);
             else
                 return false;
         }
 
         public bool Eliminar(int id, out string Mensaje)
         {
-            return dContratoLote.Eliminar(id, out Mensaje);
+            return dLlenadoContenedor.Eliminar(id, out Mensaje);
         }
     }
 }

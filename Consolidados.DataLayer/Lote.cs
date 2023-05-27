@@ -23,7 +23,8 @@ namespace Consolidados.DataLayer
                         "Select lt.IdLote, lt.IdAlmacen, a.NombreAlmacen, lt.IdEmpresa, emp.RazonSocial, lt.Descripcion, " +
                         "lt.NroLote, lt.Cantidad, lt.IdEstado, est.NombreEstado from Lote lt join Almacen a on a.IdAlmacen = " +
                         "lt.IdAlmacen join Empresa emp on emp.IdEmpresa = lt.IdEmpresa join estado est on lt.IdEstado = " +
-                        "est.IdEstado";
+                        "est.IdEstado where lt.IdEstado = (Select IdEstado from Estado where NombreEstado = 'ACTIVO') order by " +
+                        "lt.NroLote";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();

@@ -20,9 +20,7 @@ namespace Consolidados.DataLayer
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
                     string query =
-                        "Select cl.IdContratoLote, cl.IdContrato, c.NroLote[NroContratoLote], cl.IdLote, l.NroLote, cl.Cantidad, " +
-                        "cl.IdEstado, e.NombreEstado from ContratoLote cl join contrato c on cl.IdContrato = c.IdContrato join " +
-                        "Lote l on cl.IdLote = l.IdLote join estado e on cl.IdEstado = e.IdEstado";
+                        "Select cl.IdContratoLote, cl.IdContrato, c.NroContratoLote, cl.IdLote, l.NroLote, cl.Cantidad, cl.IdEstado, e.NombreEstado from ContratoLote cl join contrato c on cl.IdContrato = c.IdContrato join Lote l on cl.IdLote = l.IdLote join estado e on cl.IdEstado = e.IdEstado where cl.IdEstado = (Select IdEstado from Estado where NombreEstado = 'ACTIVO')";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -36,7 +34,7 @@ namespace Consolidados.DataLayer
                                 oContrato = new EntityLayer.Contrato()
                                 {
                                     IdContrato = Convert.ToInt32(Dr["IdContrato"]),
-                                    NroContrato = Dr["NroContratoLote"].ToString()
+                                    NroContratoLote = Dr["NroContratoLote"].ToString()
                                 },
                                 oLote = new EntityLayer.Lote()
                                 {

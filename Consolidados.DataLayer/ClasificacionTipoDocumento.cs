@@ -21,7 +21,8 @@ namespace Consolidados.DataLayer
                 {
                     string query =
                         "Select ctd.IdClasificacionTipoDocumento, ctd.NombreClasificacionTipoDocumento, ctd.IdEstado, e.NombreEstado " +
-                        "from ClasificacionTipoDocumento ctd join Estado e on ctd.IdEstado = e.IdEstado";
+                        "from ClasificacionTipoDocumento ctd join Estado e on ctd.IdEstado = e.IdEstado and ctd.IdEstado = (Select " +
+                        "IdEstado from Estado Where NombreEstado = 'ACTIVO')";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();

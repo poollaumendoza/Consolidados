@@ -120,7 +120,7 @@
                     }
                 },
                 { "data": "NroContrato" },
-                { "data": "NroLote" },
+                { "data": "NroContratoLote" },
                 { "data": "FechaContrato" },
                 { "data": "LugarCarga" },
                 { "data": "LugarDescarga" },
@@ -156,8 +156,8 @@
             $("#mensajeError").hide();
 
             if (json != null) {
-                $("#txtid").val(json.IdAlmacen);
-                $("#cboempresa").val(json.oEmpresa.RazonSocial);
+                $("#txtid").val(json.IdContrato);
+                $("#cboempresa").val(json.oEmpresa.IdEmpresa);
                 $("#txtnrocontrato").val(json.NroContrato);
                 $("#txtnrolote").val(json.NroLote);
                 $("#txtfechacontrato").val(json.FechaContrato);
@@ -165,7 +165,7 @@
                 $("#txtlugarcarga").val(json.LugarCarga);
                 $("#txtfechadescarga").val(json.FechaDescarga);
                 $("#txtlugardescarga").val(json.LugarDescarga);
-                $("#cboestado").val($("#cboestado option:first").val());
+                $("#cboestado").val(json.oEstado.IdEstado);
             }
             $("#FormModal").modal("show");
         }
@@ -223,7 +223,7 @@
             var data = tabladata.row(contratoseleccionado).data();
 
             swal({
-                title: "Consolidado",
+                title: "Consolidados",
                 text: "¿Desea eliminar este registro?",
                 type: "warning",
                 showCancelButton: "true",

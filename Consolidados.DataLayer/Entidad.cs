@@ -23,7 +23,7 @@ namespace Consolidados.DataLayer
                         "Select ent.IdEntidad, ent.IdTipoDocumento, td.NombreTipoDocumento, ent.NroDocumento, ent.RazonSocial, " +
                         "ent.Direccion, ent.Telefono, ent.Email, ent.IdEstado, est.NombreEstado from Entidad ent " +
                         "join TipoDocumento td on ent.IdTipoDocumento = td.IdTipoDocumento join Estado est on est.IdEstado = " +
-                        "ent.IdEstado";
+                        "ent.IdEstado where ent.IdEstado = (Select IdEstado from Estado where NombreEstado = 'ACTIVO')";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();

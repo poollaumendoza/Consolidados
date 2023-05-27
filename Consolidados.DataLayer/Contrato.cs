@@ -19,11 +19,7 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    string query =
-                        "Select c.IdContrato, c.IdEmpresa, em.RazonSocial, c.NroContrato, c.NroLote, c.FechaContrato, " +
-                        "c.FechaCarga, c.FechaDescarga, c.LugarCarga, c.LugarDescarga, c.IdEstado, es.NombreEstado from " +
-                        "Contrato c join Empresa em on c.IdEmpresa = em.IdEmpresa join Estado es on c.IdEstado = es.IdEstado";
-                    SqlCommand Cmd = new SqlCommand(query, Cnx);
+                    SqlCommand Cmd = new SqlCommand("sp_Contrato_Listar", Cnx);
 
                     Cnx.Open();
                     using (SqlDataReader Dr = Cmd.ExecuteReader())
@@ -39,11 +35,11 @@ namespace Consolidados.DataLayer
                                     RazonSocial = Dr["RazonSocial"].ToString()
                                 },
                                 NroContrato = Dr["NroContrato"].ToString(),
-                                NroLote = Dr["NroLote"].ToString(),
-                                FechaContrato = Convert.ToDateTime(Dr["FechaContrato"]),
-                                FechaCarga = Convert.ToDateTime(Dr["FechaCarga"]),
+                                NroContratoLote = Dr["NroContratoLote"].ToString(),
+                                FechaContrato = Dr["FechaContrato"].ToString(),
+                                FechaCarga = Dr["FechaCarga"].ToString(),
                                 LugarCarga = Dr["LugarCarga"].ToString(),
-                                FechaDescarga = Convert.ToDateTime(Dr["FechaDescarga"]),
+                                FechaDescarga = Dr["FechaDescarga"].ToString(),
                                 LugarDescarga = Dr["LugarDescarga"].ToString(),
                                 oEstado = new EntityLayer.Estado()
                                 {
@@ -75,7 +71,7 @@ namespace Consolidados.DataLayer
                     SqlCommand Cmd = new SqlCommand("sp_Contrato_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("IdEmpresa", obj.oEmpresa.IdEmpresa);
                     Cmd.Parameters.AddWithValue("NroContrato", obj.NroContrato);
-                    Cmd.Parameters.AddWithValue("NroLote", obj.NroLote);
+                    Cmd.Parameters.AddWithValue("NroContratoLote", obj.NroContratoLote);
                     Cmd.Parameters.AddWithValue("FechaContrato", obj.FechaContrato);
                     Cmd.Parameters.AddWithValue("FechaCarga", obj.FechaCarga);
                     Cmd.Parameters.AddWithValue("LugarCarga", obj.LugarCarga);
@@ -115,7 +111,7 @@ namespace Consolidados.DataLayer
                     Cmd.Parameters.AddWithValue("IdContrato", obj.IdContrato);
                     Cmd.Parameters.AddWithValue("IdEmpresa", obj.oEmpresa.IdEmpresa);
                     Cmd.Parameters.AddWithValue("NroContrato", obj.NroContrato);
-                    Cmd.Parameters.AddWithValue("NroLote", obj.NroLote);
+                    Cmd.Parameters.AddWithValue("NroContratoLote", obj.NroContratoLote);
                     Cmd.Parameters.AddWithValue("FechaContrato", obj.FechaContrato);
                     Cmd.Parameters.AddWithValue("FechaCarga", obj.FechaCarga);
                     Cmd.Parameters.AddWithValue("LugarCarga", obj.LugarCarga);

@@ -9,21 +9,22 @@ using System.Threading.Tasks;
 
 namespace Consolidados.DataLayer
 {
-    public class TipoMovimiento
+    public class LlenadoContenedor
     {
-        public List<EntityLayer.TipoMovimiento> Listar()
+        public List<EntityLayer.LlenadoContenedor> Listar()
         {
-            List<EntityLayer.TipoMovimiento> lista = new List<EntityLayer.TipoMovimiento>();
+            List<EntityLayer.LlenadoContenedor> lista = new List<EntityLayer.LlenadoContenedor>();
 
             try
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
                     string query =
-                        "Select t.IdTipoMovimiento, t.NombreTipoMovimiento, t.IdEstado, e.NombreEstado from TipoMovimiento " +
-                        "t join Estado e on t.IdEstado = e.IdEstado  where t.IdEstado = (Select IdEstado from Estado where " +
-                        "NombreEstado = 'ACTIVO')";
-
+                        "Select llc.IdLlenadoContenedor, llc.IdContrato, c.NroContratoLote, llc.IdContratoContenedor, " +
+                        "cc.NroContenedor, llc.IdLote, l.NroLote, llc.Cantidad, llc.IdEstado, e.NombreEstado from LlenadoContenedor " +
+                        "llc join contrato c on llc.IdContrato = c.IdContrato join ContratoContenedor cc on llc.IdContratoContenedor = " +
+                        "cc.IdContratoContenedor join Lote l on llc.IdLote = l.IdLote join Estado e on llc.IdEstado = e.IdEstado where " +
+                        "llc.IdEstado = (Select IdEstado from Estado where NombreEstado = 'ACTIVO')";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -31,10 +32,25 @@ namespace Consolidados.DataLayer
                     {
                         while (Dr.Read())
                         {
-                            lista.Add(new EntityLayer.TipoMovimiento()
+                            lista.Add(new EntityLayer.LlenadoContenedor()
                             {
-                                IdTipoMovimiento = Convert.ToInt32(Dr["IdTipoMovimiento"]),
-                                NombreTipoMovimiento = Dr["NombreTipoMovimiento"].ToString(),
+                                IdLlenadoContenedor = Convert.ToInt32(Dr["IdLlenadoContenedor"]),
+                                oContrato = new EntityLayer.Contrato()
+                                {
+                                    IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                    NroContratoLote = Dr["NroContratoLote"].ToString()
+                                },
+                                oContratoContenedor = new EntityLayer.ContratoContenedor()
+                                {
+                                    IdContratoContenedor = Convert.ToInt32(Dr["IdContratoContenedor"]),
+                                    NroContenedor = Dr["NroContenedor"].ToString()
+                                },
+                                oLote = new EntityLayer.Lote()
+                                {
+                                    IdLote = Convert.ToInt32(Dr["IdLote"]),
+                                    NroLote = Dr["NroLote"].ToString()
+                                },
+                                Cantidad = Convert.ToInt32(Dr["Cantidad"]),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -45,16 +61,15 @@ namespace Consolidados.DataLayer
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
-                string mensaje = ex.Message;
-                lista = new List<EntityLayer.TipoMovimiento>();
+                lista = new List<EntityLayer.LlenadoContenedor>();
             }
 
             return lista;
         }
 
-        public int Registrar(EntityLayer.TipoMovimiento obj, out string Mensaje)
+        public int Registrar(EntityLayer.LlenadoContenedor obj, out string Mensaje)
         {
             int IdAutogenerado = 0;
 
@@ -63,8 +78,11 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_TipoMovimiento_Registrar", Cnx);
-                    Cmd.Parameters.AddWithValue("NombreTipoMovimiento", obj.NombreTipoMovimiento);
+                    SqlCommand Cmd = new SqlCommand("sp_LlenadoContenedor_Registrar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
+                    Cmd.Parameters.AddWithValue("IdContratoContenedor", obj.oContratoContenedor.IdContratoContenedor);
+                    Cmd.Parameters.AddWithValue("IdLote", obj.oLote.IdLote);
+                    Cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -86,7 +104,7 @@ namespace Consolidados.DataLayer
             return IdAutogenerado;
         }
 
-        public bool Editar(EntityLayer.TipoMovimiento obj, out string Mensaje)
+        public bool Editar(EntityLayer.LlenadoContenedor obj, out string Mensaje)
         {
             bool resultado = false;
             Mensaje = string.Empty;
@@ -95,9 +113,12 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_TipoMovimiento_Editar", Cnx);
-                    Cmd.Parameters.AddWithValue("IdTipoMovimiento", obj.IdTipoMovimiento);
-                    Cmd.Parameters.AddWithValue("NombreTipoMovimiento", obj.NombreTipoMovimiento);
+                    SqlCommand Cmd = new SqlCommand("sp_LlenadoContenedor_Editar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdLlenadoContenedor", obj.IdLlenadoContenedor);
+                    Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
+                    Cmd.Parameters.AddWithValue("IdContratoContenedor", obj.oContratoContenedor.IdContratoContenedor);
+                    Cmd.Parameters.AddWithValue("IdLote", obj.oLote.IdLote);
+                    Cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -127,8 +148,8 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("Delete TipoMovimiento where IdTipoMovimiento = @IdTipoMovimiento", Cnx);
-                    Cmd.Parameters.AddWithValue("@IdTipoMovimiento", id);
+                    SqlCommand Cmd = new SqlCommand("sp_LlenadoContenedor_Eliminar", Cnx);
+                    Cmd.Parameters.AddWithValue("@IdLlenadoContenedor", id);
                     Cmd.CommandType = CommandType.Text;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;

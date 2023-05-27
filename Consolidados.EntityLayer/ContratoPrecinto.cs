@@ -12,7 +12,6 @@ namespace Consolidados.EntityLayer
         public Contrato oContrato { get; set; }
         public ContratoContenedor oContratoContenedor { get; set; }
         public string NroPrecinto { get; set; }
-        public byte[] Foto { get; set; }
         public Estado oEstado { get; set; }
     }
 }

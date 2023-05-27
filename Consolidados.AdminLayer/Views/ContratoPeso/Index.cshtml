@@ -1,7 +1,312 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "ContratoPeso";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Mantenimiento</a></li>
+    <li class="breadcrumb-item active">Pesos</li>
+</ol>
 
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>Lista de Pesos
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-success" onclick="abrirModal(null)">Crear Nueva</button>
+            </div>
+        </div>
+        <hr />
+        <table id="tabla" class="display cell-border" style="width: 100%">
+            <thead>
+                <tr>
+                    <th># Contrato</th>
+                    <th># Contenedor</th>
+                    <th>Peso</th>
+                    <th>Estado del Almacén</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="FormModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo Peso</h5>
+                <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <input id="txtid" type="hidden" value="0" />
+                <div class="row g-1">
+                    <div class="col-sm-12">
+                        <label for="exampleFormControlInput1" class="form-label">Contrato:</label>
+                        <select id="cbocontrato" class="form-select"></select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="exampleFormControlInput1" class="form-label">Contenedor:</label>
+                        <select id="cbocontenedor" class="form-select"></select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="txtpeso" class="form-label">Peso:</label>
+                        <input type="number" class="form-control" id="txtpeso" autocomplete="off">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="exampleFormControlInput1" class="form-label">Estado:</label>
+                        <select id="cboestado" class="form-select"></select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div id="mensajeError" class="alert alert-danger" role="alert">
+                            A simple danger alert-check it out!
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var tabladata;
+        var filaSeleccionada;
+
+        tabladata = $("#tabla").DataTable({
+            responsive: true,
+            ordering: false,
+            "ajax": {
+                url: '@Url.Action("ListarContratoPeso", "ContratoPeso")',
+                type: "GET",
+                dataType: "json"
+            },
+            "columns": [
+                {
+                    "data": "oContrato", "render": function (data) {
+                        return data.NroContratoLote
+                    }
+                },
+                {
+                    "data": "oContratoContenedor", "render": function (data) {
+                        return data.NroContenedor
+                    }
+                },
+                { "data": "PesoTotal" },
+                {
+                    "data": "oEstado", "render": function (data) {
+                        return data.NombreEstado
+                    }
+                },
+                {
+                    "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
+                    "orderable": false,
+                    "searchable": false,
+                    "width": "90px"
+                }
+            ],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+            }
+        });
+
+        function abrirModal(json) {
+            $("#txtid").val(0);
+            $("#cbocontrato").val($("#cbocontrato option:first").val());
+            $("#cbocontenedor").val($("#cbocontenedor option:first").val());
+            $("#txtpeso").val("");
+            $("#cboestado").val($("#cboestado option:first").val());
+            $("#mensajeError").hide();
+            if (json != null) {
+                $("#txtid").val(json.IdContratoPeso);
+                $("#cbocontrato").val(json.oContrato.IdContrato);
+                $("#cbocontenedor").val(json.oContratoContenedor.IdContratoContenedor);
+                $("#txtpeso").val(json.PesoTotal);
+                $("#cboestado").val(json.oEstado.IdEstado);
+            }
+            $("#FormModal").modal("show");
+        }
+
+        /*Control de Lista Desplegable: Estado*/
+        jQuery.ajax({
+            url: '@Url.Action("ListarEstados", "Estado")',
+            type: "GET",
+            data: null,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboestado");
+                $.each(data.data, function (index, item) {
+                    $("<option>").attr({ "value": item.IdEstado }).text(item.NombreEstado).appendTo("#cboestado");
+                })
+            },
+            error: function(error) {
+                console.log(error)
+            },
+            beforeSend: function () {
+
+            },
+        });
+
+        /*Control de Lista Desplegable: Contrato*/
+        jQuery.ajax({
+            url: '@Url.Action("ListarContrato", "Contrato")',
+            type: "GET",
+            data: null,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontrato");
+                $.each(data.data, function (index, item) {
+                    $("<option>").attr({ "value": item.IdContrato }).text(item.NroContratoLote).appendTo("#cbocontrato");
+                })
+            },
+            error: function(error) {
+                console.log(error)
+            },
+            beforeSend: function () {
+
+            },
+        });
+
+        /*Control de Lista Desplegable: ContratoContenedor*/
+        jQuery.ajax({
+            url: '@Url.Action("ListarContratoContenedor", "ContratoContenedor")',
+            type: "GET",
+            data: null,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontenedor");
+                $.each(data.data, function (index, item) {
+                    $("<option>").attr({ "value": item.IdContratoContenedor }).text(item.NroContenedor).appendTo("#cbocontenedor");
+                })
+            },
+            error: function(error) {
+                console.log(error)
+            },
+            beforeSend: function () {
+
+            },
+        });
+
+        $("#tabla tbody").on("click", '.btn-editar', function () {
+            filaSeleccionada = $(this).closest("tr");
+            var data = tabladata.row(filaSeleccionada).data();
+            abrirModal(data)
+        })
+
+        $("#tabla tbody").on("click", '.btn-eliminar', function () {
+            var pesoseleccionado = $(this).closest("tr");
+            var data = tabladata.row(pesoseleccionado).data();
+
+            swal({
+                title: "Consolidados",
+                text: "¿Desea eliminar este registro?",
+                type: "warning",
+                showCancelButton: "true",
+                confirmationButtonClass: "btn btn-danger",
+                confirmationButtonText: "Sí",
+                cancelButtonClass: "btn btn-primary",
+                cancelButtonText: "No",
+                closeOnConfirm: true
+            },
+                function () {
+                    jQuery.ajax({
+                        url: '@Url.Action("EliminarContratoPeso", "ContratoPeso")',
+                        type: "POST",
+                        data: JSON.stringify({ id: data.IdContratoPeso }),
+                        contentType: "application/json; charset=UTF-8",
+                        success: function (data) {
+                            debugger;
+                            if (data.resultado) {
+                                tabladata.row(pesoseleccionado).remove().draw();
+                            } else {
+                                swal("No se pudo eliminar el registro", data.mensaje, "error")
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        },
+                        beforeSend: function () {
+
+                        },
+                    });
+                });
+
+            console.log(data)
+        })
+
+        function Guardar() {
+            var ContratoPeso = {
+                IdContratoContenedor: $("#txtid").val(),
+                oContrato: {
+                    IdContrato: $("#cbocontrato option:selected").val(),
+                    NroContratoLote: $("#cbocontrato option:selected").text()
+                },
+                oContratoContenedor: {
+                    IdContratoContenedor: $("#cbocontenedor option:selected").val(),
+                    NroContenedor: $("#cbocontenedor option:selected").text(),
+                },
+                PesoTotal: $("#txtpeso").val(),
+                oEstado: {
+                    IdEstado: $("#cboestado option:selected").val(),
+                    NombreEstado: $("#cboestado option:selected").text()
+                }
+            }
+
+            jQuery.ajax({
+                url: '@Url.Action("GuardarContratoPeso", "ContratoPeso")',
+                type: "POST",
+                data: JSON.stringify({ objeto: ContratoPeso }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $(".modal-body").LoadingOverlay("hide");
+                    if (ContratoPeso.IdContratoPeso == 0) {
+                        if (data.resultado != 0) {
+                            ContratoPeso.IdContratoPeso = data.resultado;
+                            tabladata.row.add(ContratoPeso).draw(false);
+                            $("#FormModal").modal("hide");
+                        } else {
+                            $(".modal-body").LoadingOverlay("hide");
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    } else {
+                        if (data.resultado) {
+                            tabladata.row(filaSeleccionada).data(ContratoPeso).draw(false);
+                            filaSeleccionada = null;
+                            $("#FormModal").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+                },
+                error: function (error) {
+                    $(".modal-body").LoadingOverlay("hide")
+                    $("#mensajeError").text();
+                    $("#mensajeError").show();
+                },
+                beforeSend: function () {
+                    $(".modal-body").LoadingOverlay("show", {
+                        imageResizeFactor: 2,
+                        text: "Cargando...",
+                        size: 14
+                    });
+                }
+            });
+        }
+    </script>
+}
