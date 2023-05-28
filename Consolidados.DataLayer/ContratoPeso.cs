@@ -109,7 +109,7 @@ namespace Consolidados.DataLayer
                     SqlCommand Cmd = new SqlCommand("sp_ContratoPeso_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContratoPeso", obj.IdContratoPeso);
                     Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
-                    Cmd.Parameters.AddWithValue("IdContatoContenedor", obj.oContratoContenedor.IdContratoContenedor);
+                    Cmd.Parameters.AddWithValue("IdContratoContenedor", obj.oContratoContenedor.IdContratoContenedor);
                     Cmd.Parameters.AddWithValue("PesoTotal", obj.PesoTotal);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;

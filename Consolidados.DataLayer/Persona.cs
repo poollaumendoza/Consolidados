@@ -1,40 +1,49 @@
 ﻿using Consolidados.DataLayer.Properties;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Consolidados.DataLayer
 {
-    public class Almacen
+    public class Persona
     {
-        public List<EntityLayer.Almacen> Listar()
+        public List<EntityLayer.Persona> Listar()
         {
-            List<EntityLayer.Almacen> lista = new List<EntityLayer.Almacen>();
+            List<EntityLayer.Persona> lista = new List<EntityLayer.Persona>();
 
             try
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    string query = 
-                        "Select a.IdAlmacen, a.NombreAlmacen, a.Direccion, e.IdEstado, e.NombreEstado from Almacen a " +
-                        "join Estado e on a.IdEstado = e.IdEstado where a.IdEstado = (Select IdEstado from Estado where " +
-                        "NombreEstado = 'ACTIVO')";
-                    SqlCommand Cmd = new SqlCommand(query, Cnx);
+                    SqlCommand Cmd = new SqlCommand("sp_Persona_Listar", Cnx);
 
                     Cnx.Open();
                     using (SqlDataReader Dr = Cmd.ExecuteReader())
                     {
                         while (Dr.Read())
                         {
-                            lista.Add(new EntityLayer.Almacen()
+                            lista.Add(new EntityLayer.Persona()
                             {
-                                IdAlmacen = Convert.ToInt32(Dr["IdAlmacen"]),
-                                NombreAlmacen = Dr["NombreAlmacen"].ToString(),
+                                IdPersona = Convert.ToInt32(Dr["IdPersona"]),
+                                oTipoDocumento = new EntityLayer.TipoDocumento()
+                                {
+                                    IdTipoDocumento = Convert.ToInt32(Dr["IdTipoDocumento"]),
+                                    NombreTipoDocumento = Dr["NombreTipoDocumento"].ToString()
+                                },
+                                NroDocumento = Dr["NroDocumento"].ToString(),
+                                ApellidoPaterno = Dr["ApellidoPaterno"].ToString(),
+                                ApellidoMaterno = Dr["ApellidoMaterno"].ToString(),
+                                PrimerNombre = Dr["PrimerNombre"].ToString(),
+                                SegundoNombre = Dr["SegundoNombre"].ToString(),
+                                NombreCompleto = Dr["NombreCompleto"].ToString(),
+                                FechaNacimiento = Dr["FechaNacimiento"].ToString(),
                                 Direccion = Dr["Direccion"].ToString(),
+                                Telefono = Dr["Telefono"].ToString(),
+                                Email = Dr["Email"].ToString(),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -47,13 +56,13 @@ namespace Consolidados.DataLayer
             }
             catch
             {
-                lista = new List<EntityLayer.Almacen>();
+                lista = new List<EntityLayer.Persona>();
             }
 
             return lista;
         }
 
-        public int Registrar(EntityLayer.Almacen obj, out string Mensaje)
+        public int Registrar(EntityLayer.Persona obj, out string Mensaje)
         {
             int IdAutogenerado = 0;
 
@@ -62,9 +71,17 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_Almacen_Registrar", Cnx);
-                    Cmd.Parameters.AddWithValue("NombreAlmacen", obj.NombreAlmacen);
+                    SqlCommand Cmd = new SqlCommand("sp_Persona_Registrar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdTipoDocumento", obj.oTipoDocumento.IdTipoDocumento);
+                    Cmd.Parameters.AddWithValue("NroDocumento", obj.NroDocumento);
+                    Cmd.Parameters.AddWithValue("ApellidoPaterno", obj.ApellidoPaterno);
+                    Cmd.Parameters.AddWithValue("ApellidoMaterno", obj.ApellidoMaterno);
+                    Cmd.Parameters.AddWithValue("PrimerNombre", obj.PrimerNombre);
+                    Cmd.Parameters.AddWithValue("SegundoNombre", obj.SegundoNombre);
+                    Cmd.Parameters.AddWithValue("FechaNacimiento", obj.FechaNacimiento);
                     Cmd.Parameters.AddWithValue("Direccion", obj.Direccion);
+                    Cmd.Parameters.AddWithValue("Telefono", obj.Telefono);
+                    Cmd.Parameters.AddWithValue("Email", obj.Email);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -86,7 +103,7 @@ namespace Consolidados.DataLayer
             return IdAutogenerado;
         }
 
-        public bool Editar(EntityLayer.Almacen obj, out string Mensaje)
+        public bool Editar(EntityLayer.Persona obj, out string Mensaje)
         {
             bool resultado = false;
             Mensaje = string.Empty;
@@ -95,10 +112,18 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_Almacen_Editar", Cnx);
-                    Cmd.Parameters.AddWithValue("IdAlmacen", obj.IdAlmacen);
-                    Cmd.Parameters.AddWithValue("NombreAlmacen", obj.NombreAlmacen);
+                    SqlCommand Cmd = new SqlCommand("sp_Persona_Editar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdPersona", obj.IdPersona);
+                    Cmd.Parameters.AddWithValue("IdTipoDocumento", obj.oTipoDocumento.IdTipoDocumento);
+                    Cmd.Parameters.AddWithValue("NroDocumento", obj.NroDocumento);
+                    Cmd.Parameters.AddWithValue("ApellidoPaterno", obj.ApellidoPaterno);
+                    Cmd.Parameters.AddWithValue("ApellidoMaterno", obj.ApellidoMaterno);
+                    Cmd.Parameters.AddWithValue("PrimerNombre", obj.PrimerNombre);
+                    Cmd.Parameters.AddWithValue("SegundoNombre", obj.SegundoNombre);
+                    Cmd.Parameters.AddWithValue("FechaNacimiento", obj.FechaNacimiento);
                     Cmd.Parameters.AddWithValue("Direccion", obj.Direccion);
+                    Cmd.Parameters.AddWithValue("Telefono", obj.Telefono);
+                    Cmd.Parameters.AddWithValue("Email", obj.Email);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -128,8 +153,8 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_Almacen_Eliminar", Cnx);
-                    Cmd.Parameters.AddWithValue("@IdAlmacen", id);
+                    SqlCommand Cmd = new SqlCommand("sp_Persona_Eliminar", Cnx);
+                    Cmd.Parameters.AddWithValue("@IdPersona", id);
                     Cmd.CommandType = CommandType.Text;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;

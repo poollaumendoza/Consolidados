@@ -15,8 +15,10 @@ namespace Consolidados.EntityLayer
         public string ApellidoMaterno { get; set; }
         public string PrimerNombre { get; set; }
         public string SegundoNombre { get; set; }
+        public string NombreCompleto { get; set; }
+        public string FechaNacimiento { get; set; }
         public string Direccion { get; set; }
-        public string Teléfono { get; set; }
+        public string Telefono { get; set; }
         public string Email { get; set; }
         public Estado oEstado { get; set; }
     }

@@ -130,7 +130,6 @@
                         data: JSON.stringify({ id: data.IdEstado }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (data) {
-                            debugger;
                             if (data.resultado) {
                                 tabladata.row(estadoseleccionado).remove().draw();
                             } else {

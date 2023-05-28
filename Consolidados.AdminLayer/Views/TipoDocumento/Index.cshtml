@@ -38,7 +38,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Categoría</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Tipo Documento</h5>
                 <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -67,7 +67,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar Tipo de Documento</button>
             </div>
         </div>
     </div>
@@ -119,6 +119,7 @@
 
             if (json != null) {
                 $("#txtid").val(json.IdTipoDocumento);
+                $("#cboclasificaciontipodocumento").val(json.oClasificacionTipoDocumento.IdClasificacionTipoDocumento);
                 $("#txtnombretipodocumento").val(json.NombreTipoDocumento);
                 $("#cboestado").val(json.oEstado.IdEstado)
             }
@@ -148,7 +149,7 @@
 
         /*Control de Lista Desplegable: Estado*/
         jQuery.ajax({
-            url: '@Url.Action("ListarEstado", "Estado")',
+            url: '@Url.Action("ListarEstados", "Estado")',
             type: "GET",
             data: null,
             dataType: "json",
@@ -195,7 +196,6 @@
                         data: JSON.stringify({ id: data.IdTipoDocumento }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (data) {
-                            debugger;
                             if (data.resultado) {
                                 tabladata.row(tipodocumentoseleccionado).remove().draw();
                             } else {
@@ -217,6 +217,10 @@
         function Guardar() {
             var TipoDocumento = {
                 IdTipoDocumento: $("#txtid").val(),
+                oClasificacionTipoDocumento: {
+                    IdClasificacionTipoDocumento: $("#cboclasificaciontipodocumento option:selected").val(),
+                    NombreClasificacionTipoDocumento: $("#cboclasificaciontipodocumento option:selected").text()
+                },
                 NombreTipoDocumento: $("#txtnombretipodocumento").val(),
                 oEstado: {
                     IdEstado: $("#cboestado option:selected").val(),

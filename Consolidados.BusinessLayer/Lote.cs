@@ -44,7 +44,7 @@ namespace Consolidados.BusinessLayer
 
             if (obj.oAlmacen.IdAlmacen == 0)
                 Mensaje = "Debe seleccionar un almacén";
-            else if (obj.oEmpresa.IdEmpresa != 0)
+            else if (obj.oEmpresa.IdEmpresa == 0)
                 Mensaje = "Debe seleccionar una empresa";
             else if (string.IsNullOrEmpty(obj.Descripcion) || string.IsNullOrWhiteSpace(obj.Descripcion))
                 Mensaje = "La descripción no puede ser vacía";

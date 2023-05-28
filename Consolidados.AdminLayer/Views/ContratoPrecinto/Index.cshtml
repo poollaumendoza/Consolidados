@@ -39,7 +39,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Nuevo Peso</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Nuevo Precinto</h5>
                 <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
@@ -228,7 +228,6 @@
                         data: JSON.stringify({ id: data.IdContratoPrecinto }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (data) {
-                            debugger;
                             if (data.resultado) {
                                 tabladata.row(precintoseleccionado).remove().draw();
                             } else {
@@ -249,7 +248,7 @@
 
         function Guardar() {
             var ContratoPrecinto = {
-                IdContratoContenedor: $("#txtid").val(),
+                IdContratoPrecinto: $("#txtid").val(),
                 oContrato: {
                     IdContrato: $("#cbocontrato option:selected").val(),
                     NroContratoLote: $("#cbocontrato option:selected").text()

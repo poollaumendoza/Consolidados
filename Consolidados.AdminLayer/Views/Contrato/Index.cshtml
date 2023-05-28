@@ -240,7 +240,6 @@
                         data: JSON.stringify({ id: data.IdContrato }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (data) {
-                            debugger;
                             if (data.resultado) {
                                 tabladata.row(contratoseleccionado).remove().draw();
                             } else {

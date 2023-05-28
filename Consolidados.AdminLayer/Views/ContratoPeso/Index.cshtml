@@ -228,7 +228,6 @@
                         data: JSON.stringify({ id: data.IdContratoPeso }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (data) {
-                            debugger;
                             if (data.resultado) {
                                 tabladata.row(pesoseleccionado).remove().draw();
                             } else {
@@ -249,7 +248,7 @@
 
         function Guardar() {
             var ContratoPeso = {
-                IdContratoContenedor: $("#txtid").val(),
+                IdContratoPeso: $("#txtid").val(),
                 oContrato: {
                     IdContrato: $("#cbocontrato option:selected").val(),
                     NroContratoLote: $("#cbocontrato option:selected").text()

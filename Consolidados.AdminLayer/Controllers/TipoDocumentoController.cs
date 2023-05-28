@@ -20,6 +20,20 @@ namespace Consolidados.AdminLayer.Controllers
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult ListarTipoDocumento_Identidad()
+        {
+            List<EntityLayer.TipoDocumento> oLista = new List<EntityLayer.TipoDocumento>();
+            oLista = new BusinessLayer.TipoDocumento().Listar(tipo: "identidad");
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ListarTipoDocumento_Contable()
+        {
+            List<EntityLayer.TipoDocumento> oLista = new List<EntityLayer.TipoDocumento>();
+            oLista = new BusinessLayer.TipoDocumento().Listar(tipo: "contable");
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult GuardarTipoDocumento(EntityLayer.TipoDocumento objeto)
         {

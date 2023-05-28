@@ -15,6 +15,11 @@ namespace Consolidados.BusinessLayer
             return dTipoDocumento.Listar();
         }
 
+        public List<EntityLayer.TipoDocumento> Listar(string tipo)
+        {
+            return dTipoDocumento.Listar(tipo);
+        }
+
         public int Registrar(EntityLayer.TipoDocumento obj, out string Mensaje)
         {
             Mensaje = string.Empty;

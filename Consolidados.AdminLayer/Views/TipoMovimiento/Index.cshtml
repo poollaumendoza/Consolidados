@@ -62,7 +62,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar Tipo de Movimiento</button>
             </div>
         </div>
     </div>
@@ -163,7 +163,6 @@
                         data: JSON.stringify({ id: data.IdTipoMovimiento }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (data) {
-                            debugger;
                             if (data.resultado) {
                                 tabladata.row(tipomovimientoseleccionado).remove().draw();
                             } else {
