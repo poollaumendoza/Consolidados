@@ -59,6 +59,57 @@ namespace Consolidados.DataLayer
             return lista;
         }
 
+        public List<EntityLayer.Contrato> Listar(int IdContrato)
+        {
+            List<EntityLayer.Contrato> lista = new List<EntityLayer.Contrato>();
+
+            try
+            {
+                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                {
+                    SqlCommand Cmd = new SqlCommand("sp_Contrato_Listar_ByIdContrato", Cnx);
+                    Cmd.Parameters.AddWithValue("IdContrato", IdContrato);
+                    Cmd.CommandType = CommandType.StoredProcedure;
+
+                    Cnx.Open();
+                    using (SqlDataReader Dr = Cmd.ExecuteReader())
+                    {
+                        while (Dr.Read())
+                        {
+                            lista.Add(new EntityLayer.Contrato()
+                            {
+                                IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                oEmpresa = new EntityLayer.Empresa()
+                                {
+                                    IdEmpresa = Convert.ToInt32(Dr["IdEmpresa"]),
+                                    RazonSocial = Dr["RazonSocial"].ToString()
+                                },
+                                NroContrato = Dr["NroContrato"].ToString(),
+                                NroContratoLote = Dr["NroContratoLote"].ToString(),
+                                FechaContrato = Dr["FechaContrato"].ToString(),
+                                FechaCarga = Dr["FechaCarga"].ToString(),
+                                LugarCarga = Dr["LugarCarga"].ToString(),
+                                FechaDescarga = Dr["FechaDescarga"].ToString(),
+                                LugarDescarga = Dr["LugarDescarga"].ToString(),
+                                oEstado = new EntityLayer.Estado()
+                                {
+                                    IdEstado = Convert.ToInt32(Dr["IdEstado"]),
+                                    NombreEstado = Dr["NombreEstado"].ToString()
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string mensaje = ex.Message;
+                lista = new List<EntityLayer.Contrato>();
+            }
+
+            return lista;
+        }
+
         public int Registrar(EntityLayer.Contrato obj, out string Mensaje)
         {
             int IdAutogenerado = 0;

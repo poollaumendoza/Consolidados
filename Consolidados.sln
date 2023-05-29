@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consolidados.Desktop", "Con
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consolidados.AdminLayer", "Consolidados.AdminLayer\Consolidados.AdminLayer.csproj", "{E937ED2B-A744-49A5-BC9F-63FFC1EAC4A2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consolidados.ClientLayer", "Consolidados.ClientLayer\Consolidados.ClientLayer.csproj", "{51E2BA7D-E808-4C6B-B408-C33C8B602CBC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E937ED2B-A744-49A5-BC9F-63FFC1EAC4A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E937ED2B-A744-49A5-BC9F-63FFC1EAC4A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E937ED2B-A744-49A5-BC9F-63FFC1EAC4A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51E2BA7D-E808-4C6B-B408-C33C8B602CBC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51E2BA7D-E808-4C6B-B408-C33C8B602CBC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51E2BA7D-E808-4C6B-B408-C33C8B602CBC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51E2BA7D-E808-4C6B-B408-C33C8B602CBC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

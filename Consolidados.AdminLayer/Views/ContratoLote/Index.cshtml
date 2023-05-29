@@ -129,7 +129,7 @@
             $("#mensajeError").hide();
 
             if (json != null) {
-                $("#txtid").val(json.Id.ContratoLote);
+                $("#txtid").val(json.IdContratoLote);
                 $("#cbocontrato").val(json.oContrato.IdContrato);
                 $("#cbolote").val(json.oLote.IdLote);
                 $("#txtcantidad").val(json.Cantidad);
@@ -169,7 +169,7 @@
             success: function (data) {
                 $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontrato");
                 $.each(data.data, function (index, item) {
-                    $("<option>").attr({ "value": item.IdContrato }).text(item.NroLote).appendTo("#cbocontrato");
+                    $("<option>").attr({ "value": item.IdContrato }).text(item.NroContratoLote).appendTo("#cbocontrato");
                 })
             },
             error: function(error) {
@@ -252,7 +252,7 @@
                 IdContratoLote: $("#txtid").val(),
                 oContrato: {
                     IdContrato: $("#cbocontrato option:selected").val(),
-                    NombreEstado: $("#cbocontrato option:selected").text()
+                    NroContratoLote: $("#cbocontrato option:selected").text()
                 },
                 oLote: {
                     IdLote: $("#cbolote option:selected").val(),

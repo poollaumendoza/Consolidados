@@ -15,6 +15,11 @@ namespace Consolidados.BusinessLayer
             return dContrato.Listar();
         }
 
+        public List<EntityLayer.Contrato> Listar(int IdContrato)
+        {
+            return dContrato.Listar(IdContrato);
+        }
+
         public int Registrar(EntityLayer.Contrato obj, out string Mensaje)
         {
             Mensaje = string.Empty;
@@ -48,7 +53,7 @@ namespace Consolidados.BusinessLayer
         {
             Mensaje = string.Empty;
 
-            if (obj.oEmpresa.IdEmpresa != 0)
+            if (obj.oEmpresa.IdEmpresa == 0)
                 Mensaje = "Debe seleccionar una empresa";
             else if (string.IsNullOrEmpty(obj.NroContrato) || string.IsNullOrWhiteSpace(obj.NroContrato))
                 Mensaje = "El número de contrato no puede ser vacío";
