@@ -2,7 +2,8 @@
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                 Title="Contratos" Height="450" Width="800">
+                 Title="Contratos" Height="450" Width="800"
+                 WindowStartupLocation="CenterScreen">
     <Grid>
         <ToolBar VerticalAlignment="Top">
             <Button Name="btnAgregar" Click="BtnAgregar_Click">

@@ -1,0 +1,69 @@
+﻿<mah:MetroWindow x:Class="Consolidados.Desktop.Welcome.wndMain"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 Title="Principal" Height="500" Width="900" WindowState="Maximized">
+    <Grid>
+        <Menu Height="auto" VerticalAlignment="Top">
+            <MenuItem Header="Sistema">
+                <MenuItem Header="Opciones"/>
+                <Separator/>
+                <MenuItem Header="Salir"/>
+            </MenuItem>
+            <MenuItem Header="Operaciones">
+                <MenuItem Header="Contrato"/>
+                <MenuItem Header="Lotes"/>
+                <MenuItem Header="Contenedores"/>
+                <MenuItem Header="Peso"/>
+                <MenuItem Header="Precinto"/>
+                <MenuItem Header="Fotos"/>
+                <Separator/>
+                <MenuItem Header="Reportes"/>
+            </MenuItem>
+        </Menu>
+        <ToolBar Height="auto" Margin="0,30,0,0" VerticalAlignment="Top">
+            <Button Name="tlbContratos" Click="TlbContratos_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/folder.png" Width="32"/>
+                    <Label Content="Contratos" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="tlbLotes" Click="TlbLotes_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/note_book.png" Width="32"/>
+                    <Label Content="Lotes" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="tlbContenedores" Click="TlbContenedores_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/package.png" Width="32"/>
+                    <Label Content="Contenedores" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="tlbPesos" Click="TlbPesos_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/truck.png" Width="32"/>
+                    <Label Content="Pesos" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="tlbPrecintos" Click="TlbPrecintos_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/barcode.png" Width="32"/>
+                    <Label Content="Precintos" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="tlbFotos" Click="TlbFotos_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/image.png" Width="32"/>
+                    <Label Content="Fotos" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="tlbReportes" Click="TlbReportes_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/note.png" Width="32"/>
+                    <Label Content="Reportes" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </ToolBar>
+    </Grid>
+</mah:MetroWindow>

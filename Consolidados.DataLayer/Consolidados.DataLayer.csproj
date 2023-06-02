@@ -33,6 +33,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,9 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Almacen.cs" />
+    <Compile Include="Archivo.cs" />
     <Compile Include="ClasificacionTipoDocumento.cs" />
     <Compile Include="Contrato.cs" />
     <Compile Include="ContratoContenedor.cs" />
+    <Compile Include="ContratoFoto.cs" />
     <Compile Include="ContratoLote.cs" />
     <Compile Include="ContratoPeso.cs" />
     <Compile Include="ContratoPrecinto.cs" />
@@ -62,6 +67,7 @@
     </Compile>
     <Compile Include="TipoDocumento.cs" />
     <Compile Include="TipoMovimiento.cs" />
+    <Compile Include="_Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Consolidados.EntityLayer\Consolidados.EntityLayer.csproj">

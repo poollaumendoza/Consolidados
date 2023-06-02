@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,14 +11,13 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Consolidados.Desktop
+namespace Consolidados.Desktop.Forms.Operaciones.Reportes
 {
-    public partial class MainWindow : Window
+    public partial class wndListaReportes : MetroWindow
     {
-        public MainWindow()
+        public wndListaReportes()
         {
             InitializeComponent();
         }

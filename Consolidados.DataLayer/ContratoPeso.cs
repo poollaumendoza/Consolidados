@@ -63,6 +63,60 @@ namespace Consolidados.DataLayer
             return lista;
         }
 
+        public List<EntityLayer.ContratoPeso> Listar(int IdPeso)
+        {
+            List<EntityLayer.ContratoPeso> lista = new List<EntityLayer.ContratoPeso>();
+
+            try
+            {
+                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                {
+                    string query =
+                        "Select cp.IdContratoPeso, cp.IdContrato, c.NroContratoLote, cp.IdContratoContenedor, cc.NroContenedor, " +
+                        "cp.PesoTotal, cp.IdEstado, e.NombreEstado from ContratoPeso cp join Contrato c on cp.IdContrato = " +
+                        "c.IdContrato join ContratoContenedor cc on cp.IdContratoContenedor = cc.IdContratoContenedor join " +
+                        "Estado e on cp.IdEstado = e.IdEstado where cp.IdContratoPeso = @IdPeso";
+                    SqlCommand Cmd = new SqlCommand(query, Cnx);
+                    Cmd.Parameters.AddWithValue("IdPeso", IdPeso);
+                    Cmd.CommandType = CommandType.Text;
+
+                    Cnx.Open();
+                    using (SqlDataReader Dr = Cmd.ExecuteReader())
+                    {
+                        while (Dr.Read())
+                        {
+                            lista.Add(new EntityLayer.ContratoPeso()
+                            {
+                                IdContratoPeso = Convert.ToInt32(Dr["IdContratoPeso"]),
+                                oContrato = new EntityLayer.Contrato()
+                                {
+                                    IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                    NroContratoLote = Dr["NroContratoLote"].ToString()
+                                },
+                                oContratoContenedor = new EntityLayer.ContratoContenedor()
+                                {
+                                    IdContratoContenedor = Convert.ToInt32(Dr["IdContratoContenedor"]),
+                                    NroContenedor = Dr["NroContenedor"].ToString()
+                                },
+                                PesoTotal = Convert.ToInt32(Dr["PesoTotal"]),
+                                oEstado = new EntityLayer.Estado()
+                                {
+                                    IdEstado = Convert.ToInt32(Dr["IdEstado"]),
+                                    NombreEstado = Dr["NombreEstado"].ToString()
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                lista = new List<EntityLayer.ContratoPeso>();
+            }
+
+            return lista;
+        }
+
         public int Registrar(EntityLayer.ContratoPeso obj, out string Mensaje)
         {
             int IdAutogenerado = 0;

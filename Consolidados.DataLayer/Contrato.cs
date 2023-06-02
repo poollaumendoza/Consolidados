@@ -146,6 +146,10 @@ namespace Consolidados.DataLayer
                 IdAutogenerado = 0;
                 Mensaje = ex.Message;
             }
+            finally
+            {
+                System.IO.Directory.CreateDirectory(Settings.Default.DirectorioFotos + "\\" + obj.NroContratoLote);
+            }
             return IdAutogenerado;
         }
 

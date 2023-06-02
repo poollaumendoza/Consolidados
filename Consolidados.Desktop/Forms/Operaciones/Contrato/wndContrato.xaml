@@ -2,7 +2,8 @@
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-                 Title="Contrato" Height="423.677" Width="449.025">
+                 Title="Contrato" Height="423.677" Width="449.025"
+                 WindowStartupLocation="CenterScreen">
     <Grid>
         <ToolBar VerticalAlignment="Top">
             <Button Name="btnGuardar" Click="BtnGuardar_Click">

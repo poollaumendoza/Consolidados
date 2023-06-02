@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=5.0.0.0, Culture=neutral, PublicKeyToken=69f1c32f803d307e, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.5.0.2\lib\net462\ControlzEx.dll</HintPath>
@@ -41,6 +44,7 @@
     <Reference Include="MahApps.Metro, Version=2.0.0.0, Culture=neutral, PublicKeyToken=51482d6f650b2b3f, processorArchitecture=MSIL">
       <HintPath>..\packages\MahApps.Metro.2.4.9\lib\net47\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
@@ -69,11 +73,111 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Forms\Contable\Compra\wndCompra.xaml.cs">
+      <DependentUpon>wndCompra.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Contable\Compra\wndListaCompra.xaml.cs">
+      <DependentUpon>wndListaCompra.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Contable\Venta\wndListaVenta.xaml.cs">
+      <DependentUpon>wndListaVenta.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Contable\Venta\wndVenta.xaml.cs">
+      <DependentUpon>wndVenta.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\ContratoFoto\wndEmpaquetar.xaml.cs">
+      <DependentUpon>wndEmpaquetar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\ContratoFoto\wndFoto.xaml.cs">
+      <DependentUpon>wndFoto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\ContratoFoto\wndListaFoto.xaml.cs">
+      <DependentUpon>wndListaFoto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\ContratoLote\wndListaLote.xaml.cs">
+      <DependentUpon>wndListaLote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\ContratoLote\wndLote.xaml.cs">
+      <DependentUpon>wndLote.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\ContratoPeso\wndListaPeso.xaml.cs">
+      <DependentUpon>wndListaPeso.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\ContratoPeso\wndPeso.xaml.cs">
+      <DependentUpon>wndPeso.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\ContratoPrecinto\wndListaPrecinto.xaml.cs">
+      <DependentUpon>wndListaPrecinto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\ContratoPrecinto\wndPrecinto.xaml.cs">
+      <DependentUpon>wndPrecinto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\Reportes\wndListaReportes.xaml.cs">
+      <DependentUpon>wndListaReportes.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Welcome\wndLogin.xaml.cs">
+      <DependentUpon>wndLogin.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Welcome\wndMain.xaml.cs">
+      <DependentUpon>wndMain.xaml</DependentUpon>
+    </Compile>
+    <Page Include="Forms\Contable\Compra\wndCompra.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Contable\Compra\wndListaCompra.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Contable\Venta\wndListaVenta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Contable\Venta\wndVenta.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\Operaciones\ContratoContenedor\wndContenedor.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Forms\Operaciones\ContratoContenedor\wndListaContenedor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Operaciones\ContratoFoto\wndEmpaquetar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Operaciones\ContratoFoto\wndFoto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Operaciones\ContratoFoto\wndListaFoto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Operaciones\ContratoLote\wndListaLote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Operaciones\ContratoLote\wndLote.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Operaciones\ContratoPeso\wndListaPeso.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Operaciones\ContratoPeso\wndPeso.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Operaciones\ContratoPrecinto\wndListaPrecinto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Operaciones\ContratoPrecinto\wndPrecinto.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -84,10 +188,6 @@
     <Page Include="Forms\Operaciones\Contrato\wndListaContrato.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -105,10 +205,18 @@
     <Compile Include="Forms\Operaciones\Contrato\wndListaContrato.xaml.cs">
       <DependentUpon>wndListaContrato.xaml</DependentUpon>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
+    <Page Include="Forms\Operaciones\Reportes\wndListaReportes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Welcome\wndLogin.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Welcome\wndMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -139,13 +247,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Forms\Administracion\Persona\" />
-    <Folder Include="Forms\Contable\Compra\" />
-    <Folder Include="Forms\Contable\Venta\" />
-    <Folder Include="Forms\Operaciones\ContratoFoto\" />
-    <Folder Include="Forms\Operaciones\ContratoLote\" />
-    <Folder Include="Forms\Operaciones\ContratoPeso\" />
-    <Folder Include="Forms\Operaciones\ContratoPrecinto\" />
-    <Folder Include="Welcome\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\delete.png" />
@@ -177,6 +278,57 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\block.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\note_book.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\package.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\truck.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\barcode.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\chart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\chart_pie.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\credit_cart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\folder.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\note.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\sale.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\security.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\tablet.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\tools.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\search_image.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\zip_file.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

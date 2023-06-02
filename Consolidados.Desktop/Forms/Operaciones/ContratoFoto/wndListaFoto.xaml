@@ -1,0 +1,62 @@
+﻿<mah:MetroWindow x:Class="Consolidados.Desktop.Forms.Operaciones.ContratoFoto.wndListaFoto"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 Title="Fotos" Height="450" Width="800"
+                 WindowStartupLocation="CenterScreen">
+    <Grid>
+        <ToolBar VerticalAlignment="Top">
+            <Button Name="btnFoto" Click="BtnFoto_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/add.png" Width="32"/>
+                    <Label Content="Foto" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="btnBuscarNueva" Click="BtnBuscarNueva_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/search_image.png" Width="32"/>
+                    <Label Content="Buscar Nuevas" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+            <Button Name="btnEmpaquetar" Click="BtnEmpaquetar_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/zip_file.png" Width="32"/>
+                    <Label Content="Empaquetar" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </ToolBar>
+        <DataGrid Name="dg" AutoGenerateColumns="False" BorderThickness="1" CanUserAddRows="False" Margin="0,49,0,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="# Contrato" Binding="{Binding Path=oContrato.NroContratoLote}"/>
+                <DataGridTextColumn Header="# Contenedor" Binding="{Binding Path=oContratoContenedor.NroContenedor}"/>
+                <DataGridTextColumn Header="Foto" Binding="{Binding Path=Foto}"/>
+                <DataGridTextColumn Header="Estado" Binding="{Binding Path=oEstado.NombreEstado}"/>
+                <DataGridTextColumn Width="5*"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnEditar" CommandParameter="{Binding Path=IdContratoFoto}" Click="BtnEditar_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Resources/edit.png" Width="16"/>
+                                    <Label Content="Editar" VerticalContentAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Name="btnEliminar" CommandParameter="{Binding Path=IdContratoFoto}" Click="BtnEliminar_Click">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Source="/Resources/delete.png" Width="16"/>
+                                    <Label Content="Eliminar" VerticalContentAlignment="Center"/>
+                                </StackPanel>
+                            </Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</mah:MetroWindow>

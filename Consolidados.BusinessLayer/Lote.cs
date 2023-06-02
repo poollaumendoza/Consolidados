@@ -15,6 +15,11 @@ namespace Consolidados.BusinessLayer
             return dLote.Listar();
         }
 
+        public List<EntityLayer.Lote> Listar(int IdLote)
+        {
+            return dLote.Listar(IdLote);
+        }
+
         public int Registrar(EntityLayer.Lote obj, out string Mensaje)
         {
             Mensaje = string.Empty;

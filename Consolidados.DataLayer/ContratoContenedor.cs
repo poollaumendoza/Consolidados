@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Consolidados.DataLayer
 {
@@ -22,8 +23,7 @@ namespace Consolidados.DataLayer
                     string query =
                         "Select cc.IdContratoContenedor, cc.IdContrato, c.NroContratoLote, cc.NroContenedor, cc.Payload, " +
                         "cc.IdEstado, e.NombreEstado from ContratoContenedor cc join Contrato c on cc.IdContrato = c.IdContrato " +
-                        "join Estado e on cc.IdEstado = e.IdEstado where cc.IdEstado = (Select IdEstado from Estado where NombreEstado " +
-                        "= 'ACTIVO')";
+                        "join Estado e on cc.IdEstado = e.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -53,6 +53,69 @@ namespace Consolidados.DataLayer
             }
             catch
             {
+                lista = new List<EntityLayer.ContratoContenedor>();
+            }
+
+            return lista;
+        }
+
+        public List<EntityLayer.ContratoContenedor> Listar(string objeto, object valor)
+        {
+            List<EntityLayer.ContratoContenedor> lista = new List<EntityLayer.ContratoContenedor>();
+            string query = string.Empty;
+
+            switch (objeto)
+            {
+                case "IdContrato":
+                    query = "Select cc.IdContratoContenedor, cc.IdContrato, c.NroContratoLote, cc.NroContenedor, cc.Payload, " +
+                        "cc.IdEstado, e.NombreEstado from ContratoContenedor cc join Contrato c on cc.IdContrato = c.IdContrato " +
+                        "join Estado e on cc.IdEstado = e.IdEstado where cc.IdContrato = @IdContrato";
+                    break;
+                case "IdContratoContenedor":
+                    query =
+                        "Select cc.IdContratoContenedor, cc.IdContrato, c.NroContratoLote, cc.NroContenedor, cc.Payload, " +
+                        "cc.IdEstado, e.NombreEstado from ContratoContenedor cc join Contrato c on cc.IdContrato = c.IdContrato " +
+                        "join Estado e on cc.IdEstado = e.IdEstado where cc.IdContratoContenedor = @IdContratoContenedor";
+                    break;
+            }
+
+            try
+            {
+                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                {
+                    
+                    SqlCommand Cmd = new SqlCommand(query, Cnx);
+                    Cmd.Parameters.AddWithValue(objeto, valor);
+                    Cmd.CommandType = CommandType.Text;
+
+                    Cnx.Open();
+                    using (SqlDataReader Dr = Cmd.ExecuteReader())
+                    {
+                        while (Dr.Read())
+                        {
+                            lista.Add(new EntityLayer.ContratoContenedor()
+                            {
+                                IdContratoContenedor = Convert.ToInt32(Dr["IdContratoContenedor"]),
+                                oContrato = new EntityLayer.Contrato()
+                                {
+                                    IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                    NroContratoLote = Dr["NroContratoLote"].ToString()
+                                },
+                                NroContenedor = Dr["NroContenedor"].ToString(),
+                                Payload = Convert.ToInt32(Dr["Payload"]),
+                                oEstado = new EntityLayer.Estado()
+                                {
+                                    IdEstado = Convert.ToInt32(Dr["IdEstado"]),
+                                    NombreEstado = Dr["NombreEstado"].ToString()
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                string mensaje = ex.Message;
                 lista = new List<EntityLayer.ContratoContenedor>();
             }
 
@@ -89,6 +152,15 @@ namespace Consolidados.DataLayer
             {
                 IdAutogenerado = 0;
                 Mensaje = ex.Message;
+            }
+            finally
+            {
+                Directory.CreateDirectory(
+                    string.Format(
+                        "{0}\\{1}\\{2}", 
+                        Settings.Default.DirectorioFotos, 
+                        obj.oContrato.NroContratoLote, 
+                        obj.NroContenedor));
             }
             return IdAutogenerado;
         }

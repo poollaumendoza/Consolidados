@@ -20,7 +20,9 @@ namespace Consolidados.DataLayer
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
                     string query =
-                        "";
+                        "Select cp.IdContratoPrecinto, cp.IdContrato, c.NroContratoLote, cp.IdContratoContenedor, cc.NroContenedor, cp.NroPrecinto, cp.IdEstado, " +
+                        "e.NombreEstado from ContratoPrecinto cp join Contrato c on cp.IdContrato = c.IdContrato join ContratoContenedor cc on cp.IdContratoContenedor = " +
+                        "cc.IdContratoContenedor join Estado e on cp.IdEstado = e.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -41,7 +43,74 @@ namespace Consolidados.DataLayer
                                     IdContratoContenedor = Convert.ToInt32(Dr["IdContratoContenedor"]),
                                     NroContenedor = Dr["NroContenedor"].ToString()
                                 },
-                                NroPrecinto = Dr["PesoTotal"].ToString(),
+                                NroPrecinto = Dr["NroPrecinto"].ToString(),
+                                oEstado = new EntityLayer.Estado()
+                                {
+                                    IdEstado = Convert.ToInt32(Dr["IdEstado"]),
+                                    NombreEstado = Dr["NombreEstado"].ToString()
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                string mensaje = ex.Message;
+                lista = new List<EntityLayer.ContratoPrecinto>();
+            }
+
+            return lista;
+        }
+
+        public List<EntityLayer.ContratoPrecinto> Listar(string objeto, object valor)
+        {
+            List<EntityLayer.ContratoPrecinto> lista = new List<EntityLayer.ContratoPrecinto>();
+            string query = string.Empty;
+
+            switch (objeto)
+            {
+                case "IdContrato":
+                    query = 
+                        "Select cp.IdContratoPrecinto, cp.IdContrato, c.NroContratoLote, cp.IdContratoContenedor, cc.NroContenedor, cp.NroPrecinto, cp.IdEstado, " +
+                        "e.NombreEstado from ContratoPrecinto cp join Contrato c on cp.IdContrato = c.IdContrato join ContratoContenedor cc on cp.IdContratoContenedor = " +
+                        "cc.IdContratoContenedor join Estado e on cp.IdEstado = e.IdEstado where cp.IdContrato = @IdContrato";
+                    break;
+                case "IdContratoPrecinto":
+                    query =
+                        "Select cp.IdContratoPrecinto, cp.IdContrato, c.NroContratoLote, cp.IdContratoContenedor, cc.NroContenedor, cp.NroPrecinto, cp.IdEstado, " +
+                        "e.NombreEstado from ContratoPrecinto cp join Contrato c on cp.IdContrato = c.IdContrato join ContratoContenedor cc on cp.IdContratoContenedor = " +
+                        "cc.IdContratoContenedor join Estado e on cp.IdEstado = e.IdEstado where cp.IdContratoPrecinto = @IdContratoPrecinto";
+                    break;
+            }
+
+            try
+            {
+                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                {
+                    SqlCommand Cmd = new SqlCommand(query, Cnx);
+                    Cmd.Parameters.AddWithValue(objeto, valor);
+                    Cmd.CommandType = CommandType.Text;
+
+                    Cnx.Open();
+                    using (SqlDataReader Dr = Cmd.ExecuteReader())
+                    {
+                        while (Dr.Read())
+                        {
+                            lista.Add(new EntityLayer.ContratoPrecinto()
+                            {
+                                IdContratoPrecinto = Convert.ToInt32(Dr["IdContratoPrecinto"]),
+                                oContrato = new EntityLayer.Contrato()
+                                {
+                                    IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                    NroContratoLote = Dr["NroContratoLote"].ToString()
+                                },
+                                oContratoContenedor = new EntityLayer.ContratoContenedor()
+                                {
+                                    IdContratoContenedor = Convert.ToInt32(Dr["IdContratoContenedor"]),
+                                    NroContenedor = Dr["NroContenedor"].ToString()
+                                },
+                                NroPrecinto = Dr["NroPrecinto"].ToString(),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -106,7 +175,7 @@ namespace Consolidados.DataLayer
                     SqlCommand Cmd = new SqlCommand("sp_ContratoPrecinto_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContratoPrecinto", obj.IdContratoPrecinto);
                     Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
-                    Cmd.Parameters.AddWithValue("IdContatoContenedor", obj.oContratoContenedor.IdContratoContenedor);
+                    Cmd.Parameters.AddWithValue("IdContratoContenedor", obj.oContratoContenedor.IdContratoContenedor);
                     Cmd.Parameters.AddWithValue("NroPrecinto", obj.NroPrecinto);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;

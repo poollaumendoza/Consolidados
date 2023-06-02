@@ -1,0 +1,10 @@
+﻿<mah:MetroWindow x:Class="Consolidados.Desktop.Forms.Operaciones.Reportes.wndListaReportes"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 Title="wndListaReportes" Height="450" Width="800"
+                 WindowStartupLocation="CenterScreen">
+    <Grid>
+
+    </Grid>
+</mah:MetroWindow>

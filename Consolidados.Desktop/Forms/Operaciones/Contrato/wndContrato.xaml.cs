@@ -74,7 +74,11 @@ namespace Consolidados.Desktop.Forms.Operaciones.Contrato
                         NombreEstado = cboEstado.Text
                     }
                 };
-                bContrato.Registrar(contrato, out Mensaje);
+                if(bContrato.Registrar(contrato, out Mensaje) > 0)
+                {
+                    var mensaje = await this.ShowMessageAsync("Consolidados", Mensaje, MessageDialogStyle.Affirmative);
+                    DialogResult = true;
+                }
             }
             else
             {

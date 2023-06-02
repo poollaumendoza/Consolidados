@@ -4,10 +4,13 @@
   <Settings>
     <Setting Name="CadenaConexion" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
   &lt;ConnectionString&gt;Server=(local);Database=Consolidados;User=sa;Password=Ss@20601836271;&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
       <Value Profile="(Default)">Server=(local);Database=Consolidados;User=sa;Password=Ss@20601836271;</Value>
+    </Setting>
+    <Setting Name="DirectorioFotos" Type="System.String" Scope="User">
+      <Value Profile="(Default)">C:\Consolidados\Photos</Value>
     </Setting>
   </Settings>
 </SettingsFile>
