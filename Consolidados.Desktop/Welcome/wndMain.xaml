@@ -64,6 +64,13 @@
                     <Label Content="Reportes" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Button>
+            <Separator/>
+            <Button Name="tlbBusqueda" Click="TlbBusqueda_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/search.png" Width="32"/>
+                    <Label Content="Búsqueda" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
         </ToolBar>
     </Grid>
 </mah:MetroWindow>

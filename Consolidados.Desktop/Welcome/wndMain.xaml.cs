@@ -65,5 +65,11 @@ namespace Consolidados.Desktop.Welcome
             oWindow = new Forms.Operaciones.Reportes.wndListaReportes();
             oWindow.ShowDialog();
         }
+
+        private void TlbBusqueda_Click(object sender, RoutedEventArgs e)
+        {
+            oWindow = new Forms.Operaciones.Búsqueda.wndBúsqueda();
+            oWindow.ShowDialog();
+        }
     }
 }
