@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Almacen.cs" />
     <Compile Include="Archivo.cs" />
+    <Compile Include="Busqueda.cs" />
     <Compile Include="ClasificacionTipoDocumento.cs" />
     <Compile Include="Contrato.cs" />
     <Compile Include="ContratoContenedor.cs" />

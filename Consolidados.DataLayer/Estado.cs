@@ -38,8 +38,9 @@ namespace Consolidados.DataLayer
                     }
                 }
             }
-            catch
+            catch(Exception ex)
             {
+                string mensaje = ex.Message;
                 lista = new List<EntityLayer.Estado>();
             }
 

@@ -26,22 +26,19 @@ namespace Consolidados.DataLayer.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Server=(local);Database=Consolidados;User=sa;Password=Ss@20601836271;")]
+        [global::System.Configuration.DefaultSettingValueAttribute("Server=25.70.216.105;Database=Consolidados;User=sa;Password=Ss@20601836271;")]
         public string CadenaConexion {
             get {
                 return ((string)(this["CadenaConexion"]));
             }
         }
         
-        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("C:\\Consolidados\\Photos")]
         public string DirectorioFotos {
             get {
                 return ((string)(this["DirectorioFotos"]));
-            }
-            set {
-                this["DirectorioFotos"] = value;
             }
         }
     }

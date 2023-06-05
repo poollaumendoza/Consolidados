@@ -159,7 +159,7 @@
                 $("#txtid").val(json.IdContrato);
                 $("#cboempresa").val(json.oEmpresa.IdEmpresa);
                 $("#txtnrocontrato").val(json.NroContrato);
-                $("#txtnrolote").val(json.NroLote);
+                $("#txtnrolote").val(json.NroContratoLote);
                 $("#txtfechacontrato").val(json.FechaContrato);
                 $("#txtfechacarga").val(json.FechaCarga);
                 $("#txtlugarcarga").val(json.LugarCarga);
@@ -266,7 +266,7 @@
                     RazonSocial: $("#cboempresa option:selected").text()
                 },
                 NroContrato: $("#txtnrocontrato").val(),
-                NroLote: $("#txtnrolote").val(),
+                NroContratoLote: $("#txtnrolote").val(),
                 FechaContrato: $("#txtfechacontrato").val(),
                 FechaCarga: $("#txtfechacarga").val(),
                 LugarCarga: $("#txtlugarcarga").val(),

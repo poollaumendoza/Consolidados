@@ -20,11 +20,8 @@ namespace Consolidados.DataLayer
                 using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
                 {
                     string query =
-                        "Select emp.IdEmpresa, emp.IdTipoDocumento, td.NombreTipoDocumento, emp.NroDocumento, emp.RazonSocial, emp.Direccion, emp.Telefono, emp.Email, " +
-                        "emp.IdEstado, es.NombreEstado from Empresa emp join TipoDocumento td on emp.IdTipoDocumento = td.IdTipoDocumento join Estado es on emp.IdEstado = " +
-                        "es.IdEstado where emp.IdEstado = (Select IdEstado from Estado where NombreEstado = 'ACTIVO')";
+                        "Select emp.IdEmpresa, emp.IdTipoDocumento, td.NombreTipoDocumento, emp.NroDocumento, emp.RazonSocial, emp.Direccion, emp.Telefono, emp.Email, emp.IdEstado, es.NombreEstado from Empresa emp join TipoDocumento td on emp.IdTipoDocumento = td.IdTipoDocumento join Estado es on emp.IdEstado = es.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
-
                     Cnx.Open();
                     using (SqlDataReader Dr = Cmd.ExecuteReader())
                     {
