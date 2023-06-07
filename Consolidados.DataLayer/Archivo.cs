@@ -1,6 +1,6 @@
-﻿using Consolidados.DataLayer.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -14,7 +14,7 @@ namespace Consolidados.DataLayer
         {
             List<EntityLayer.Archivo> oLista = new List<EntityLayer.Archivo>();
 
-            using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+            using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
             {
                 SqlCommand Cmd = new SqlCommand("sp_Archivos_CLAP", Cnx);
                 Cmd.Parameters.AddWithValue("@IdContrato", IdContrato);

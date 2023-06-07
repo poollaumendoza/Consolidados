@@ -1,4 +1,4 @@
-﻿using Consolidados.DataLayer.Properties;
+﻿using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -18,7 +18,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
                         "Select cf.IdContratoFoto, cf.IdContrato, c.NroContratoLote, cf.IdContratoContenedor, cc.NroContenedor, cf.Foto, cf.IdEstado, e.NombreEstado from ContratoFoto cf join Contrato c on cf.IdContrato = c.IdContrato join ContratoContenedor cc on cf.IdContratoContenedor = cc.IdContratoContenedor join Estado e on cf.IdEstado = e.IdEstado";
@@ -85,7 +85,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
                     Cmd.Parameters.AddWithValue(objeto, valor);
@@ -136,12 +136,11 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_ContratoFoto_Registrar", Cnx);
+                    SqlCommand Cmd = new SqlCommand("sp_ContratoFoto_RegistrarWeb", Cnx);
                     Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
                     Cmd.Parameters.AddWithValue("IdContratoContenedor", obj.oContratoContenedor.IdContratoContenedor);
-                    Cmd.Parameters.AddWithValue("Foto", obj.Foto);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -152,7 +151,6 @@ namespace Consolidados.DataLayer
 
                     IdAutogenerado = Convert.ToInt32(Cmd.Parameters["Resultado"].Value);
                     Mensaje = Cmd.Parameters["Mensaje"].Value.ToString();
-
                 }
             }
             catch (Exception ex)
@@ -170,7 +168,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoFoto_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContratoFoto", obj.IdContratoFoto);
@@ -204,13 +202,44 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoFoto_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdContratoFoto", id);
                     Cmd.CommandType = CommandType.Text;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;
+                }
+            }
+            catch (Exception ex)
+            {
+                resultado = false;
+                Mensaje = ex.Message;
+            }
+            return resultado;
+        }
+
+        public bool GuardarFoto(EntityLayer.ContratoFoto oContratoFoto, out string Mensaje)
+        {
+            bool resultado = false;
+            Mensaje = string.Empty;
+
+            try
+            {
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
+                {
+                    SqlCommand Cmd = new SqlCommand("Update ContratoFoto set Foto = @Foto where IdContratoFoto = @IdContratoFoto", Cnx);
+                    Cmd.Parameters.AddWithValue("IdContratoFoto", oContratoFoto.IdContratoFoto);
+                    Cmd.Parameters.AddWithValue("Foto", oContratoFoto.Foto);
+                    Cmd.Parameters.Add("Resultado", SqlDbType.Bit).Direction = ParameterDirection.Output;
+                    Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    Cmd.CommandType = CommandType.Text;
+                    Cnx.Open();
+
+                    if (Cmd.ExecuteNonQuery() > 0)
+                        resultado = true;
+                    else
+                        Mensaje = "No se puede actualizar imagen";
                 }
             }
             catch (Exception ex)

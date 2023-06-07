@@ -1,4 +1,4 @@
-﻿using Consolidados.DataLayer.Properties;
+﻿using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -17,7 +17,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
                         "Select ent.IdEntidad, ent.IdTipoDocumento, td.NombreTipoDocumento, ent.NroDocumento, ent.RazonSocial, " +
@@ -69,7 +69,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Entidad_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("IdTipoDocumento", obj.oTipoDocumento.IdTipoDocumento);
@@ -106,7 +106,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Entidad_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdEntidad", obj.IdEntidad);
@@ -143,7 +143,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Entidad_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdEntidad", id);

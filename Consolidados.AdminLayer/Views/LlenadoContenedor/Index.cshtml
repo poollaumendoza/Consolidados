@@ -47,15 +47,15 @@
                 <input id="txtid" type="hidden" value="0" />
                 <div class="row g-1">
                     <div class="col-sm-12">
-                        <label for="exampleFormControlInput1" class="form-label">Contrato:</label>
+                        <label for="cbocontrato" class="form-label">Contrato:</label>
                         <select id="cbocontrato" class="form-select"></select>
                     </div>
                     <div class="col-sm-12">
-                        <label for="exampleFormControlInput1" class="form-label">Contenedor:</label>
+                        <label for="cbocontenedor" class="form-label">Contenedor:</label>
                         <select id="cbocontenedor" class="form-select"></select>
                     </div>
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Lote:</label>
+                        <label for="cbolote" class="form-label">Lote:</label>
                         <select id="cbolote" class="form-select"></select>
                     </div>
                     <div class="col-sm-6">
@@ -63,7 +63,7 @@
                         <input type="number" class="form-control" id="txtcantidad" autocomplete="off">
                     </div>
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Estado</label>
+                        <label for="cboestado" class="form-label">Estado</label>
                         <select id="cboestado" class="form-select"></select>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar Registro</button>
             </div>
         </div>
     </div>
@@ -86,6 +86,12 @@
     <script>
         var tabladata;
         var filaSeleccionada;
+
+        $(document).ready(function () {
+            ListarContratos();
+            ListarLote();
+            ListarEstados();
+        });
 
         tabladata = $("#tabla").DataTable({
             responsive: true,
@@ -140,6 +146,7 @@
             $("#mensajeError").hide();
 
             if (json != null) {
+                $("#txtid").val(json.IdLlenadoContenedor);
                 $("#cbocontrato").val(json.oContrato.IdContrato);
                 $("#cbocontenedor").val(json.oContratoContenedor.IdContratoContenedor);
                 $("#cbolote").val(json.oLote.IdLote);
@@ -150,88 +157,137 @@
         }
 
         /*Control de Lista Desplegable: Estado*/
-        jQuery.ajax({
-            url: '@Url.Action("ListarEstados", "Estado")',
-            type: "GET",
-            data: null,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboestado");
-                $.each(data.data, function (index, item) {
-                    $("<option>").attr({ "value": item.IdEstado }).text(item.NombreEstado).appendTo("#cboestado");
-                })
-            },
-            error: function(error) {
-                console.log(error)
-            },
-            beforeSend: function () {
+        function ListarEstados() {
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboestado");
+            jQuery.ajax({
+                url: '@Url.Action("ListarEstados", "Estado")',
+                type: "GET",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    
+                    $.each(data.data, function (index, item) {
+                        $("<option>").attr({ "value": item.IdEstado }).text(item.NombreEstado).appendTo("#cboestado");
+                    })
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
 
-            },
-        });
+                },
+            });
+        }
 
         /*Control de Lista Desplegable: Contrato*/
-        jQuery.ajax({
-            url: '@Url.Action("ListarContrato", "Contrato")',
-            type: "GET",
-            data: null,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontrato");
-                $.each(data.data, function (index, item) {
-                    $("<option>").attr({ "value": item.IdContrato }).text(item.NroContratoLote).appendTo("#cbocontrato");
-                })
-            },
-            error: function(error) {
-                console.log(error)
-            },
-            beforeSend: function () {
+        function ListarContratos() {
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontrato");
+            jQuery.ajax({
+                url: '@Url.Action("ListarContrato", "LlenadoContenedor")',
+                type: "POST",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.data != null) {
+                        $.each(data.data, function (index, item) {
+                            $("<option>").attr({ "value": item.IdContrato }).text(item.NroContratoLote).appendTo("#cbocontrato");
+                        })
+                        ListarContenedores();
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
 
-            },
-        });
+                },
+            });
+        }
+
+        $("#cbocontrato").on("change", function () {
+            ListarContenedores();
+        })
 
         /*Control de Lista Desplegable: Contenedor*/
-        jQuery.ajax({
-            url: '@Url.Action("ListarContratoContenedor", "ContratoContenedor")',
-            type: "GET",
-            data: null,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontenedor");
-                $.each(data.data, function (index, item) {
-                    $("<option>").attr({ "value": item.IdContratoContenedor }).text(item.NroContenedor).appendTo("#cbocontenedor");
-                })
-            },
-            error: function(error) {
-                console.log(error)
-            },
-            beforeSend: function () {
+        function ListarContenedores() {
+            $("#cbocontenedor").html("")
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontenedor");
 
-            },
-        });
+            jQuery.ajax({
+                url: '@Url.Action("ListarContratoContenedor", "LlenadoContenedor")',
+                type: "POST",
+                data: JSON.stringify({ IdContrato: $("#cbocontrato option:selected").val() }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.data != null) {
+                        $.each(data.data, function (index, item) {
+                            $("<option>").attr({ "value": item.IdContratoContenedor }).text(item.NroContenedor).appendTo("#cbocontenedor");
+                        })
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
 
-        /*Control de Lista Desplegable: Lote*/
-        jQuery.ajax({
-            url: '@Url.Action("ListarLote", "Lote")',
-            type: "GET",
-            data: null,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbolote");
-                $.each(data.data, function (index, item) {
-                    $("<option>").attr({ "value": item.IdLote }).text(item.NroLote).appendTo("#cbolote");
-                })
-            },
-            error: function(error) {
-                console.log(error)
-            },
-            beforeSend: function () {
+                },
+            });
+        }
 
-            },
-        });
+        function ListarLote() {
+            $("#cbolote").html("")
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbolote");
+            jQuery.ajax({
+                url: '@Url.Action("ListarLote", "LlenadoContenedor")',
+                type: "POST",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.data != null) {
+                        $.each(data.data, function (index, item) {
+                            $("<option>").attr({ "value": item.IdLote }).text(item.NroLote).appendTo("#cbolote");
+                        })
+                        ObtenerCantidadByLote();
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            });
+        }
+
+        $("#cbolote").on("change", function () {
+            ObtenerCantidadByLote();
+        })
+
+        function ObtenerCantidadByLote() {
+            $("#txtcantidad").html()
+            jQuery.ajax({
+                url: '@Url.Action("ObtenerCantidadPorLote", "LlenadoContenedor")',
+                type: "POST",
+                data: JSON.stringify({ IdContrato: $("#cbocontrato option:selected").val(), IdLote: $("#cbolote option:selected").val() }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.data != null) {
+                        $("#txtcantidad").val(data.data);
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            });
+        }
 
         $("#tabla tbody").on("click", '.btn-editar', function () {
             filaSeleccionada = $(this).closest("tr");

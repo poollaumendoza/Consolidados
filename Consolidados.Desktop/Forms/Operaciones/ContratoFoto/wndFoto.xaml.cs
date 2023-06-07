@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Media.Imaging;
 using System.Linq;
+using System.Configuration;
+using Consolidados.Desktop.Properties;
 
 namespace Consolidados.Desktop.Forms.Operaciones.ContratoFoto
 {
@@ -94,17 +96,18 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoFoto
                             IdContratoContenedor = Convert.ToInt32(cboContenedor.SelectedValue),
                             NroContenedor = cboContenedor.Text
                         },
-                        Foto = item.Imagen,
+                        Foto = string.Format("{0}\\{1}\\{2}\\{3}", Settings.Default.Photos, cboContrato.Text, cboContenedor.Text, Path.GetFileName(item.Imagen)),
                         oEstado = new EntityLayer.Estado()
                         {
                             IdEstado = Convert.ToInt32(cboEstado.SelectedValue),
                             NombreEstado = cboEstado.Text
                         }
                     };
-                    if (bFoto.Registrar(foto, out Mensaje) > 0)
-                    {
-                        var message = await this.ShowMessageAsync("Consolidados", Mensaje, MessageDialogStyle.Affirmative);
-                    }
+
+                    //File.Move(item.Imagen, string.Format("{0}{1}{2}", ConfigurationManager.AppSettings["Photos"], cboContrato.Text, cboContenedor.Text));
+
+                    bFoto.Registrar(foto, out Mensaje);
+                        //var message = await this.ShowMessageAsync("Consolidados", Mensaje, MessageDialogStyle.Affirmative);
                 }
             }
             else
@@ -121,7 +124,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoFoto
                         IdContratoContenedor = Convert.ToInt32(cboContenedor.SelectedValue),
                         NroContenedor = cboContenedor.Text
                     },
-                    Foto = rutaarchivo,
+                    Foto = string.Format("{0}\\{1}\\{2}\\{3}", Settings.Default.Photos, cboContrato.Text, cboContenedor.Text, Path.GetFileName(rutaarchivo)),
                     oEstado = new EntityLayer.Estado()
                     {
                         IdEstado = Convert.ToInt32(cboEstado.SelectedValue),
@@ -133,6 +136,10 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoFoto
                     var message = await this.ShowMessageAsync("Consolidados", Mensaje, MessageDialogStyle.Affirmative);
                 }
             }
+        }
+        void MoverFotos()
+        {
+            foreach (var item in listaFotos) { File.Copy(item.Imagen, string.Format("{0}\\{1}\\{2}\\{3}", Settings.Default.Photos, cboContrato.Text, cboContenedor.Text, Path.GetFileName(item.Imagen))); }
         }
         #endregion
         #region Clases
@@ -182,6 +189,9 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoFoto
         private void BtnGuardar_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Guardar();
+            DialogResult = true;
+            MoverFotos();
+            Close();
         }
 
         private void BtnCancelar_Click(object sender, System.Windows.RoutedEventArgs e)

@@ -1,4 +1,4 @@
-﻿using Consolidados.DataLayer.Properties;
+﻿using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -17,14 +17,10 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "Select llc.IdLlenadoContenedor, llc.IdContrato, c.NroContratoLote, llc.IdContratoContenedor, " +
-                        "cc.NroContenedor, llc.IdLote, l.NroLote, llc.Cantidad, llc.IdEstado, e.NombreEstado from LlenadoContenedor " +
-                        "llc join contrato c on llc.IdContrato = c.IdContrato join ContratoContenedor cc on llc.IdContratoContenedor = " +
-                        "cc.IdContratoContenedor join Lote l on llc.IdLote = l.IdLote join Estado e on llc.IdEstado = e.IdEstado where " +
-                        "llc.IdEstado = (Select IdEstado from Estado where NombreEstado = 'ACTIVO')";
+                        "Select llc.IdLlenadoContenedor, llc.IdContrato, c.NroContratoLote, llc.IdContratoContenedor, cc.NroContenedor, llc.IdLote, l.NroLote, llc.Cantidad, llc.IdEstado, e.NombreEstado from LlenadoContenedor llc join contrato c on llc.IdContrato = c.IdContrato join ContratoContenedor cc on llc.IdContratoContenedor = cc.IdContratoContenedor join Lote l on llc.IdLote = l.IdLote join Estado e on llc.IdEstado = e.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -76,7 +72,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_LlenadoContenedor_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
@@ -111,7 +107,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_LlenadoContenedor_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdLlenadoContenedor", obj.IdLlenadoContenedor);
@@ -146,7 +142,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_LlenadoContenedor_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdLlenadoContenedor", id);

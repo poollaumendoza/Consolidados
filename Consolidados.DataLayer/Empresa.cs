@@ -1,4 +1,4 @@
-﻿using Consolidados.DataLayer.Properties;
+﻿using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -17,7 +17,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
                         "Select emp.IdEmpresa, emp.IdTipoDocumento, td.NombreTipoDocumento, emp.NroDocumento, emp.RazonSocial, emp.Direccion, emp.Telefono, emp.Email, emp.IdEstado, es.NombreEstado from Empresa emp join TipoDocumento td on emp.IdTipoDocumento = td.IdTipoDocumento join Estado es on emp.IdEstado = es.IdEstado";
@@ -65,7 +65,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Empresa_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("IdTipoDocumento", obj.oTipoDocumento.IdTipoDocumento);
@@ -102,7 +102,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Empresa_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdEmpresa", obj.IdEmpresa);
@@ -139,7 +139,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Empresa_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdEmpresa", id);

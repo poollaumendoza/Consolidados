@@ -22,6 +22,35 @@ namespace Consolidados.AdminLayer.Controllers
         }
 
         [HttpPost]
+        public JsonResult ListarContrato()
+        {
+            List<EntityLayer.Contrato> oLista = new List<EntityLayer.Contrato>();
+            oLista = new BusinessLayer.Contrato().Listar();
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
+        public JsonResult ListarContratoContenedor(int IdContrato)
+        {
+            List<EntityLayer.ContratoContenedor> oLista = new List<EntityLayer.ContratoContenedor>();
+            oLista = new BusinessLayer.ContratoContenedor().Listar(IdContrato);
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ListarLote()
+        {
+            List<EntityLayer.Lote> oLista = new List<EntityLayer.Lote>();
+            oLista = new BusinessLayer.Lote().Listar();
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ObtenerCantidadPorLote(int IdContrato, int IdLote)
+        {
+            int resultado = new BusinessLayer.ContratoLote().ObtenerCantidadPorLote(IdContrato, IdLote);
+            return Json(new { data = resultado }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult GuardarLlenadoContenedor(EntityLayer.LlenadoContenedor objeto)
         {
             object resultado;

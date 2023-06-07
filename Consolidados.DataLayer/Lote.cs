@@ -1,4 +1,4 @@
-﻿using Consolidados.DataLayer.Properties;
+﻿using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -17,7 +17,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
                         "Select lt.IdLote, lt.IdAlmacen, a.NombreAlmacen, lt.IdEmpresa, emp.RazonSocial, lt.Descripcion, " +
@@ -71,7 +71,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
                         "Select lt.IdLote, lt.IdAlmacen, a.NombreAlmacen, lt.IdEmpresa, emp.RazonSocial, lt.Descripcion, " +
@@ -128,7 +128,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Lote_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("IdAlmacen", obj.oAlmacen.IdAlmacen);
@@ -164,7 +164,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Lote_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdLote", obj.IdLote);
@@ -200,7 +200,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Lote_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdLote", id);

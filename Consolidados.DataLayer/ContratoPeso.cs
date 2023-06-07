@@ -1,4 +1,4 @@
-﻿using Consolidados.DataLayer.Properties;
+﻿using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -17,7 +17,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
                         "Select cp.IdContratoPeso, cp.IdContrato, c.NroContratoLote, cp.IdContratoContenedor, cc.NroContenedor, " +
@@ -69,7 +69,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
                         "Select cp.IdContratoPeso, cp.IdContrato, c.NroContratoLote, cp.IdContratoContenedor, cc.NroContenedor, " +
@@ -124,7 +124,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoPeso_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
@@ -158,7 +158,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoPeso_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContratoPeso", obj.IdContratoPeso);
@@ -192,7 +192,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoPeso_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdContratoPeso", id);

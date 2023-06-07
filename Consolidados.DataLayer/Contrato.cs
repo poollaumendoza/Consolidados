@@ -1,4 +1,4 @@
-﻿using Consolidados.DataLayer.Properties;
+﻿using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -17,7 +17,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Contrato_Listar", Cnx);
 
@@ -65,7 +65,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Contrato_Listar_ByIdContrato", Cnx);
                     Cmd.Parameters.AddWithValue("IdContrato", IdContrato);
@@ -117,7 +117,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Contrato_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("IdEmpresa", obj.oEmpresa.IdEmpresa);
@@ -148,7 +148,7 @@ namespace Consolidados.DataLayer
             }
             finally
             {
-                System.IO.Directory.CreateDirectory(Settings.Default.DirectorioFotos + "\\" + obj.NroContratoLote);
+                System.IO.Directory.CreateDirectory(ConfigurationManager.AppSettings["Photos"] + "\\" + obj.NroContratoLote);
             }
             return IdAutogenerado;
         }
@@ -160,7 +160,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Contrato_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContrato", obj.IdContrato);
@@ -199,7 +199,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Contrato_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdContrato", id);

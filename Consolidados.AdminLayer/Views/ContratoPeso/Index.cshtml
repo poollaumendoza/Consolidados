@@ -82,6 +82,11 @@
         var tabladata;
         var filaSeleccionada;
 
+        $(document).ready(function () {
+            ListarContratos();
+            ListarEstados();
+        });
+
         tabladata = $("#tabla").DataTable({
             responsive: true,
             ordering: false,
@@ -159,46 +164,61 @@
         });
 
         /*Control de Lista Desplegable: Contrato*/
-        jQuery.ajax({
-            url: '@Url.Action("ListarContrato", "Contrato")',
-            type: "GET",
-            data: null,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontrato");
-                $.each(data.data, function (index, item) {
-                    $("<option>").attr({ "value": item.IdContrato }).text(item.NroContratoLote).appendTo("#cbocontrato");
-                })
-            },
-            error: function(error) {
-                console.log(error)
-            },
-            beforeSend: function () {
+        function ListarContratos() {
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontrato");
+            jQuery.ajax({
+                url: '@Url.Action("ListarContrato", "LlenadoContenedor")',
+                type: "POST",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.data != null) {
+                        $.each(data.data, function (index, item) {
+                            $("<option>").attr({ "value": item.IdContrato }).text(item.NroContratoLote).appendTo("#cbocontrato");
+                        })
+                        ListarContenedores();
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
 
-            },
-        });
+                },
+            });
+        }
 
-        /*Control de Lista Desplegable: ContratoContenedor*/
-        jQuery.ajax({
-            url: '@Url.Action("ListarContratoContenedor", "ContratoContenedor")',
-            type: "GET",
-            data: null,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontenedor");
-                $.each(data.data, function (index, item) {
-                    $("<option>").attr({ "value": item.IdContratoContenedor }).text(item.NroContenedor).appendTo("#cbocontenedor");
-                })
-            },
-            error: function(error) {
-                console.log(error)
-            },
-            beforeSend: function () {
+        $("#cbocontrato").on("change", function () {
+            ListarContenedores();
+        })
 
-            },
-        });
+        /*Control de Lista Desplegable: Contenedor*/
+        function ListarContenedores() {
+            $("#cbocontenedor").html("")
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontenedor");
+
+            jQuery.ajax({
+                url: '@Url.Action("ListarContratoContenedor", "LlenadoContenedor")',
+                type: "POST",
+                data: JSON.stringify({ IdContrato: $("#cbocontrato option:selected").val() }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.data != null) {
+                        $.each(data.data, function (index, item) {
+                            $("<option>").attr({ "value": item.IdContratoContenedor }).text(item.NroContenedor).appendTo("#cbocontenedor");
+                        })
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            });
+        }
 
         $("#tabla tbody").on("click", '.btn-editar', function () {
             filaSeleccionada = $(this).closest("tr");

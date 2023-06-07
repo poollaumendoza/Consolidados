@@ -1,11 +1,11 @@
-﻿using Consolidados.DataLayer.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Configuration;
 
 namespace Consolidados.DataLayer
 {
@@ -17,7 +17,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
                         "Select t.IdTipoMovimiento, t.NombreTipoMovimiento, t.IdEstado, e.NombreEstado from TipoMovimiento " +
@@ -61,7 +61,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_TipoMovimiento_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("NombreTipoMovimiento", obj.NombreTipoMovimiento);
@@ -93,7 +93,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_TipoMovimiento_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdTipoMovimiento", obj.IdTipoMovimiento);
@@ -125,7 +125,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("Delete TipoMovimiento where IdTipoMovimiento = @IdTipoMovimiento", Cnx);
                     Cmd.Parameters.AddWithValue("@IdTipoMovimiento", id);

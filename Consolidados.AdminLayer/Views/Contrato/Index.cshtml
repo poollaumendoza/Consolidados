@@ -49,7 +49,7 @@
                 <input id="txtid" type="hidden" value="0" />
                 <div class="row g-1">
                     <div class="col-sm-12">
-                        <label for="exampleFormControlInput1" class="form-label">Empresa:</label>
+                        <label for="cboempresa" class="form-label">Empresa:</label>
                         <select id="cboempresa" class="form-select"></select>
                     </div>
                     <div class="col-sm-12">
@@ -62,11 +62,11 @@
                     </div>
                     <div class="col-sm-6">
                         <label for="txtfechacontrato" class="form-label">Fecha del Contrato:</label>
-                        <input type="date" class="form-control" id="txtfechacontrato" autocomplete="off">
+                        <input class="form-control" id="txtfechacontrato" name="txtfechacontrato" />
                     </div>
                     <div class="col-sm-6">
                         <label for="txtfechacarga" class="form-label">Fecha de Carga:</label>
-                        <input type="date" class="form-control" id="txtfechacarga" autocomplete="off">
+                        <input class="form-control" id="txtfechacarga" name="txtfechacarga" />
                     </div>
                     <div class="col-sm-12">
                         <label for="txtlugarcarga" class="form-label">Lugar de Carga:</label>
@@ -74,14 +74,14 @@
                     </div>
                     <div class="col-sm-6">
                         <label for="txtfechadescarga" class="form-label">Fecha de Descarga:</label>
-                        <input type="date" class="form-control" id="txtfechadescarga" autocomplete="off">
+                        <input class="form-control" id="txtfechadescarga" name="txtfechadescarga"/>
                     </div>
                     <div class="col-sm-12">
                         <label for="txtlugardescarga" class="form-label">Lugar de Descarga:</label>
                         <input type="text" class="form-control" id="txtlugardescarga" placeholder="Lugar de Descarga" autocomplete="off">
                     </div>
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Estado</label>
+                        <label for="cboestado" class="form-label">Estado</label>
                         <select id="cboestado" class="form-select"></select>
                     </div>
                 </div>
@@ -104,6 +104,10 @@
     <script>
         var tabladata;
         var filaSeleccionada;
+
+        $("#txtfechacontrato").datepicker();
+        $("#txtfechacarga").datepicker();
+        $("#txtfechadescarga").datepicker();
 
         tabladata = $("#tabla").DataTable({
             responsive: true,

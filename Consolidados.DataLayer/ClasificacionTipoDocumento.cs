@@ -1,6 +1,6 @@
-﻿using Consolidados.DataLayer.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
                         "Select ctd.IdClasificacionTipoDocumento, ctd.NombreClasificacionTipoDocumento, ctd.IdEstado, e.NombreEstado " +
@@ -59,7 +59,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ClasificacionTipoDocumento_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("NombreClasificacionTipoDocumento", obj.NombreClasificacionTipoDocumento);
@@ -91,7 +91,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ClasificacionTipoDocumento_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdClasificacionTipoDocumento", obj.IdClasificacionTipoDocumento);
@@ -123,7 +123,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ClasificacionTipoDocumento_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdClasificacionTipoDocumento", id);

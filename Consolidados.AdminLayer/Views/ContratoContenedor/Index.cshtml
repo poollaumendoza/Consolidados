@@ -47,7 +47,7 @@
                 <div class="row g-1">
                     <div class="col-sm-12">
                         <label for="exampleFormControlInput1" class="form-label">Contrato:</label>
-                        <select id="cbocontrato" class="form-select"></select>
+                        <select id="cbocontrato" class="form-select" onchange=""></select>
                     </div>
                     <div class="col-sm-6">
                         <label for="txtnrocontenedor" class="form-label"># Contenedor:</label>
@@ -115,6 +115,7 @@
                 "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
             }
         });
+
 
         function abrirModal(json) {
             $("#txtid").val(0);

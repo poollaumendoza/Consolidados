@@ -1,7 +1,385 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Foto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<ol class="breadcrumb mb-4 mt-4">
+    <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Mantenimiento</a></li>
+    <li class="breadcrumb-item active">Fotos</li>
+</ol>
 
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>Lista de Fotos
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <button type="button" class="btn btn-success" onclick="abrirModal(null)">Crear Nueva</button>
+            </div>
+        </div>
+        <hr />
+        <table id="tabla" class="display cell-border" style="width: 100%">
+            <thead>
+                <tr>
+                    <th># Contrato</th>
+                    <th># Contenedor</th>
+                    <th>Nombre de Foto</th>
+                    <th>Foto</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="FormModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-dark text-white">
+                <h5 class="modal-title" id="exampleModalLabel">Foto</h5>
+                <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body">
+                <input id="txtid" type="hidden" value="0" />
+                <form id="contenedor" class="row">
+                    <div class="col-sm-6">
+                        <div class="mb-12">
+                            <img id="imgFoto" height="200" width="200" class="border rounded mx-auto d-block img-fluid" />
+                        </div>
+                        <div class="mb-12">
+                            <input class="form-control" type="file" id="fileFoto" accept="image/png,image/jpg,image/jpeg" onchange="mostrarImagen(this)" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="mb-12">
+                            <label class="form-label"># Contrato:</label>
+                            <select id="cbocontrato" name="cbocontrato" class="form-select"></select>
+                        </div>
+                        <div class="mb-12">
+                            <label class="form-label"># Contenedor:</label>
+                            <select id="cbocontenedor" name="cbocontenedor" class="form-select"></select>
+                        </div>
+                        <div class="mb-12">
+                            <label class="form-label">Estado:</label>
+                            <select id="cboestado" name="cboestado" class="form-select"></select>
+                        </div>
+                    </div>
+                </form>
+                <div class="row mt-2">
+                    <div class="col-12">
+                        <div id="mensajeError" class="alert alert-danger" role="alert"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar Foto</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var tabladata;
+        var filaSeleccionada;
+
+        $(document).ready(function () {
+            ListarContratos();
+            ListarEstados();
+        });
+
+        /* Mostrar la imagen seleccionada */
+        function mostrarImagen(input) {
+            if (input.files) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $("#imgFoto").attr("src", e.target.result).width(200).height(200)
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        /* Cargar Lista de Productos */
+        tabladata = $("#tabla").DataTable({
+            responsive: true,
+            ordering: false,
+            "ajax": {
+                url: '@Url.Action("ListarContratoFoto", "ContratoFoto")',
+                type: "GET",
+                dataType: "json"
+            },
+            "columns": [
+                {
+                    "data": "oContrato", "render": function (data) {
+                        return data.NroContratoLote
+                    }
+                },
+                {
+                    "data": "oContratoContenedor", "render": function (data) {
+                        return data.NroContenedor
+                    }
+                },
+                { "data": "Foto" },
+                {
+                    "data": "oEstado", "render": function (data) {
+                        return data.NombreEstado
+                    }
+                },
+                {
+                    "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
+                    "orderable": false,
+                    "searchable": false,
+                    "width": "90px"
+                }
+            ],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+            }
+        });
+
+        /*Control de Lista Desplegable: Contrato*/
+        function ListarContratos() {
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontrato");
+            jQuery.ajax({
+                url: '@Url.Action("ListarContrato", "ContratoFoto")',
+                type: "POST",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.data != null) {
+                        $.each(data.data, function (index, item) {
+                            $("<option>").attr({ "value": item.IdContrato }).text(item.NroContratoLote).appendTo("#cbocontrato");
+                        })
+                        ListarContenedores();
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            });
+        }
+
+        $("#cbocontrato").on("change", function () {
+            ListarContenedores();
+        })
+
+        /*Control de Lista Desplegable: Contenedor*/
+        function ListarContenedores() {
+            $("#cbocontenedor").html("")
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontenedor");
+
+            jQuery.ajax({
+                url: '@Url.Action("ListarContratoContenedor", "ContratoFoto")',
+                type: "POST",
+                data: JSON.stringify({ IdContrato: $("#cbocontrato option:selected").val() }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.data != null) {
+                        $.each(data.data, function (index, item) {
+                            $("<option>").attr({ "value": item.IdContratoContenedor }).text(item.NroContenedor).appendTo("#cbocontenedor");
+                        })
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            });
+        }
+
+        /*Control de Lista Desplegable: Estado*/
+        function ListarEstados() {
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboestado");
+            jQuery.ajax({
+                url: '@Url.Action("ListarEstados", "Estado")',
+                type: "GET",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    
+                    $.each(data.data, function (index, item) {
+                        $("<option>").attr({ "value": item.IdEstado }).text(item.NombreEstado).appendTo("#cboestado");
+                    })
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            });
+        }
+
+        /*Abrir Modal: Nuevo Producto*/
+        function abrirModal(json) {
+            $("#txtid").val(0);
+            $("#imgFoto").removeAttr("src");
+            $("#fileFoto").val("");
+            $("#cbocontrato").val($("#cbocontrato option:first").val());
+            $("#cbocontenedor").val($("#cbocontenedor option:first").val());
+            $("#cboestado").val($("#cboestado option:first").val());
+            $("#mensajeError").hide();
+
+            if (json != null) {
+                $("#txtid").val(json.IdContratoFoto);
+                $("#cbocontrato").val(json.oContrato.IdContrato);
+                $("#cbocontenedor").val(json.oContratoContenedor.IdContratoContenedor);
+                $("#cboestado").val(json.oEstado.IdEstado);
+
+                jQuery.ajax({
+                    url: '@Url.Action("FotoContenedor", "ContratoFoto")',
+                    type: "POST",
+                    data: JSON.stringify({ id: json.IdContratoFoto }),
+                    dataType: "json",
+                    contentType: "application/json; charset=utf-8",
+                    success: function (data) {
+                        $("#imgFoto").LoadingOverlay("hide");
+                        if (data.conversion) {
+                            $("#imgFoto").attr({ "src": "data:image/" + data.extension + ";base64," + data.textobase64 });
+                        }
+                    },
+                    error: function (data) {
+                        $("#imgFoto").LoadingOverlay("hide");
+                        $("#mensajeError").show();
+                        $("#mensajeError").text("Error al mostrar imagen");
+                    },
+                    beforeSend: function () {
+                        $("#imgFoto").LoadingOverlay("show");
+                    },
+                })
+            }
+            $("#FormModal").modal("show");
+        }
+
+        /* Boton Editar */
+        $("#tabla tbody").on("click", '.btn-editar', function () {
+            filaSeleccionada = $(this).closest("tr");
+            var data = tabladata.row(filaSeleccionada).data();
+            abrirModal(data)
+        })
+
+        /* Boton Eliminar */
+        $("#tabla tbody").on("click", '.btn-eliminar', function () {
+            var fotoseleccionada = $(this).closest("tr");
+            var data = tabladata.row(fotoseleccionada).data();
+
+            swal({
+                title: "Consolidados",
+                text: "¿Desea eliminar este registro?",
+                type: "warning",
+                showCancelButton: "true",
+                confirmationButtonClass: "btn btn-danger",
+                confirmationButtonText: "Sí",
+                cancelButtonClass: "btn btn-primary",
+                cancelButtonText: "No",
+                closeOnConfirm: true
+            },
+                function () {
+                    jQuery.ajax({
+                        url: '@Url.Action("EliminarContratoFoto", "ContratoFoto")',
+                        type: "POST",
+                        data: JSON.stringify({ id: data.IdContratoFoto }),
+                        contentType: "application/json; charset=UTF-8",
+                        success: function (data) {
+                            debugger;
+                            if (data.resultado) {
+                                tabladata.row(fotoseleccionada).remove().draw();
+                            } else {
+                                swal("No se pudo eliminar el registro", data.mensaje, "error")
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error)
+                        },
+                        beforeSend: function () {
+
+                        },
+                    });
+                });
+
+            console.log(data)
+        })
+
+        /* Acción Guardar */
+        function Guardar() {
+
+            var ImagenSeleccionada = $("#fileFoto")[0].files[0];
+            var ContratoFoto = {
+                IdContratoFoto: $("#txtid").val(),
+                oContrato: {
+                    IdContrato: $("#cbocontrato option:selected").val(),
+                    NroContratoLote: $("#cbocontrato option:selected").text()
+                },
+                oContratoContenedor: {
+                    IdContratoContenedor: $("#cbocontenedor option:selected").val(),
+                    NroContenedor: $("#cbocontenedor option:selected").text()
+                },
+                oEstado: {
+                    IdEstado: $("#cboestado option:selected").val(),
+                    NombreEstado: $("#cboestado option:selected").text()
+                }
+            }
+
+            var request = new FormData();
+            request.append("objeto", JSON.stringify(ContratoFoto));
+            request.append("archivoImagen", ImagenSeleccionada);
+
+            jQuery.ajax({
+                url: '@Url.Action("GuardarContratoFoto", "ContratoFoto")',
+                type: "POST",
+                data: request,
+                processData: false,
+                contentType: false,
+                success: function (data) {
+                    $(".modal-body").LoadingOverlay("hide");
+                    if (ContratoFoto.IdContratoFoto == 0) {
+                        if (data.idGenerado != 0) {
+                            ContratoFoto.IdContratoFoto = data.idGenerado;
+                            tabladata.row.add(ContratoFoto).draw(false);
+                            $("#FormModal").modal("hide");
+                        } else {
+                            $(".modal-body").LoadingOverlay("hide");
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    } else {
+                        if (data.operacionExitosa) {
+                            tabladata.row(filaSeleccionada).data(ContratoFoto).draw(false);
+                            filaSeleccionada = null;
+                            $("#FormModal").modal("hide");
+                        } else {
+                            $("#mensajeError").text(data.mensaje);
+                            $("#mensajeError").show();
+                        }
+                    }
+                },
+                error: function (error) {
+                    $(".modal-body").LoadingOverlay("hide")
+                    $("#mensajeError").text();
+                    $("#mensajeError").show();
+                },
+                beforeSend: function () {
+                    $(".modal-body").LoadingOverlay("show", {
+                        imageResizeFactor: 2,
+                        text: "Cargando...",
+                        size: 14
+                    });
+                }
+            });
+        }
+    </script>
+}

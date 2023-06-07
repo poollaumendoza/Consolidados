@@ -15,6 +15,11 @@ namespace Consolidados.BusinessLayer
             return dContratoContenedor.Listar();
         }
 
+        public List<EntityLayer.ContratoContenedor> Listar(int IdContrato)
+        {
+            return dContratoContenedor.Listar(IdContrato);
+        }
+
         public List<EntityLayer.ContratoContenedor> Listar(string objeto, object valor)
         {
             return dContratoContenedor.Listar(objeto, valor);

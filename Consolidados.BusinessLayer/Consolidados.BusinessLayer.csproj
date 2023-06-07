@@ -58,6 +58,7 @@
     <Compile Include="Lote.cs" />
     <Compile Include="Persona.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Recursos.cs" />
     <Compile Include="TipoDocumento.cs" />
     <Compile Include="TipoMovimiento.cs" />
     <Compile Include="_Util.cs" />

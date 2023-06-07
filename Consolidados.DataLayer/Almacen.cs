@@ -1,6 +1,6 @@
-﻿using Consolidados.DataLayer.Properties;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
@@ -17,7 +17,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query = 
                         "Select a.IdAlmacen, a.NombreAlmacen, a.Direccion, e.IdEstado, e.NombreEstado from Almacen a " +
@@ -60,7 +60,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Almacen_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("NombreAlmacen", obj.NombreAlmacen);
@@ -93,7 +93,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Almacen_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdAlmacen", obj.IdAlmacen);
@@ -126,7 +126,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Almacen_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdAlmacen", id);

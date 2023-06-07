@@ -24,8 +24,6 @@ namespace Consolidados.BusinessLayer
                 Mensaje = "Debe seleccionar un contrato";
             else if (obj.oContratoContenedor.IdContratoContenedor == 0)
                 Mensaje = "Debe seleccionar un contenedor";
-            else if(obj.Foto.Length == 0)
-                Mensaje = "Debe subir una foto";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado";
 
@@ -43,8 +41,6 @@ namespace Consolidados.BusinessLayer
                 Mensaje = "Debe seleccionar un contrato";
             else if (obj.oContratoContenedor.IdContratoContenedor == 0)
                 Mensaje = "Debe seleccionar un contenedor";
-            else if (obj.Foto.Length == 0)
-                Mensaje = "Debe subir una foto";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado";
 
@@ -57,6 +53,11 @@ namespace Consolidados.BusinessLayer
         public bool Eliminar(int id, out string Mensaje)
         {
             return dContratoFoto.Eliminar(id, out Mensaje);
+        }
+
+        public bool GuardarFoto(EntityLayer.ContratoFoto oContratoFoto, out string Mensaje)
+        {
+            return dContratoFoto.GuardarFoto(oContratoFoto, out Mensaje);
         }
     }
 }

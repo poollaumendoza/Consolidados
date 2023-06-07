@@ -15,6 +15,16 @@ namespace Consolidados.BusinessLayer
             return dContratoLote.Listar();
         }
 
+        public List<EntityLayer.ContratoLote> Listar(int IdContrato)
+        {
+            return dContratoLote.Listar(IdContrato);
+        }
+
+        public int ObtenerCantidadPorLote(int IdContrato, int IdLote)
+        {
+            return dContratoLote.ObtenerCantidadPorLote(IdContrato, IdLote);
+        }
+
         public int Registrar(EntityLayer.ContratoLote obj, out string Mensaje)
         {
             Mensaje = string.Empty;

@@ -22,6 +22,14 @@ namespace Consolidados.AdminLayer.Controllers
         }
 
         [HttpPost]
+        public JsonResult ListarContratoLote(int IdContrato)
+        {
+            List<EntityLayer.ContratoLote> oLista = new List<EntityLayer.ContratoLote>();
+            oLista = new BusinessLayer.ContratoLote().Listar(IdContrato);
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpPost]
         public JsonResult GuardarContratoLote(EntityLayer.ContratoLote objeto)
         {
             object resultado;

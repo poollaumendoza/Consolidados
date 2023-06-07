@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Consolidados.EntityLayer;
 using System.Data;
 using System.Data.SqlClient;
-using Consolidados.DataLayer.Properties;
+using System.Configuration;
 
 namespace Consolidados.DataLayer
 {
@@ -18,7 +18,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query = "Select IdEstado, NombreEstado from Estado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
@@ -54,7 +54,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Estado_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("NombreEstado", obj.NombreEstado);
@@ -85,7 +85,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Estado_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.IdEstado);
@@ -116,7 +116,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("Delete Estado where IdEstado = @IdEstado", Cnx);
                     Cmd.Parameters.AddWithValue("@IdEstado", id);

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.6.33723.286
+# Visual Studio 15
+VisualStudioVersion = 15.0.33529.398
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consolidados.EntityLayer", "Consolidados.EntityLayer\Consolidados.EntityLayer.csproj", "{0261C96A-676F-48A2-AEE8-4DEAACA4396C}"
 EndProject
@@ -19,7 +19,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consolidados.Movil.Android"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consolidados.Movil.iOS", "Consolidados.Movil\Consolidados.Movil.iOS\Consolidados.Movil.iOS.csproj", "{192EC53A-C650-4C72-9D0F-ED70CE666CB6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consolidados.Movil", "Consolidados.Movil\Consolidados.Movil\Consolidados.Movil.csproj", "{A62482CF-FDAC-4998-9870-E589B0339290}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Consolidados.Movil", "Consolidados.Movil\Consolidados.Movil\Consolidados.Movil.csproj", "{A62482CF-FDAC-4998-9870-E589B0339290}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

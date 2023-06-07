@@ -1,4 +1,4 @@
-﻿using Consolidados.DataLayer.Properties;
+﻿using System.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -18,13 +18,58 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "Select cc.IdContratoContenedor, cc.IdContrato, c.NroContratoLote, cc.NroContenedor, cc.Payload, " +
-                        "cc.IdEstado, e.NombreEstado from ContratoContenedor cc join Contrato c on cc.IdContrato = c.IdContrato " +
-                        "join Estado e on cc.IdEstado = e.IdEstado";
+                        "Select cc.IdContratoContenedor, cc.IdContrato, c.NroContratoLote, cc.NroContenedor, cc.Payload, cc.IdEstado, e.NombreEstado from ContratoContenedor cc join Contrato c on cc.IdContrato = c.IdContrato join Estado e on cc.IdEstado = e.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
+
+                    Cnx.Open();
+                    using (SqlDataReader Dr = Cmd.ExecuteReader())
+                    {
+                        while (Dr.Read())
+                        {
+                            lista.Add(new EntityLayer.ContratoContenedor()
+                            {
+                                IdContratoContenedor = Convert.ToInt32(Dr["IdContratoContenedor"]),
+                                oContrato = new EntityLayer.Contrato()
+                                {
+                                    IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                    NroContratoLote = Dr["NroContratoLote"].ToString()
+                                },
+                                NroContenedor = Dr["NroContenedor"].ToString(),
+                                Payload = Convert.ToInt32(Dr["Payload"]),
+                                oEstado = new EntityLayer.Estado()
+                                {
+                                    IdEstado = Convert.ToInt32(Dr["IdEstado"]),
+                                    NombreEstado = Dr["NombreEstado"].ToString()
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                lista = new List<EntityLayer.ContratoContenedor>();
+            }
+
+            return lista;
+        }
+
+        public List<EntityLayer.ContratoContenedor> Listar(int IdContrato)
+        {
+            List<EntityLayer.ContratoContenedor> lista = new List<EntityLayer.ContratoContenedor>();
+
+            try
+            {
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
+                {
+                    string query =
+                        "Select cc.IdContratoContenedor, cc.IdContrato, c.NroContratoLote, cc.NroContenedor, cc.Payload, cc.IdEstado, e.NombreEstado from ContratoContenedor cc join Contrato c on cc.IdContrato = c.IdContrato join Estado e on cc.IdEstado = e.IdEstado where cc.IdContrato = @IdContrato";
+                    SqlCommand Cmd = new SqlCommand(query, Cnx);
+                    Cmd.Parameters.AddWithValue("@IdContrato", IdContrato);
+                    Cmd.CommandType = CommandType.Text;
 
                     Cnx.Open();
                     using (SqlDataReader Dr = Cmd.ExecuteReader())
@@ -81,7 +126,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
@@ -129,7 +174,7 @@ namespace Consolidados.DataLayer
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoContenedor_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
@@ -158,7 +203,7 @@ namespace Consolidados.DataLayer
                 Directory.CreateDirectory(
                     string.Format(
                         "{0}\\{1}\\{2}", 
-                        Settings.Default.DirectorioFotos, 
+                        ConfigurationManager.AppSettings["Photos"], 
                         obj.oContrato.NroContratoLote, 
                         obj.NroContenedor));
             }
@@ -172,7 +217,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoContenedor_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContratoContenedor", obj.IdContratoContenedor);
@@ -206,7 +251,7 @@ namespace Consolidados.DataLayer
 
             try
             {
-                using (SqlConnection Cnx = new SqlConnection(Settings.Default.CadenaConexion))
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoContenedor_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdContratoContenedor", id);
