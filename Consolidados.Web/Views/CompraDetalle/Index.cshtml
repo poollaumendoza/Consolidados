@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Consolidados.Web.Models.CompraDetalle>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Precio)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Compra.Serie)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado.NombreEstado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lote.Descripcion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Cantidad)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Precio)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Compra.Serie)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado.NombreEstado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lote.Descripcion)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdCompraDetalle }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdCompraDetalle }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdCompraDetalle })
+        </td>
+    </tr>
+}
+
+</table>

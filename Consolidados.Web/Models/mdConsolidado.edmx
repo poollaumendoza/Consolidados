@@ -1,0 +1,2378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ConsolidadosModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Almacen">
+          <Key>
+            <PropertyRef Name="IdAlmacen" />
+          </Key>
+          <Property Name="IdAlmacen" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreAlmacen" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClasificacionTipoDocumento">
+          <Key>
+            <PropertyRef Name="IdClasificacionTipoDocumento" />
+          </Key>
+          <Property Name="IdClasificacionTipoDocumento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreClasificacionTipoDocumento" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Compra">
+          <Key>
+            <PropertyRef Name="IdCompra" />
+          </Key>
+          <Property Name="IdCompra" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdEntidad" Type="int" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="Serie" Type="nvarchar" MaxLength="5" Nullable="false" />
+          <Property Name="Correlativo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="FechaCompra" Type="date" Nullable="false" />
+          <Property Name="Importe" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IGV" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CompraDetalle">
+          <Key>
+            <PropertyRef Name="IdCompraDetalle" />
+          </Key>
+          <Property Name="IdCompraDetalle" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdCompra" Type="int" Nullable="false" />
+          <Property Name="IdLote" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="Precio" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Contrato">
+          <Key>
+            <PropertyRef Name="IdContrato" />
+          </Key>
+          <Property Name="IdContrato" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="NroContrato" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="NroContratoLote" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="FechaContrato" Type="date" Nullable="false" />
+          <Property Name="FechaCarga" Type="date" Nullable="false" />
+          <Property Name="LugarCarga" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="FechaDescarga" Type="date" Nullable="false" />
+          <Property Name="LugarDescarga" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContratoContenedor">
+          <Key>
+            <PropertyRef Name="IdContratoContenedor" />
+          </Key>
+          <Property Name="IdContratoContenedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdContrato" Type="int" Nullable="false" />
+          <Property Name="NroContenedor" Type="nvarchar" MaxLength="12" Nullable="false" />
+          <Property Name="Payload" Type="int" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContratoFoto">
+          <Key>
+            <PropertyRef Name="IdContratoFoto" />
+          </Key>
+          <Property Name="IdContratoFoto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdContrato" Type="int" />
+          <Property Name="IdContratoContenedor" Type="int" />
+          <Property Name="Foto" Type="nvarchar(max)" />
+          <Property Name="IdEstado" Type="int" />
+        </EntityType>
+        <EntityType Name="ContratoLote">
+          <Key>
+            <PropertyRef Name="IdContratoLote" />
+          </Key>
+          <Property Name="IdContratoLote" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdContrato" Type="int" Nullable="false" />
+          <Property Name="IdLote" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContratoPeso">
+          <Key>
+            <PropertyRef Name="IdContratoPeso" />
+          </Key>
+          <Property Name="IdContratoPeso" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdContrato" Type="int" Nullable="false" />
+          <Property Name="IdContratoContenedor" Type="int" Nullable="false" />
+          <Property Name="PesoTotal" Type="int" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ContratoPrecinto">
+          <Key>
+            <PropertyRef Name="IdContratoPrecinto" />
+          </Key>
+          <Property Name="IdContratoPrecinto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdContrato" Type="int" Nullable="false" />
+          <Property Name="IdContratoContenedor" Type="int" Nullable="false" />
+          <Property Name="NroPrecinto" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="NroDocumento" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="RazonSocial" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Entidad">
+          <Key>
+            <PropertyRef Name="IdEntidad" />
+          </Key>
+          <Property Name="IdEntidad" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="NroDocumento" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="RazonSocial" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="IdEstado" />
+          </Key>
+          <Property Name="IdEstado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreEstado" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LlenadoContenedor">
+          <Key>
+            <PropertyRef Name="IdLlenadoContenedor" />
+          </Key>
+          <Property Name="IdLlenadoContenedor" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdContrato" Type="int" Nullable="false" />
+          <Property Name="IdContratoContenedor" Type="int" Nullable="false" />
+          <Property Name="IdLote" Type="int" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lote">
+          <Key>
+            <PropertyRef Name="IdLote" />
+          </Key>
+          <Property Name="IdLote" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdAlmacen" Type="int" Nullable="false" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="NroLote" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Cantidad" Type="int" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Movimiento">
+          <Key>
+            <PropertyRef Name="IdMovimiento" />
+          </Key>
+          <Property Name="IdMovimiento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTipoMovimiento" Type="int" Nullable="false" />
+          <Property Name="IdEmpresa" Type="int" Nullable="false" />
+          <Property Name="IdLote" Type="int" Nullable="false" />
+          <Property Name="FechaMovimiento" Type="date" Nullable="false" />
+          <Property Name="StockInicial" Type="int" Nullable="false" />
+          <Property Name="Ingreso" Type="int" Nullable="false" />
+          <Property Name="Salida" Type="int" Nullable="false" />
+          <Property Name="StockActual" Type="int" StoreGeneratedPattern="Computed" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="IdPersona" />
+          </Key>
+          <Property Name="IdPersona" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="NroDocumento" Type="varchar" MaxLength="11" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="PrimerNombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="SegundoNombre" Type="nvarchar" MaxLength="30" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Direccion" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Telefono" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoDocumento">
+          <Key>
+            <PropertyRef Name="IdTipoDocumento" />
+          </Key>
+          <Property Name="IdTipoDocumento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdClasificacionTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="NombreTipoDocumento" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoMovimiento">
+          <Key>
+            <PropertyRef Name="IdTipoMovimiento" />
+          </Key>
+          <Property Name="IdTipoMovimiento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NombreTipoMovimiento" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdPersona" Type="int" Nullable="false" />
+          <Property Name="NombreUsuario" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Contraseña" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IdEstado" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Almacen_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Almacen">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClasificacionTipoDocumento_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="ClasificacionTipoDocumento" Type="Self.ClasificacionTipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ClasificacionTipoDocumento">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_Entidad">
+          <End Role="Entidad" Type="Self.Entidad" Multiplicity="1" />
+          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entidad">
+              <PropertyRef Name="IdEntidad" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdEntidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompraDetalle_Compra">
+          <End Role="Compra" Type="Self.Compra" Multiplicity="1" />
+          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compra">
+              <PropertyRef Name="IdCompra" />
+            </Principal>
+            <Dependent Role="CompraDetalle">
+              <PropertyRef Name="IdCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompraDetalle_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="CompraDetalle">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompraDetalle_Lote">
+          <End Role="Lote" Type="Self.Lote" Multiplicity="1" />
+          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lote">
+              <PropertyRef Name="IdLote" />
+            </Principal>
+            <Dependent Role="CompraDetalle">
+              <PropertyRef Name="IdLote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoContenedor_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="ContratoContenedor">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoContenedor_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ContratoContenedor">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoFoto_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="0..1" />
+          <End Role="ContratoFoto" Type="Self.ContratoFoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="ContratoFoto">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoFoto_ContratoContenedor">
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="0..1" />
+          <End Role="ContratoFoto" Type="Self.ContratoFoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContratoContenedor">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Principal>
+            <Dependent Role="ContratoFoto">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoFoto_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="0..1" />
+          <End Role="ContratoFoto" Type="Self.ContratoFoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ContratoFoto">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoLote_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="ContratoLote" Type="Self.ContratoLote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="ContratoLote">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoLote_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="ContratoLote" Type="Self.ContratoLote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ContratoLote">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoLote_Lote">
+          <End Role="Lote" Type="Self.Lote" Multiplicity="1" />
+          <End Role="ContratoLote" Type="Self.ContratoLote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lote">
+              <PropertyRef Name="IdLote" />
+            </Principal>
+            <Dependent Role="ContratoLote">
+              <PropertyRef Name="IdLote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPeso_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="ContratoPeso" Type="Self.ContratoPeso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="ContratoPeso">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPeso_ContratoContenedor">
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="1" />
+          <End Role="ContratoPeso" Type="Self.ContratoPeso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContratoContenedor">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Principal>
+            <Dependent Role="ContratoPeso">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPeso_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="ContratoPeso" Type="Self.ContratoPeso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ContratoPeso">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPrecinto_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="ContratoPrecinto" Type="Self.ContratoPrecinto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="ContratoPrecinto">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPrecinto_ContratoContenedor">
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="1" />
+          <End Role="ContratoPrecinto" Type="Self.ContratoPrecinto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContratoContenedor">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Principal>
+            <Dependent Role="ContratoPrecinto">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPrecinto_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="ContratoPrecinto" Type="Self.ContratoPrecinto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ContratoPrecinto">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresa_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Empresa">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresa_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Empresa">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entidad_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Entidad" Type="Self.Entidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Entidad">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entidad_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="Entidad" Type="Self.Entidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Entidad">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LlenadoContenedor_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="LlenadoContenedor" Type="Self.LlenadoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="LlenadoContenedor">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LlenadoContenedor_ContratoContenedor">
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="1" />
+          <End Role="LlenadoContenedor" Type="Self.LlenadoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContratoContenedor">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Principal>
+            <Dependent Role="LlenadoContenedor">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LlenadoContenedor_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="LlenadoContenedor" Type="Self.LlenadoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="LlenadoContenedor">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LlenadoContenedor_Lote">
+          <End Role="Lote" Type="Self.Lote" Multiplicity="1" />
+          <End Role="LlenadoContenedor" Type="Self.LlenadoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lote">
+              <PropertyRef Name="IdLote" />
+            </Principal>
+            <Dependent Role="LlenadoContenedor">
+              <PropertyRef Name="IdLote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lote_Almacen">
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+          <End Role="Lote" Type="Self.Lote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="IdAlmacen" />
+            </Principal>
+            <Dependent Role="Lote">
+              <PropertyRef Name="IdAlmacen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lote_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Lote" Type="Self.Lote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Lote">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lote_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Lote" Type="Self.Lote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Lote">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_Lote">
+          <End Role="Lote" Type="Self.Lote" Multiplicity="1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lote">
+              <PropertyRef Name="IdLote" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="IdLote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_TipoMovimiento">
+          <End Role="TipoMovimiento" Type="Self.TipoMovimiento" Multiplicity="1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoMovimiento">
+              <PropertyRef Name="IdTipoMovimiento" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="IdTipoMovimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persona_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Persona">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persona_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Persona">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoDocumento_ClasificacionTipoDocumento">
+          <End Role="ClasificacionTipoDocumento" Type="Self.ClasificacionTipoDocumento" Multiplicity="1" />
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClasificacionTipoDocumento">
+              <PropertyRef Name="IdClasificacionTipoDocumento" />
+            </Principal>
+            <Dependent Role="TipoDocumento">
+              <PropertyRef Name="IdClasificacionTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoDocumento_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="TipoDocumento">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoMovimiento_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="TipoMovimiento" Type="Self.TipoMovimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="TipoMovimiento">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Persona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="IdPersona" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConsolidadosModelStoreContainer">
+          <EntitySet Name="Almacen" EntityType="Self.Almacen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClasificacionTipoDocumento" EntityType="Self.ClasificacionTipoDocumento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Compra" EntityType="Self.Compra" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompraDetalle" EntityType="Self.CompraDetalle" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Contrato" EntityType="Self.Contrato" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContratoContenedor" EntityType="Self.ContratoContenedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContratoFoto" EntityType="Self.ContratoFoto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContratoLote" EntityType="Self.ContratoLote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContratoPeso" EntityType="Self.ContratoPeso" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContratoPrecinto" EntityType="Self.ContratoPrecinto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Entidad" EntityType="Self.Entidad" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LlenadoContenedor" EntityType="Self.LlenadoContenedor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lote" EntityType="Self.Lote" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Movimiento" EntityType="Self.Movimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoMovimiento" EntityType="Self.TipoMovimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Almacen_Estado" Association="Self.FK_Almacen_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Almacen" EntitySet="Almacen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClasificacionTipoDocumento_Estado" Association="Self.FK_ClasificacionTipoDocumento_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ClasificacionTipoDocumento" EntitySet="ClasificacionTipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_Empresa" Association="Self.FK_Compra_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_Entidad" Association="Self.FK_Compra_Entidad">
+            <End Role="Entidad" EntitySet="Entidad" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_Estado" Association="Self.FK_Compra_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_TipoDocumento" Association="Self.FK_Compra_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompraDetalle_Compra" Association="Self.FK_CompraDetalle_Compra">
+            <End Role="Compra" EntitySet="Compra" />
+            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompraDetalle_Estado" Association="Self.FK_CompraDetalle_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompraDetalle_Lote" Association="Self.FK_CompraDetalle_Lote">
+            <End Role="Lote" EntitySet="Lote" />
+            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_Empresa" Association="Self.FK_Contrato_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_Estado" Association="Self.FK_Contrato_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoContenedor_Contrato" Association="Self.FK_ContratoContenedor_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoContenedor_Estado" Association="Self.FK_ContratoContenedor_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoFoto_Contrato" Association="Self.FK_ContratoFoto_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="ContratoFoto" EntitySet="ContratoFoto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoFoto_ContratoContenedor" Association="Self.FK_ContratoFoto_ContratoContenedor">
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+            <End Role="ContratoFoto" EntitySet="ContratoFoto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoFoto_Estado" Association="Self.FK_ContratoFoto_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ContratoFoto" EntitySet="ContratoFoto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoLote_Contrato" Association="Self.FK_ContratoLote_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="ContratoLote" EntitySet="ContratoLote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoLote_Estado" Association="Self.FK_ContratoLote_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ContratoLote" EntitySet="ContratoLote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoLote_Lote" Association="Self.FK_ContratoLote_Lote">
+            <End Role="Lote" EntitySet="Lote" />
+            <End Role="ContratoLote" EntitySet="ContratoLote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPeso_Contrato" Association="Self.FK_ContratoPeso_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="ContratoPeso" EntitySet="ContratoPeso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPeso_ContratoContenedor" Association="Self.FK_ContratoPeso_ContratoContenedor">
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+            <End Role="ContratoPeso" EntitySet="ContratoPeso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPeso_Estado" Association="Self.FK_ContratoPeso_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ContratoPeso" EntitySet="ContratoPeso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPrecinto_Contrato" Association="Self.FK_ContratoPrecinto_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="ContratoPrecinto" EntitySet="ContratoPrecinto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPrecinto_ContratoContenedor" Association="Self.FK_ContratoPrecinto_ContratoContenedor">
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+            <End Role="ContratoPrecinto" EntitySet="ContratoPrecinto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPrecinto_Estado" Association="Self.FK_ContratoPrecinto_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ContratoPrecinto" EntitySet="ContratoPrecinto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresa_Estado" Association="Self.FK_Empresa_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Empresa" EntitySet="Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresa_TipoDocumento" Association="Self.FK_Empresa_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Empresa" EntitySet="Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entidad_Estado" Association="Self.FK_Entidad_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Entidad" EntitySet="Entidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entidad_TipoDocumento" Association="Self.FK_Entidad_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Entidad" EntitySet="Entidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LlenadoContenedor_Contrato" Association="Self.FK_LlenadoContenedor_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="LlenadoContenedor" EntitySet="LlenadoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LlenadoContenedor_ContratoContenedor" Association="Self.FK_LlenadoContenedor_ContratoContenedor">
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+            <End Role="LlenadoContenedor" EntitySet="LlenadoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LlenadoContenedor_Estado" Association="Self.FK_LlenadoContenedor_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="LlenadoContenedor" EntitySet="LlenadoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LlenadoContenedor_Lote" Association="Self.FK_LlenadoContenedor_Lote">
+            <End Role="Lote" EntitySet="Lote" />
+            <End Role="LlenadoContenedor" EntitySet="LlenadoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lote_Almacen" Association="Self.FK_Lote_Almacen">
+            <End Role="Almacen" EntitySet="Almacen" />
+            <End Role="Lote" EntitySet="Lote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lote_Empresa" Association="Self.FK_Lote_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Lote" EntitySet="Lote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lote_Estado" Association="Self.FK_Lote_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Lote" EntitySet="Lote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_Empresa" Association="Self.FK_Movimiento_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_Estado" Association="Self.FK_Movimiento_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_Lote" Association="Self.FK_Movimiento_Lote">
+            <End Role="Lote" EntitySet="Lote" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_TipoMovimiento" Association="Self.FK_Movimiento_TipoMovimiento">
+            <End Role="TipoMovimiento" EntitySet="TipoMovimiento" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persona_Estado" Association="Self.FK_Persona_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Persona" EntitySet="Persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persona_TipoDocumento" Association="Self.FK_Persona_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Persona" EntitySet="Persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoDocumento_ClasificacionTipoDocumento" Association="Self.FK_TipoDocumento_ClasificacionTipoDocumento">
+            <End Role="ClasificacionTipoDocumento" EntitySet="ClasificacionTipoDocumento" />
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoDocumento_Estado" Association="Self.FK_TipoDocumento_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoMovimiento_Estado" Association="Self.FK_TipoMovimiento_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="TipoMovimiento" EntitySet="TipoMovimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Estado" Association="Self.FK_Usuario_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Persona" Association="Self.FK_Usuario_Persona">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ConsolidadosModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Almacen">
+          <Key>
+            <PropertyRef Name="IdAlmacen" />
+          </Key>
+          <Property Name="IdAlmacen" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreAlmacen" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Almacen_Estado" FromRole="Almacen" ToRole="Estado" />
+          <NavigationProperty Name="Lote" Relationship="Self.FK_Lote_Almacen" FromRole="Almacen" ToRole="Lote" />
+        </EntityType>
+        <EntityType Name="ClasificacionTipoDocumento">
+          <Key>
+            <PropertyRef Name="IdClasificacionTipoDocumento" />
+          </Key>
+          <Property Name="IdClasificacionTipoDocumento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreClasificacionTipoDocumento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_ClasificacionTipoDocumento_Estado" FromRole="ClasificacionTipoDocumento" ToRole="Estado" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK_TipoDocumento_ClasificacionTipoDocumento" FromRole="ClasificacionTipoDocumento" ToRole="TipoDocumento" />
+        </EntityType>
+        <EntityType Name="Compra">
+          <Key>
+            <PropertyRef Name="IdCompra" />
+          </Key>
+          <Property Name="IdCompra" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdEntidad" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="Serie" Type="String" MaxLength="5" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Correlativo" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaCompra" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Importe" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IGV" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Total" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Compra_Empresa" FromRole="Compra" ToRole="Empresa" />
+          <NavigationProperty Name="Entidad" Relationship="Self.FK_Compra_Entidad" FromRole="Compra" ToRole="Entidad" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Compra_Estado" FromRole="Compra" ToRole="Estado" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK_Compra_TipoDocumento" FromRole="Compra" ToRole="TipoDocumento" />
+          <NavigationProperty Name="CompraDetalle" Relationship="Self.FK_CompraDetalle_Compra" FromRole="Compra" ToRole="CompraDetalle" />
+        </EntityType>
+        <EntityType Name="CompraDetalle">
+          <Key>
+            <PropertyRef Name="IdCompraDetalle" />
+          </Key>
+          <Property Name="IdCompraDetalle" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdCompra" Type="Int32" Nullable="false" />
+          <Property Name="IdLote" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="Precio" Type="Decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Compra" Relationship="Self.FK_CompraDetalle_Compra" FromRole="CompraDetalle" ToRole="Compra" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_CompraDetalle_Estado" FromRole="CompraDetalle" ToRole="Estado" />
+          <NavigationProperty Name="Lote" Relationship="Self.FK_CompraDetalle_Lote" FromRole="CompraDetalle" ToRole="Lote" />
+        </EntityType>
+        <EntityType Name="Contrato">
+          <Key>
+            <PropertyRef Name="IdContrato" />
+          </Key>
+          <Property Name="IdContrato" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="NroContrato" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NroContratoLote" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaContrato" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="FechaCarga" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LugarCarga" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaDescarga" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="LugarDescarga" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Contrato_Empresa" FromRole="Contrato" ToRole="Empresa" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Contrato_Estado" FromRole="Contrato" ToRole="Estado" />
+          <NavigationProperty Name="ContratoContenedor" Relationship="Self.FK_ContratoContenedor_Contrato" FromRole="Contrato" ToRole="ContratoContenedor" />
+          <NavigationProperty Name="ContratoLote" Relationship="Self.FK_ContratoLote_Contrato" FromRole="Contrato" ToRole="ContratoLote" />
+          <NavigationProperty Name="ContratoPeso" Relationship="Self.FK_ContratoPeso_Contrato" FromRole="Contrato" ToRole="ContratoPeso" />
+          <NavigationProperty Name="ContratoPrecinto" Relationship="Self.FK_ContratoPrecinto_Contrato" FromRole="Contrato" ToRole="ContratoPrecinto" />
+          <NavigationProperty Name="LlenadoContenedor" Relationship="Self.FK_LlenadoContenedor_Contrato" FromRole="Contrato" ToRole="LlenadoContenedor" />
+          <NavigationProperty Name="ContratoFoto" Relationship="ConsolidadosModel.FK_ContratoFoto_Contrato" FromRole="Contrato" ToRole="ContratoFoto" />
+        </EntityType>
+        <EntityType Name="ContratoContenedor">
+          <Key>
+            <PropertyRef Name="IdContratoContenedor" />
+          </Key>
+          <Property Name="IdContratoContenedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdContrato" Type="Int32" Nullable="false" />
+          <Property Name="NroContenedor" Type="String" MaxLength="12" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Payload" Type="Int32" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_ContratoContenedor_Contrato" FromRole="ContratoContenedor" ToRole="Contrato" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_ContratoContenedor_Estado" FromRole="ContratoContenedor" ToRole="Estado" />
+          <NavigationProperty Name="ContratoPeso" Relationship="Self.FK_ContratoPeso_ContratoContenedor" FromRole="ContratoContenedor" ToRole="ContratoPeso" />
+          <NavigationProperty Name="ContratoPrecinto" Relationship="Self.FK_ContratoPrecinto_ContratoContenedor" FromRole="ContratoContenedor" ToRole="ContratoPrecinto" />
+          <NavigationProperty Name="LlenadoContenedor" Relationship="Self.FK_LlenadoContenedor_ContratoContenedor" FromRole="ContratoContenedor" ToRole="LlenadoContenedor" />
+          <NavigationProperty Name="ContratoFoto" Relationship="ConsolidadosModel.FK_ContratoFoto_ContratoContenedor" FromRole="ContratoContenedor" ToRole="ContratoFoto" />
+        </EntityType>
+        <EntityType Name="ContratoLote">
+          <Key>
+            <PropertyRef Name="IdContratoLote" />
+          </Key>
+          <Property Name="IdContratoLote" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdContrato" Type="Int32" Nullable="false" />
+          <Property Name="IdLote" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_ContratoLote_Contrato" FromRole="ContratoLote" ToRole="Contrato" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_ContratoLote_Estado" FromRole="ContratoLote" ToRole="Estado" />
+          <NavigationProperty Name="Lote" Relationship="Self.FK_ContratoLote_Lote" FromRole="ContratoLote" ToRole="Lote" />
+        </EntityType>
+        <EntityType Name="ContratoPeso">
+          <Key>
+            <PropertyRef Name="IdContratoPeso" />
+          </Key>
+          <Property Name="IdContratoPeso" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdContrato" Type="Int32" Nullable="false" />
+          <Property Name="IdContratoContenedor" Type="Int32" Nullable="false" />
+          <Property Name="PesoTotal" Type="Int32" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_ContratoPeso_Contrato" FromRole="ContratoPeso" ToRole="Contrato" />
+          <NavigationProperty Name="ContratoContenedor" Relationship="Self.FK_ContratoPeso_ContratoContenedor" FromRole="ContratoPeso" ToRole="ContratoContenedor" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_ContratoPeso_Estado" FromRole="ContratoPeso" ToRole="Estado" />
+        </EntityType>
+        <EntityType Name="ContratoPrecinto">
+          <Key>
+            <PropertyRef Name="IdContratoPrecinto" />
+          </Key>
+          <Property Name="IdContratoPrecinto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdContrato" Type="Int32" Nullable="false" />
+          <Property Name="IdContratoContenedor" Type="Int32" Nullable="false" />
+          <Property Name="NroPrecinto" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_ContratoPrecinto_Contrato" FromRole="ContratoPrecinto" ToRole="Contrato" />
+          <NavigationProperty Name="ContratoContenedor" Relationship="Self.FK_ContratoPrecinto_ContratoContenedor" FromRole="ContratoPrecinto" ToRole="ContratoContenedor" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_ContratoPrecinto_Estado" FromRole="ContratoPrecinto" ToRole="Estado" />
+        </EntityType>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="IdEmpresa" />
+          </Key>
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="NroDocumento" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Compra" Relationship="Self.FK_Compra_Empresa" FromRole="Empresa" ToRole="Compra" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_Contrato_Empresa" FromRole="Empresa" ToRole="Contrato" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Empresa_Estado" FromRole="Empresa" ToRole="Estado" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK_Empresa_TipoDocumento" FromRole="Empresa" ToRole="TipoDocumento" />
+          <NavigationProperty Name="Lote" Relationship="Self.FK_Lote_Empresa" FromRole="Empresa" ToRole="Lote" />
+          <NavigationProperty Name="Movimiento" Relationship="Self.FK_Movimiento_Empresa" FromRole="Empresa" ToRole="Movimiento" />
+        </EntityType>
+        <EntityType Name="Entidad">
+          <Key>
+            <PropertyRef Name="IdEntidad" />
+          </Key>
+          <Property Name="IdEntidad" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="NroDocumento" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="RazonSocial" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Compra" Relationship="Self.FK_Compra_Entidad" FromRole="Entidad" ToRole="Compra" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Entidad_Estado" FromRole="Entidad" ToRole="Estado" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK_Entidad_TipoDocumento" FromRole="Entidad" ToRole="TipoDocumento" />
+        </EntityType>
+        <EntityType Name="Estado">
+          <Key>
+            <PropertyRef Name="IdEstado" />
+          </Key>
+          <Property Name="IdEstado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreEstado" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Almacen" Relationship="Self.FK_Almacen_Estado" FromRole="Estado" ToRole="Almacen" />
+          <NavigationProperty Name="ClasificacionTipoDocumento" Relationship="Self.FK_ClasificacionTipoDocumento_Estado" FromRole="Estado" ToRole="ClasificacionTipoDocumento" />
+          <NavigationProperty Name="Compra" Relationship="Self.FK_Compra_Estado" FromRole="Estado" ToRole="Compra" />
+          <NavigationProperty Name="CompraDetalle" Relationship="Self.FK_CompraDetalle_Estado" FromRole="Estado" ToRole="CompraDetalle" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_Contrato_Estado" FromRole="Estado" ToRole="Contrato" />
+          <NavigationProperty Name="ContratoContenedor" Relationship="Self.FK_ContratoContenedor_Estado" FromRole="Estado" ToRole="ContratoContenedor" />
+          <NavigationProperty Name="ContratoLote" Relationship="Self.FK_ContratoLote_Estado" FromRole="Estado" ToRole="ContratoLote" />
+          <NavigationProperty Name="ContratoPeso" Relationship="Self.FK_ContratoPeso_Estado" FromRole="Estado" ToRole="ContratoPeso" />
+          <NavigationProperty Name="ContratoPrecinto" Relationship="Self.FK_ContratoPrecinto_Estado" FromRole="Estado" ToRole="ContratoPrecinto" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Empresa_Estado" FromRole="Estado" ToRole="Empresa" />
+          <NavigationProperty Name="Entidad" Relationship="Self.FK_Entidad_Estado" FromRole="Estado" ToRole="Entidad" />
+          <NavigationProperty Name="LlenadoContenedor" Relationship="Self.FK_LlenadoContenedor_Estado" FromRole="Estado" ToRole="LlenadoContenedor" />
+          <NavigationProperty Name="Lote" Relationship="Self.FK_Lote_Estado" FromRole="Estado" ToRole="Lote" />
+          <NavigationProperty Name="Movimiento" Relationship="Self.FK_Movimiento_Estado" FromRole="Estado" ToRole="Movimiento" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_Estado" FromRole="Estado" ToRole="Persona" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK_TipoDocumento_Estado" FromRole="Estado" ToRole="TipoDocumento" />
+          <NavigationProperty Name="TipoMovimiento" Relationship="Self.FK_TipoMovimiento_Estado" FromRole="Estado" ToRole="TipoMovimiento" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Estado" FromRole="Estado" ToRole="Usuario" />
+          <NavigationProperty Name="ContratoFoto" Relationship="ConsolidadosModel.FK_ContratoFoto_Estado" FromRole="Estado" ToRole="ContratoFoto" />
+        </EntityType>
+        <EntityType Name="LlenadoContenedor">
+          <Key>
+            <PropertyRef Name="IdLlenadoContenedor" />
+          </Key>
+          <Property Name="IdLlenadoContenedor" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdContrato" Type="Int32" Nullable="false" />
+          <Property Name="IdContratoContenedor" Type="Int32" Nullable="false" />
+          <Property Name="IdLote" Type="Int32" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Contrato" Relationship="Self.FK_LlenadoContenedor_Contrato" FromRole="LlenadoContenedor" ToRole="Contrato" />
+          <NavigationProperty Name="ContratoContenedor" Relationship="Self.FK_LlenadoContenedor_ContratoContenedor" FromRole="LlenadoContenedor" ToRole="ContratoContenedor" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_LlenadoContenedor_Estado" FromRole="LlenadoContenedor" ToRole="Estado" />
+          <NavigationProperty Name="Lote" Relationship="Self.FK_LlenadoContenedor_Lote" FromRole="LlenadoContenedor" ToRole="Lote" />
+        </EntityType>
+        <EntityType Name="Lote">
+          <Key>
+            <PropertyRef Name="IdLote" />
+          </Key>
+          <Property Name="IdLote" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdAlmacen" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NroLote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Cantidad" Type="Int32" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Almacen" Relationship="Self.FK_Lote_Almacen" FromRole="Lote" ToRole="Almacen" />
+          <NavigationProperty Name="CompraDetalle" Relationship="Self.FK_CompraDetalle_Lote" FromRole="Lote" ToRole="CompraDetalle" />
+          <NavigationProperty Name="ContratoLote" Relationship="Self.FK_ContratoLote_Lote" FromRole="Lote" ToRole="ContratoLote" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Lote_Empresa" FromRole="Lote" ToRole="Empresa" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Lote_Estado" FromRole="Lote" ToRole="Estado" />
+          <NavigationProperty Name="LlenadoContenedor" Relationship="Self.FK_LlenadoContenedor_Lote" FromRole="Lote" ToRole="LlenadoContenedor" />
+          <NavigationProperty Name="Movimiento" Relationship="Self.FK_Movimiento_Lote" FromRole="Lote" ToRole="Movimiento" />
+        </EntityType>
+        <EntityType Name="Movimiento">
+          <Key>
+            <PropertyRef Name="IdMovimiento" />
+          </Key>
+          <Property Name="IdMovimiento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTipoMovimiento" Type="Int32" Nullable="false" />
+          <Property Name="IdEmpresa" Type="Int32" Nullable="false" />
+          <Property Name="IdLote" Type="Int32" Nullable="false" />
+          <Property Name="FechaMovimiento" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="StockInicial" Type="Int32" Nullable="false" />
+          <Property Name="Ingreso" Type="Int32" Nullable="false" />
+          <Property Name="Salida" Type="Int32" Nullable="false" />
+          <Property Name="StockActual" Type="Int32" annotation:StoreGeneratedPattern="Computed" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Movimiento_Empresa" FromRole="Movimiento" ToRole="Empresa" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Movimiento_Estado" FromRole="Movimiento" ToRole="Estado" />
+          <NavigationProperty Name="Lote" Relationship="Self.FK_Movimiento_Lote" FromRole="Movimiento" ToRole="Lote" />
+          <NavigationProperty Name="TipoMovimiento" Relationship="Self.FK_Movimiento_TipoMovimiento" FromRole="Movimiento" ToRole="TipoMovimiento" />
+        </EntityType>
+        <EntityType Name="Persona">
+          <Key>
+            <PropertyRef Name="IdPersona" />
+          </Key>
+          <Property Name="IdPersona" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="NroDocumento" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ApellidoPaterno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ApellidoMaterno" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="PrimerNombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SegundoNombre" Type="String" MaxLength="30" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaNacimiento" Type="String" MaxLength="10" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Direccion" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Persona_Estado" FromRole="Persona" ToRole="Estado" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK_Persona_TipoDocumento" FromRole="Persona" ToRole="TipoDocumento" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Usuario_Persona" FromRole="Persona" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="TipoDocumento">
+          <Key>
+            <PropertyRef Name="IdTipoDocumento" />
+          </Key>
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdClasificacionTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="NombreTipoDocumento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ClasificacionTipoDocumento" Relationship="Self.FK_TipoDocumento_ClasificacionTipoDocumento" FromRole="TipoDocumento" ToRole="ClasificacionTipoDocumento" />
+          <NavigationProperty Name="Compra" Relationship="Self.FK_Compra_TipoDocumento" FromRole="TipoDocumento" ToRole="Compra" />
+          <NavigationProperty Name="Empresa" Relationship="Self.FK_Empresa_TipoDocumento" FromRole="TipoDocumento" ToRole="Empresa" />
+          <NavigationProperty Name="Entidad" Relationship="Self.FK_Entidad_TipoDocumento" FromRole="TipoDocumento" ToRole="Entidad" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_TipoDocumento_Estado" FromRole="TipoDocumento" ToRole="Estado" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Persona_TipoDocumento" FromRole="TipoDocumento" ToRole="Persona" />
+        </EntityType>
+        <EntityType Name="TipoMovimiento">
+          <Key>
+            <PropertyRef Name="IdTipoMovimiento" />
+          </Key>
+          <Property Name="IdTipoMovimiento" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NombreTipoMovimiento" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_TipoMovimiento_Estado" FromRole="TipoMovimiento" ToRole="Estado" />
+          <NavigationProperty Name="Movimiento" Relationship="Self.FK_Movimiento_TipoMovimiento" FromRole="TipoMovimiento" ToRole="Movimiento" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdPersona" Type="Int32" Nullable="false" />
+          <Property Name="NombreUsuario" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Contraseña" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdEstado" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Estado" Relationship="Self.FK_Usuario_Estado" FromRole="Usuario" ToRole="Estado" />
+          <NavigationProperty Name="Persona" Relationship="Self.FK_Usuario_Persona" FromRole="Usuario" ToRole="Persona" />
+        </EntityType>
+        <Association Name="FK_Almacen_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Almacen">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lote_Almacen">
+          <End Role="Almacen" Type="Self.Almacen" Multiplicity="1" />
+          <End Role="Lote" Type="Self.Lote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Almacen">
+              <PropertyRef Name="IdAlmacen" />
+            </Principal>
+            <Dependent Role="Lote">
+              <PropertyRef Name="IdAlmacen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClasificacionTipoDocumento_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="ClasificacionTipoDocumento" Type="Self.ClasificacionTipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ClasificacionTipoDocumento">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoDocumento_ClasificacionTipoDocumento">
+          <End Role="ClasificacionTipoDocumento" Type="Self.ClasificacionTipoDocumento" Multiplicity="1" />
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClasificacionTipoDocumento">
+              <PropertyRef Name="IdClasificacionTipoDocumento" />
+            </Principal>
+            <Dependent Role="TipoDocumento">
+              <PropertyRef Name="IdClasificacionTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_Entidad">
+          <End Role="Entidad" Type="Self.Entidad" Multiplicity="1" />
+          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Entidad">
+              <PropertyRef Name="IdEntidad" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdEntidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Compra_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Compra">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompraDetalle_Compra">
+          <End Role="Compra" Type="Self.Compra" Multiplicity="1" />
+          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Compra">
+              <PropertyRef Name="IdCompra" />
+            </Principal>
+            <Dependent Role="CompraDetalle">
+              <PropertyRef Name="IdCompra" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompraDetalle_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="CompraDetalle">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CompraDetalle_Lote">
+          <End Role="Lote" Type="Self.Lote" Multiplicity="1" />
+          <End Role="CompraDetalle" Type="Self.CompraDetalle" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lote">
+              <PropertyRef Name="IdLote" />
+            </Principal>
+            <Dependent Role="CompraDetalle">
+              <PropertyRef Name="IdLote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Contrato_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Contrato">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoContenedor_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="ContratoContenedor">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoLote_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="ContratoLote" Type="Self.ContratoLote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="ContratoLote">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPeso_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="ContratoPeso" Type="Self.ContratoPeso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="ContratoPeso">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPrecinto_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="ContratoPrecinto" Type="Self.ContratoPrecinto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="ContratoPrecinto">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LlenadoContenedor_Contrato">
+          <End Role="Contrato" Type="Self.Contrato" Multiplicity="1" />
+          <End Role="LlenadoContenedor" Type="Self.LlenadoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="LlenadoContenedor">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoContenedor_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ContratoContenedor">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPeso_ContratoContenedor">
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="1" />
+          <End Role="ContratoPeso" Type="Self.ContratoPeso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContratoContenedor">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Principal>
+            <Dependent Role="ContratoPeso">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPrecinto_ContratoContenedor">
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="1" />
+          <End Role="ContratoPrecinto" Type="Self.ContratoPrecinto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContratoContenedor">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Principal>
+            <Dependent Role="ContratoPrecinto">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LlenadoContenedor_ContratoContenedor">
+          <End Role="ContratoContenedor" Type="Self.ContratoContenedor" Multiplicity="1" />
+          <End Role="LlenadoContenedor" Type="Self.LlenadoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContratoContenedor">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Principal>
+            <Dependent Role="LlenadoContenedor">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoLote_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="ContratoLote" Type="Self.ContratoLote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ContratoLote">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoLote_Lote">
+          <End Role="Lote" Type="Self.Lote" Multiplicity="1" />
+          <End Role="ContratoLote" Type="Self.ContratoLote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lote">
+              <PropertyRef Name="IdLote" />
+            </Principal>
+            <Dependent Role="ContratoLote">
+              <PropertyRef Name="IdLote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPeso_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="ContratoPeso" Type="Self.ContratoPeso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ContratoPeso">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoPrecinto_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="ContratoPrecinto" Type="Self.ContratoPrecinto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ContratoPrecinto">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresa_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Empresa">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Empresa_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Empresa">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lote_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Lote" Type="Self.Lote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Lote">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_Empresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="IdEmpresa" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="IdEmpresa" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entidad_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Entidad" Type="Self.Entidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Entidad">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Entidad_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="Entidad" Type="Self.Entidad" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Entidad">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LlenadoContenedor_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="LlenadoContenedor" Type="Self.LlenadoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="LlenadoContenedor">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Lote_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Lote" Type="Self.Lote" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Lote">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persona_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Persona">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoDocumento_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="TipoDocumento">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TipoMovimiento_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="TipoMovimiento" Type="Self.TipoMovimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="TipoMovimiento">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Estado">
+          <End Role="Estado" Type="Self.Estado" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LlenadoContenedor_Lote">
+          <End Role="Lote" Type="Self.Lote" Multiplicity="1" />
+          <End Role="LlenadoContenedor" Type="Self.LlenadoContenedor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lote">
+              <PropertyRef Name="IdLote" />
+            </Principal>
+            <Dependent Role="LlenadoContenedor">
+              <PropertyRef Name="IdLote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_Lote">
+          <End Role="Lote" Type="Self.Lote" Multiplicity="1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lote">
+              <PropertyRef Name="IdLote" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="IdLote" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Movimiento_TipoMovimiento">
+          <End Role="TipoMovimiento" Type="Self.TipoMovimiento" Multiplicity="1" />
+          <End Role="Movimiento" Type="Self.Movimiento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoMovimiento">
+              <PropertyRef Name="IdTipoMovimiento" />
+            </Principal>
+            <Dependent Role="Movimiento">
+              <PropertyRef Name="IdTipoMovimiento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Persona_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="Persona" Type="Self.Persona" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Persona">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Persona">
+          <End Role="Persona" Type="Self.Persona" Multiplicity="1" />
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Persona">
+              <PropertyRef Name="IdPersona" />
+            </Principal>
+            <Dependent Role="Usuario">
+              <PropertyRef Name="IdPersona" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConsolidadosEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Almacen" EntityType="Self.Almacen" />
+          <EntitySet Name="ClasificacionTipoDocumento" EntityType="Self.ClasificacionTipoDocumento" />
+          <EntitySet Name="Compra" EntityType="Self.Compra" />
+          <EntitySet Name="CompraDetalle" EntityType="Self.CompraDetalle" />
+          <EntitySet Name="Contrato" EntityType="Self.Contrato" />
+          <EntitySet Name="ContratoContenedor" EntityType="Self.ContratoContenedor" />
+          <EntitySet Name="ContratoLote" EntityType="Self.ContratoLote" />
+          <EntitySet Name="ContratoPeso" EntityType="Self.ContratoPeso" />
+          <EntitySet Name="ContratoPrecinto" EntityType="Self.ContratoPrecinto" />
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" />
+          <EntitySet Name="Entidad" EntityType="Self.Entidad" />
+          <EntitySet Name="Estado" EntityType="Self.Estado" />
+          <EntitySet Name="LlenadoContenedor" EntityType="Self.LlenadoContenedor" />
+          <EntitySet Name="Lote" EntityType="Self.Lote" />
+          <EntitySet Name="Movimiento" EntityType="Self.Movimiento" />
+          <EntitySet Name="Persona" EntityType="Self.Persona" />
+          <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" />
+          <EntitySet Name="TipoMovimiento" EntityType="Self.TipoMovimiento" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Almacen_Estado" Association="Self.FK_Almacen_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Almacen" EntitySet="Almacen" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lote_Almacen" Association="Self.FK_Lote_Almacen">
+            <End Role="Almacen" EntitySet="Almacen" />
+            <End Role="Lote" EntitySet="Lote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClasificacionTipoDocumento_Estado" Association="Self.FK_ClasificacionTipoDocumento_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ClasificacionTipoDocumento" EntitySet="ClasificacionTipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoDocumento_ClasificacionTipoDocumento" Association="Self.FK_TipoDocumento_ClasificacionTipoDocumento">
+            <End Role="ClasificacionTipoDocumento" EntitySet="ClasificacionTipoDocumento" />
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_Empresa" Association="Self.FK_Compra_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_Entidad" Association="Self.FK_Compra_Entidad">
+            <End Role="Entidad" EntitySet="Entidad" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_Estado" Association="Self.FK_Compra_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Compra_TipoDocumento" Association="Self.FK_Compra_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Compra" EntitySet="Compra" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompraDetalle_Compra" Association="Self.FK_CompraDetalle_Compra">
+            <End Role="Compra" EntitySet="Compra" />
+            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompraDetalle_Estado" Association="Self.FK_CompraDetalle_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CompraDetalle_Lote" Association="Self.FK_CompraDetalle_Lote">
+            <End Role="Lote" EntitySet="Lote" />
+            <End Role="CompraDetalle" EntitySet="CompraDetalle" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_Empresa" Association="Self.FK_Contrato_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Contrato_Estado" Association="Self.FK_Contrato_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Contrato" EntitySet="Contrato" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoContenedor_Contrato" Association="Self.FK_ContratoContenedor_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoLote_Contrato" Association="Self.FK_ContratoLote_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="ContratoLote" EntitySet="ContratoLote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPeso_Contrato" Association="Self.FK_ContratoPeso_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="ContratoPeso" EntitySet="ContratoPeso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPrecinto_Contrato" Association="Self.FK_ContratoPrecinto_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="ContratoPrecinto" EntitySet="ContratoPrecinto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LlenadoContenedor_Contrato" Association="Self.FK_LlenadoContenedor_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="LlenadoContenedor" EntitySet="LlenadoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoContenedor_Estado" Association="Self.FK_ContratoContenedor_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPeso_ContratoContenedor" Association="Self.FK_ContratoPeso_ContratoContenedor">
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+            <End Role="ContratoPeso" EntitySet="ContratoPeso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPrecinto_ContratoContenedor" Association="Self.FK_ContratoPrecinto_ContratoContenedor">
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+            <End Role="ContratoPrecinto" EntitySet="ContratoPrecinto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LlenadoContenedor_ContratoContenedor" Association="Self.FK_LlenadoContenedor_ContratoContenedor">
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+            <End Role="LlenadoContenedor" EntitySet="LlenadoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoLote_Estado" Association="Self.FK_ContratoLote_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ContratoLote" EntitySet="ContratoLote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoLote_Lote" Association="Self.FK_ContratoLote_Lote">
+            <End Role="Lote" EntitySet="Lote" />
+            <End Role="ContratoLote" EntitySet="ContratoLote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPeso_Estado" Association="Self.FK_ContratoPeso_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ContratoPeso" EntitySet="ContratoPeso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoPrecinto_Estado" Association="Self.FK_ContratoPrecinto_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ContratoPrecinto" EntitySet="ContratoPrecinto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresa_Estado" Association="Self.FK_Empresa_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Empresa" EntitySet="Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Empresa_TipoDocumento" Association="Self.FK_Empresa_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Empresa" EntitySet="Empresa" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lote_Empresa" Association="Self.FK_Lote_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Lote" EntitySet="Lote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_Empresa" Association="Self.FK_Movimiento_Empresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entidad_Estado" Association="Self.FK_Entidad_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Entidad" EntitySet="Entidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Entidad_TipoDocumento" Association="Self.FK_Entidad_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Entidad" EntitySet="Entidad" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LlenadoContenedor_Estado" Association="Self.FK_LlenadoContenedor_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="LlenadoContenedor" EntitySet="LlenadoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Lote_Estado" Association="Self.FK_Lote_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Lote" EntitySet="Lote" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_Estado" Association="Self.FK_Movimiento_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persona_Estado" Association="Self.FK_Persona_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Persona" EntitySet="Persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoDocumento_Estado" Association="Self.FK_TipoDocumento_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TipoMovimiento_Estado" Association="Self.FK_TipoMovimiento_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="TipoMovimiento" EntitySet="TipoMovimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Estado" Association="Self.FK_Usuario_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LlenadoContenedor_Lote" Association="Self.FK_LlenadoContenedor_Lote">
+            <End Role="Lote" EntitySet="Lote" />
+            <End Role="LlenadoContenedor" EntitySet="LlenadoContenedor" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_Lote" Association="Self.FK_Movimiento_Lote">
+            <End Role="Lote" EntitySet="Lote" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Movimiento_TipoMovimiento" Association="Self.FK_Movimiento_TipoMovimiento">
+            <End Role="TipoMovimiento" EntitySet="TipoMovimiento" />
+            <End Role="Movimiento" EntitySet="Movimiento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Persona_TipoDocumento" Association="Self.FK_Persona_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Persona" EntitySet="Persona" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Persona" Association="Self.FK_Usuario_Persona">
+            <End Role="Persona" EntitySet="Persona" />
+            <End Role="Usuario" EntitySet="Usuario" />
+          </AssociationSet>
+          <EntitySet Name="ContratoFoto" EntityType="ConsolidadosModel.ContratoFoto" />
+          <AssociationSet Name="FK_ContratoFoto_Contrato" Association="ConsolidadosModel.FK_ContratoFoto_Contrato">
+            <End Role="Contrato" EntitySet="Contrato" />
+            <End Role="ContratoFoto" EntitySet="ContratoFoto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoFoto_ContratoContenedor" Association="ConsolidadosModel.FK_ContratoFoto_ContratoContenedor">
+            <End Role="ContratoContenedor" EntitySet="ContratoContenedor" />
+            <End Role="ContratoFoto" EntitySet="ContratoFoto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContratoFoto_Estado" Association="ConsolidadosModel.FK_ContratoFoto_Estado">
+            <End Role="Estado" EntitySet="Estado" />
+            <End Role="ContratoFoto" EntitySet="ContratoFoto" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ContratoFoto">
+          <Key>
+            <PropertyRef Name="IdContratoFoto" />
+          </Key>
+          <Property Name="IdContratoFoto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdContrato" Type="Int32" />
+          <Property Name="IdContratoContenedor" Type="Int32" />
+          <Property Name="Foto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IdEstado" Type="Int32" />
+          <NavigationProperty Name="Contrato" Relationship="ConsolidadosModel.FK_ContratoFoto_Contrato" FromRole="ContratoFoto" ToRole="Contrato" />
+          <NavigationProperty Name="ContratoContenedor" Relationship="ConsolidadosModel.FK_ContratoFoto_ContratoContenedor" FromRole="ContratoFoto" ToRole="ContratoContenedor" />
+          <NavigationProperty Name="Estado" Relationship="ConsolidadosModel.FK_ContratoFoto_Estado" FromRole="ContratoFoto" ToRole="Estado" />
+        </EntityType>
+        <Association Name="FK_ContratoFoto_Contrato">
+          <End Type="ConsolidadosModel.Contrato" Role="Contrato" Multiplicity="0..1" />
+          <End Type="ConsolidadosModel.ContratoFoto" Role="ContratoFoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contrato">
+              <PropertyRef Name="IdContrato" />
+            </Principal>
+            <Dependent Role="ContratoFoto">
+              <PropertyRef Name="IdContrato" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoFoto_ContratoContenedor">
+          <End Type="ConsolidadosModel.ContratoContenedor" Role="ContratoContenedor" Multiplicity="0..1" />
+          <End Type="ConsolidadosModel.ContratoFoto" Role="ContratoFoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContratoContenedor">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Principal>
+            <Dependent Role="ContratoFoto">
+              <PropertyRef Name="IdContratoContenedor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContratoFoto_Estado">
+          <End Type="ConsolidadosModel.Estado" Role="Estado" Multiplicity="0..1" />
+          <End Type="ConsolidadosModel.ContratoFoto" Role="ContratoFoto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estado">
+              <PropertyRef Name="IdEstado" />
+            </Principal>
+            <Dependent Role="ContratoFoto">
+              <PropertyRef Name="IdEstado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ConsolidadosModelStoreContainer" CdmEntityContainer="ConsolidadosEntities">
+          <EntitySetMapping Name="Almacen">
+            <EntityTypeMapping TypeName="ConsolidadosModel.Almacen">
+              <MappingFragment StoreEntitySet="Almacen">
+                <ScalarProperty Name="IdAlmacen" ColumnName="IdAlmacen" />
+                <ScalarProperty Name="NombreAlmacen" ColumnName="NombreAlmacen" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClasificacionTipoDocumento">
+            <EntityTypeMapping TypeName="ConsolidadosModel.ClasificacionTipoDocumento">
+              <MappingFragment StoreEntitySet="ClasificacionTipoDocumento">
+                <ScalarProperty Name="IdClasificacionTipoDocumento" ColumnName="IdClasificacionTipoDocumento" />
+                <ScalarProperty Name="NombreClasificacionTipoDocumento" ColumnName="NombreClasificacionTipoDocumento" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Compra">
+            <EntityTypeMapping TypeName="ConsolidadosModel.Compra">
+              <MappingFragment StoreEntitySet="Compra">
+                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="Serie" ColumnName="Serie" />
+                <ScalarProperty Name="Correlativo" ColumnName="Correlativo" />
+                <ScalarProperty Name="FechaCompra" ColumnName="FechaCompra" />
+                <ScalarProperty Name="Importe" ColumnName="Importe" />
+                <ScalarProperty Name="IGV" ColumnName="IGV" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompraDetalle">
+            <EntityTypeMapping TypeName="ConsolidadosModel.CompraDetalle">
+              <MappingFragment StoreEntitySet="CompraDetalle">
+                <ScalarProperty Name="IdCompraDetalle" ColumnName="IdCompraDetalle" />
+                <ScalarProperty Name="IdCompra" ColumnName="IdCompra" />
+                <ScalarProperty Name="IdLote" ColumnName="IdLote" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="Precio" ColumnName="Precio" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contrato">
+            <EntityTypeMapping TypeName="ConsolidadosModel.Contrato">
+              <MappingFragment StoreEntitySet="Contrato">
+                <ScalarProperty Name="IdContrato" ColumnName="IdContrato" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="NroContrato" ColumnName="NroContrato" />
+                <ScalarProperty Name="NroContratoLote" ColumnName="NroContratoLote" />
+                <ScalarProperty Name="FechaContrato" ColumnName="FechaContrato" />
+                <ScalarProperty Name="FechaCarga" ColumnName="FechaCarga" />
+                <ScalarProperty Name="LugarCarga" ColumnName="LugarCarga" />
+                <ScalarProperty Name="FechaDescarga" ColumnName="FechaDescarga" />
+                <ScalarProperty Name="LugarDescarga" ColumnName="LugarDescarga" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContratoContenedor">
+            <EntityTypeMapping TypeName="ConsolidadosModel.ContratoContenedor">
+              <MappingFragment StoreEntitySet="ContratoContenedor">
+                <ScalarProperty Name="IdContratoContenedor" ColumnName="IdContratoContenedor" />
+                <ScalarProperty Name="IdContrato" ColumnName="IdContrato" />
+                <ScalarProperty Name="NroContenedor" ColumnName="NroContenedor" />
+                <ScalarProperty Name="Payload" ColumnName="Payload" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContratoLote">
+            <EntityTypeMapping TypeName="ConsolidadosModel.ContratoLote">
+              <MappingFragment StoreEntitySet="ContratoLote">
+                <ScalarProperty Name="IdContratoLote" ColumnName="IdContratoLote" />
+                <ScalarProperty Name="IdContrato" ColumnName="IdContrato" />
+                <ScalarProperty Name="IdLote" ColumnName="IdLote" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContratoPeso">
+            <EntityTypeMapping TypeName="ConsolidadosModel.ContratoPeso">
+              <MappingFragment StoreEntitySet="ContratoPeso">
+                <ScalarProperty Name="IdContratoPeso" ColumnName="IdContratoPeso" />
+                <ScalarProperty Name="IdContrato" ColumnName="IdContrato" />
+                <ScalarProperty Name="IdContratoContenedor" ColumnName="IdContratoContenedor" />
+                <ScalarProperty Name="PesoTotal" ColumnName="PesoTotal" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContratoPrecinto">
+            <EntityTypeMapping TypeName="ConsolidadosModel.ContratoPrecinto">
+              <MappingFragment StoreEntitySet="ContratoPrecinto">
+                <ScalarProperty Name="IdContratoPrecinto" ColumnName="IdContratoPrecinto" />
+                <ScalarProperty Name="IdContrato" ColumnName="IdContrato" />
+                <ScalarProperty Name="IdContratoContenedor" ColumnName="IdContratoContenedor" />
+                <ScalarProperty Name="NroPrecinto" ColumnName="NroPrecinto" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Empresa">
+            <EntityTypeMapping TypeName="ConsolidadosModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="NroDocumento" ColumnName="NroDocumento" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Entidad">
+            <EntityTypeMapping TypeName="ConsolidadosModel.Entidad">
+              <MappingFragment StoreEntitySet="Entidad">
+                <ScalarProperty Name="IdEntidad" ColumnName="IdEntidad" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="NroDocumento" ColumnName="NroDocumento" />
+                <ScalarProperty Name="RazonSocial" ColumnName="RazonSocial" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estado">
+            <EntityTypeMapping TypeName="ConsolidadosModel.Estado">
+              <MappingFragment StoreEntitySet="Estado">
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="NombreEstado" ColumnName="NombreEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LlenadoContenedor">
+            <EntityTypeMapping TypeName="ConsolidadosModel.LlenadoContenedor">
+              <MappingFragment StoreEntitySet="LlenadoContenedor">
+                <ScalarProperty Name="IdLlenadoContenedor" ColumnName="IdLlenadoContenedor" />
+                <ScalarProperty Name="IdContrato" ColumnName="IdContrato" />
+                <ScalarProperty Name="IdContratoContenedor" ColumnName="IdContratoContenedor" />
+                <ScalarProperty Name="IdLote" ColumnName="IdLote" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lote">
+            <EntityTypeMapping TypeName="ConsolidadosModel.Lote">
+              <MappingFragment StoreEntitySet="Lote">
+                <ScalarProperty Name="IdLote" ColumnName="IdLote" />
+                <ScalarProperty Name="IdAlmacen" ColumnName="IdAlmacen" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="NroLote" ColumnName="NroLote" />
+                <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Movimiento">
+            <EntityTypeMapping TypeName="ConsolidadosModel.Movimiento">
+              <MappingFragment StoreEntitySet="Movimiento">
+                <ScalarProperty Name="IdMovimiento" ColumnName="IdMovimiento" />
+                <ScalarProperty Name="IdTipoMovimiento" ColumnName="IdTipoMovimiento" />
+                <ScalarProperty Name="IdEmpresa" ColumnName="IdEmpresa" />
+                <ScalarProperty Name="IdLote" ColumnName="IdLote" />
+                <ScalarProperty Name="FechaMovimiento" ColumnName="FechaMovimiento" />
+                <ScalarProperty Name="StockInicial" ColumnName="StockInicial" />
+                <ScalarProperty Name="Ingreso" ColumnName="Ingreso" />
+                <ScalarProperty Name="Salida" ColumnName="Salida" />
+                <ScalarProperty Name="StockActual" ColumnName="StockActual" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Persona">
+            <EntityTypeMapping TypeName="ConsolidadosModel.Persona">
+              <MappingFragment StoreEntitySet="Persona">
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="NroDocumento" ColumnName="NroDocumento" />
+                <ScalarProperty Name="ApellidoPaterno" ColumnName="ApellidoPaterno" />
+                <ScalarProperty Name="ApellidoMaterno" ColumnName="ApellidoMaterno" />
+                <ScalarProperty Name="PrimerNombre" ColumnName="PrimerNombre" />
+                <ScalarProperty Name="SegundoNombre" ColumnName="SegundoNombre" />
+                <ScalarProperty Name="FechaNacimiento" ColumnName="FechaNacimiento" />
+                <ScalarProperty Name="Direccion" ColumnName="Direccion" />
+                <ScalarProperty Name="Telefono" ColumnName="Telefono" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoDocumento">
+            <EntityTypeMapping TypeName="ConsolidadosModel.TipoDocumento">
+              <MappingFragment StoreEntitySet="TipoDocumento">
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="IdClasificacionTipoDocumento" ColumnName="IdClasificacionTipoDocumento" />
+                <ScalarProperty Name="NombreTipoDocumento" ColumnName="NombreTipoDocumento" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoMovimiento">
+            <EntityTypeMapping TypeName="ConsolidadosModel.TipoMovimiento">
+              <MappingFragment StoreEntitySet="TipoMovimiento">
+                <ScalarProperty Name="IdTipoMovimiento" ColumnName="IdTipoMovimiento" />
+                <ScalarProperty Name="NombreTipoMovimiento" ColumnName="NombreTipoMovimiento" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="ConsolidadosModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="IdPersona" ColumnName="IdPersona" />
+                <ScalarProperty Name="NombreUsuario" ColumnName="NombreUsuario" />
+                <ScalarProperty Name="Contraseña" ColumnName="Contraseña" />
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContratoFoto">
+            <EntityTypeMapping TypeName="ConsolidadosModel.ContratoFoto">
+              <MappingFragment StoreEntitySet="ContratoFoto">
+                <ScalarProperty Name="IdEstado" ColumnName="IdEstado" />
+                <ScalarProperty Name="Foto" ColumnName="Foto" />
+                <ScalarProperty Name="IdContratoContenedor" ColumnName="IdContratoContenedor" />
+                <ScalarProperty Name="IdContrato" ColumnName="IdContrato" />
+                <ScalarProperty Name="IdContratoFoto" ColumnName="IdContratoFoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

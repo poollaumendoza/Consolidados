@@ -12,7 +12,7 @@ namespace Consolidados.EntityLayer
         public TipoMovimiento oTipoMovimiento { get; set; }
         public Empresa oEmpresa { get; set; }
         public Lote oLote { get; set; }
-        public DateTime FechaMovimiento { get; set; }
+        public string FechaMovimiento { get; set; }
         public int StockInicial { get; set; }
         public int Ingreso { get; set; }
         public int Salida { get; set; }

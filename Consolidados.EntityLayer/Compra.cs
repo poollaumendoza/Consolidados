@@ -15,7 +15,7 @@ namespace Consolidados.EntityLayer
         public TipoDocumento oTipoDocumento { get; set; }
         public string Serie { get; set; }
         public string Correlativo { get; set; }
-        public DateTime FechaCompra { get; set; }
+        public string FechaCompra { get; set; }
         public decimal Importe { get; set; }
         public decimal IGV { get; set; }
         public decimal Total { get; set; }

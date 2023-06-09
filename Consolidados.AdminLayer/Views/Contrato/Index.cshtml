@@ -105,9 +105,9 @@
         var tabladata;
         var filaSeleccionada;
 
-        $("#txtfechacontrato").datepicker();
-        $("#txtfechacarga").datepicker();
-        $("#txtfechadescarga").datepicker();
+        $("#txtfechacontrato").datepicker({ dateFormat: "dd/mm/yy" }).datepicker('setDate', new Date());
+        $("#txtfechacarga").datepicker({ dateFormat: "dd/mm/yy" }).datepicker('setDate', new Date());
+        $("#txtfechadescarga").datepicker({ dateFormat: "dd/mm/yy" }).datepicker('setDate', new Date());
 
         tabladata = $("#tabla").DataTable({
             responsive: true,

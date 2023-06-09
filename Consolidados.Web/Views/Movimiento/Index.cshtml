@@ -1,0 +1,82 @@
+﻿@model IEnumerable<Consolidados.Web.Models.Movimiento>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FechaMovimiento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockInicial)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Ingreso)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Salida)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StockActual)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Empresa.NroDocumento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado.NombreEstado)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Lote.Descripcion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoMovimiento.NombreTipoMovimiento)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FechaMovimiento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockInicial)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Ingreso)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Salida)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StockActual)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Empresa.NroDocumento)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado.NombreEstado)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Lote.Descripcion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoMovimiento.NombreTipoMovimiento)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdMovimiento }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdMovimiento }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdMovimiento })
+        </td>
+    </tr>
+}
+
+</table>

@@ -48,7 +48,7 @@ namespace Consolidados.BusinessLayer
         {
             Mensaje = string.Empty;
 
-            if (obj.oContrato.IdContrato != 0)
+            if (obj.oContrato.IdContrato == 0)
                 Mensaje = "Debe seleccionar un contrato";
             else if (obj.oLote.IdLote == 0)
                 Mensaje = "Debe seleccionar un lote";

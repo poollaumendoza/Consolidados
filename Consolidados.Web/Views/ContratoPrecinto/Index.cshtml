@@ -1,0 +1,52 @@
+﻿@model IEnumerable<Consolidados.Web.Models.ContratoPrecinto>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NroPrecinto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Contrato.NroContrato)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContratoContenedor.NroContenedor)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estado.NombreEstado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NroPrecinto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Contrato.NroContrato)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContratoContenedor.NroContenedor)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estado.NombreEstado)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdContratoPrecinto }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdContratoPrecinto }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdContratoPrecinto })
+        </td>
+    </tr>
+}
+
+</table>

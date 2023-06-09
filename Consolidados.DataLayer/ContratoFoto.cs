@@ -206,7 +206,7 @@ namespace Consolidados.DataLayer
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoFoto_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdContratoFoto", id);
-                    Cmd.CommandType = CommandType.Text;
+                    Cmd.CommandType = CommandType.StoredProcedure;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;
                 }

@@ -147,7 +147,7 @@ namespace Consolidados.DataLayer
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Entidad_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdEntidad", id);
-                    Cmd.CommandType = CommandType.Text;
+                    Cmd.CommandType = CommandType.StoredProcedure;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;
                 }

@@ -6,6 +6,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace Consolidados.DataLayer
 {
@@ -148,7 +149,7 @@ namespace Consolidados.DataLayer
             }
             finally
             {
-                System.IO.Directory.CreateDirectory(ConfigurationManager.AppSettings["Photos"] + "\\" + obj.NroContratoLote);
+                System.IO.Directory.CreateDirectory(string.Format("{0}\\{1}", ConfigurationManager.AppSettings["Photos"], obj.NroContratoLote));
             }
             return IdAutogenerado;
         }
@@ -203,7 +204,7 @@ namespace Consolidados.DataLayer
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Contrato_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdContrato", id);
-                    Cmd.CommandType = CommandType.Text;
+                    Cmd.CommandType = CommandType.StoredProcedure;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;
                 }

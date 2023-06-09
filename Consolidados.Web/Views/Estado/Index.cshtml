@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Consolidados.Web.Models.Estado>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NombreEstado)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NombreEstado)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.IdEstado }) |
+            @Html.ActionLink("Details", "Details", new { id=item.IdEstado }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.IdEstado })
+        </td>
+    </tr>
+}
+
+</table>

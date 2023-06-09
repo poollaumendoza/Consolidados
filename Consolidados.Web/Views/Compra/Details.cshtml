@@ -1,0 +1,99 @@
+﻿@model Consolidados.Web.Models.Compra
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Compra</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Serie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Serie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Correlativo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Correlativo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCompra)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCompra)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Importe)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Importe)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IGV)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IGV)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Total)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Total)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empresa.NroDocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empresa.NroDocumento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Entidad.NroDocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Entidad.NroDocumento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado.NombreEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado.NombreEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoDocumento.NombreTipoDocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoDocumento.NombreTipoDocumento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdCompra }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

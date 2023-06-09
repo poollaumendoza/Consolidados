@@ -208,7 +208,7 @@ namespace Consolidados.DataLayer
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoPrecinto_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdContratoPrecinto", id);
-                    Cmd.CommandType = CommandType.Text;
+                    Cmd.CommandType = CommandType.StoredProcedure;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;
                 }

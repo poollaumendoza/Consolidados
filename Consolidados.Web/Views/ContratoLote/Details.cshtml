@@ -1,0 +1,51 @@
+﻿@model Consolidados.Web.Models.ContratoLote
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ContratoLote</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Cantidad)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Cantidad)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contrato.NroContrato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contrato.NroContrato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado.NombreEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado.NombreEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lote.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lote.Descripcion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdContratoLote }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

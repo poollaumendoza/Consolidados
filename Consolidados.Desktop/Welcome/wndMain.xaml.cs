@@ -62,7 +62,7 @@ namespace Consolidados.Desktop.Welcome
 
         private void TlbReportes_Click(object sender, RoutedEventArgs e)
         {
-            oWindow = new Forms.Operaciones.Reportes.wndListaReportes();
+            oWindow = new Forms.Operaciones.Reportes.wndInfoContenedores();
             oWindow.ShowDialog();
         }
 

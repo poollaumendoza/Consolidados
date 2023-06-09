@@ -52,13 +52,18 @@
     <Reference Include="Microsoft.Xaml.Behaviors, Version=1.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Xaml.Behaviors.Wpf.1.1.39\lib\net45\Microsoft.Xaml.Behaviors.dll</HintPath>
     </Reference>
+    <Reference Include="ReachFramework" />
+    <Reference Include="sapbusinessobjects.wpf.viewer, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
+    <Reference Include="SAPBusinessObjects.WPF.ViewerShared, Version=13.0.3500.0, Culture=neutral, PublicKeyToken=692fbea5521e1304, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Printing" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -119,10 +124,16 @@
     <Compile Include="Forms\Operaciones\ContratoPrecinto\wndPrecinto.xaml.cs">
       <DependentUpon>wndPrecinto.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Operaciones\Reportes\rptInfoContenedores.cs">
+    <Compile Include="Forms\Operaciones\LlenadoContenedor\wndListaLlenado.xaml.cs">
+      <DependentUpon>wndListaLlenado.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\LlenadoContenedor\wndLlenadoContenedor.xaml.cs">
+      <DependentUpon>wndLlenadoContenedor.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\Operaciones\Reportes\rptInfoLlenado.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>rptInfoContenedores.rpt</DependentUpon>
+      <DependentUpon>rptInfoLlenado.rpt</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Forms\Operaciones\Reportes\wndInfoContenedores.xaml.cs">
@@ -225,6 +236,14 @@
     <Compile Include="Forms\Operaciones\Contrato\wndListaContrato.xaml.cs">
       <DependentUpon>wndListaContrato.xaml</DependentUpon>
     </Compile>
+    <Page Include="Forms\Operaciones\LlenadoContenedor\wndListaLlenado.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Forms\Operaciones\LlenadoContenedor\wndLlenadoContenedor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Forms\Operaciones\Reportes\wndInfoContenedores.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -256,9 +275,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Forms\Operaciones\Reportes\rptInfoContenedores.rpt">
+    <EmbeddedResource Include="Forms\Operaciones\Reportes\rptInfoLlenado.rpt">
       <Generator>CrystalDecisions.VSDesigner.CodeGen.ReportCodeGenerator</Generator>
-      <LastGenOutput>rptInfoContenedores.cs</LastGenOutput>
+      <LastGenOutput>rptInfoLlenado.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

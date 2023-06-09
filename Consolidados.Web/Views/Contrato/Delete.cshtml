@@ -1,0 +1,97 @@
+﻿@model Consolidados.Web.Models.Contrato
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Contrato</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NroContrato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NroContrato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NroContratoLote)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NroContratoLote)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaContrato)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaContrato)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaCarga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaCarga)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LugarCarga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LugarCarga)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaDescarga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaDescarga)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LugarDescarga)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LugarDescarga)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empresa.NroDocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empresa.NroDocumento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado.NombreEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado.NombreEstado)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

@@ -1,0 +1,16 @@
+﻿<mah:MetroWindow x:Class="Consolidados.Desktop.Forms.Operaciones.LlenadoContenedor.wndListaLlenado"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 Title="Registros de Llenado" Height="450" Width="800">
+    <Grid>
+        <ToolBar VerticalAlignment="Top">
+            <Button>
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="/Resources/add.png" Width="32"/>
+                    <Label Content="Registro de Llenado" VerticalContentAlignment="Center"/>
+                </StackPanel>
+            </Button>
+        </ToolBar>
+    </Grid>
+</mah:MetroWindow>

@@ -1,0 +1,35 @@
+﻿@model Consolidados.Web.Models.TipoMovimiento
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>TipoMovimiento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.NombreTipoMovimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NombreTipoMovimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado.NombreEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado.NombreEstado)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdTipoMovimiento }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

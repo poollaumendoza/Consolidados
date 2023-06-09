@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a87b3dd5340f42c9a6009e02d3b80b42" Name="Diagram1">
+        <EntityTypeShape EntityType="ConsolidadosModel.Almacen" Width="1.5" PointX="3" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.ClasificacionTipoDocumento" Width="1.5" PointX="3" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.Compra" Width="1.5" PointX="13.5" PointY="19.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.CompraDetalle" Width="1.5" PointX="10.5" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.Contrato" Width="1.5" PointX="15.75" PointY="16.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.ContratoContenedor" Width="1.5" PointX="18" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.ContratoLote" Width="1.5" PointX="7.5" PointY="15.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.ContratoPeso" Width="1.5" PointX="20.25" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.ContratoPrecinto" Width="1.5" PointX="23.25" PointY="19" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.Empresa" Width="1.5" PointX="10.5" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.Entidad" Width="1.5" PointX="13.5" PointY="14.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.Estado" Width="1.5" PointX="0.75" PointY="18.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.LlenadoContenedor" Width="1.5" PointX="7.5" PointY="23.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.Lote" Width="1.5" PointX="5.25" PointY="18.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.Movimiento" Width="1.5" PointX="10.5" PointY="24" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.Persona" Width="1.5" PointX="13.5" PointY="24.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.TipoDocumento" Width="1.5" PointX="8.25" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.TipoMovimiento" Width="1.5" PointX="3" PointY="23.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsolidadosModel.Usuario" Width="1.5" PointX="15.75" PointY="22.375" IsExpanded="true" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Almacen_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Lote_Almacen" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ClasificacionTipoDocumento_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_TipoDocumento_ClasificacionTipoDocumento" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Compra_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Compra_Entidad" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Compra_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Compra_TipoDocumento" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_CompraDetalle_Compra" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_CompraDetalle_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_CompraDetalle_Lote" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Contrato_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Contrato_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoContenedor_Contrato" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoLote_Contrato" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoPeso_Contrato" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoPrecinto_Contrato" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_LlenadoContenedor_Contrato" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoContenedor_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoPeso_ContratoContenedor" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoPrecinto_ContratoContenedor" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_LlenadoContenedor_ContratoContenedor" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoLote_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoLote_Lote" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoPeso_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoPrecinto_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Empresa_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Empresa_TipoDocumento" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Lote_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Movimiento_Empresa" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Entidad_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Entidad_TipoDocumento" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_LlenadoContenedor_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Lote_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Movimiento_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Persona_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_TipoDocumento_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_TipoMovimiento_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Usuario_Estado" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_LlenadoContenedor_Lote" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Movimiento_Lote" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Movimiento_TipoMovimiento" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Persona_TipoDocumento" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsolidadosModel.FK_Usuario_Persona" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="ConsolidadosModel.ContratoFoto" Width="1.5" PointX="20.25" PointY="15.125" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoFoto_Contrato" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoFoto_ContratoContenedor" />
+        <AssociationConnector Association="ConsolidadosModel.FK_ContratoFoto_Estado" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

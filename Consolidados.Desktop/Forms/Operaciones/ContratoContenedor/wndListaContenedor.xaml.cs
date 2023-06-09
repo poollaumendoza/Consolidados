@@ -47,8 +47,14 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoContenedor
                 CargarContenedores();
         }
 
-        private void BtnEliminar_Click(object sender, RoutedEventArgs e)
+        private async void BtnEliminar_Click(object sender, RoutedEventArgs e)
         {
+            string Mensaje = string.Empty;
+            IdContenedor = (int)((Button)sender).CommandParameter;
+            if (bContenedor.Eliminar(IdContenedor, out Mensaje))
+                await this.ShowMessageAsync("Consolidados", Mensaje, MessageDialogStyle.Affirmative);
+            else
+                await this.ShowMessageAsync("Consolidados", Mensaje, MessageDialogStyle.Affirmative);
 
         }
     }

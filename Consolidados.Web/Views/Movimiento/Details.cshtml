@@ -1,0 +1,91 @@
+﻿@model Consolidados.Web.Models.Movimiento
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Movimiento</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaMovimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaMovimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockInicial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockInicial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ingreso)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ingreso)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Salida)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Salida)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StockActual)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StockActual)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empresa.NroDocumento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empresa.NroDocumento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado.NombreEstado)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado.NombreEstado)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lote.Descripcion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lote.Descripcion)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoMovimiento.NombreTipoMovimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoMovimiento.NombreTipoMovimiento)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IdMovimiento }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

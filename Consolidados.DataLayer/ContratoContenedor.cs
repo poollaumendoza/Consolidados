@@ -201,8 +201,7 @@ namespace Consolidados.DataLayer
             finally
             {
                 Directory.CreateDirectory(
-                    string.Format(
-                        "{0}\\{1}\\{2}", 
+                    Path.Combine(
                         ConfigurationManager.AppSettings["Photos"], 
                         obj.oContrato.NroContratoLote, 
                         obj.NroContenedor));
@@ -255,7 +254,7 @@ namespace Consolidados.DataLayer
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoContenedor_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdContratoContenedor", id);
-                    Cmd.CommandType = CommandType.Text;
+                    Cmd.CommandType = CommandType.StoredProcedure;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;
                 }
