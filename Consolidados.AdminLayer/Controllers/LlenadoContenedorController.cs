@@ -37,10 +37,17 @@ namespace Consolidados.AdminLayer.Controllers
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
 
+        //public JsonResult ListarLote()
+        //{
+        //    List<EntityLayer.Lote> oLista = new List<EntityLayer.Lote>();
+        //    oLista = new BusinessLayer.Lote().Listar();
+        //    return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        //}
+
         public JsonResult ListarLote()
         {
-            List<EntityLayer.Lote> oLista = new List<EntityLayer.Lote>();
-            oLista = new BusinessLayer.Lote().Listar();
+            List<EntityLayer.ContratoLote> oLista = new List<EntityLayer.ContratoLote>();
+            oLista = new BusinessLayer.ContratoLote().Listar();
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
 

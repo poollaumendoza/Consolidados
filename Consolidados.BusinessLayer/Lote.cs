@@ -34,6 +34,8 @@ namespace Consolidados.BusinessLayer
                 Mensaje = "La dirección no puede ser vacía";
             else if (obj.Cantidad == 0)
                 Mensaje = "La cantidad no puede ser 0";
+            else if (obj.Peso == 0)
+                Mensaje = "El peso no puede ser 0";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado para este Lote";
 
@@ -57,6 +59,8 @@ namespace Consolidados.BusinessLayer
                 Mensaje = "La dirección no puede ser vacía";
             else if (obj.Cantidad == 0)
                 Mensaje = "La cantidad no puede ser 0";
+            else if (obj.Peso == 0)
+                Mensaje = "El peso no puede ser 0";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado para este Lote";
 

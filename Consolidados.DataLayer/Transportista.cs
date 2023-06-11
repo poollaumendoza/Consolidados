@@ -1,26 +1,26 @@
-﻿using System.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Consolidados.DataLayer
 {
-    public class Lote
+    public class Transportista
     {
-        public List<EntityLayer.Lote> Listar()
+        public List<EntityLayer.Transportista> Listar()
         {
-            List<EntityLayer.Lote> lista = new List<EntityLayer.Lote>();
+            List<EntityLayer.Transportista> lista = new List<EntityLayer.Transportista>();
 
             try
             {
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "Select lt.IdLote, lt.IdAlmacen, a.NombreAlmacen, lt.IdEmpresa, emp.RazonSocial, lt.Descripcion, lt.NroLote, lt.Cantidad, lt.Peso, lt.IdEstado, est.NombreEstado from Lote lt join Almacen a on a.IdAlmacen = lt.IdAlmacen join Empresa emp on emp.IdEmpresa = lt.IdEmpresa join estado est on lt.IdEstado = est.IdEstado";
+                        "Select t.IdTransportista, t.Apellidos, t.Nombres, t.DNI, t.LicConducir, t.Telefono, t.IdEstado, e.NombreEstado from Transportista t join estado e on t.idestado = e.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -28,23 +28,14 @@ namespace Consolidados.DataLayer
                     {
                         while (Dr.Read())
                         {
-                            lista.Add(new EntityLayer.Lote()
+                            lista.Add(new EntityLayer.Transportista()
                             {
-                                IdLote = Convert.ToInt32(Dr["IdLote"]),
-                                oAlmacen = new EntityLayer.Almacen()
-                                {
-                                    IdAlmacen = Convert.ToInt32(Dr["IdAlmacen"]),
-                                    NombreAlmacen = Dr["NombreAlmacen"].ToString()
-                                },
-                                oEmpresa = new EntityLayer.Empresa()
-                                {
-                                    IdEmpresa = Convert.ToInt32(Dr["IdEmpresa"]),
-                                    RazonSocial = Dr["RazonSocial"].ToString()
-                                },
-                                Descripcion = Dr["Descripcion"].ToString(),
-                                NroLote = Dr["NroLote"].ToString(),
-                                Cantidad = Convert.ToInt32(Dr["Cantidad"]),
-                                Peso = Convert.ToInt32(Dr["Peso"]),
+                                IdTransportista = Convert.ToInt32(Dr["IdTransportista"]),
+                                Apellidos = Dr["Apellidos"].ToString(),
+                                Nombres = Dr["Nombres"].ToString(),
+                                DNI = Dr["DNI"].ToString(),
+                                LicConducir = Dr["LicConducir"].ToString(),
+                                Telefono = Dr["Telefono"].ToString(),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -57,48 +48,39 @@ namespace Consolidados.DataLayer
             }
             catch
             {
-                lista = new List<EntityLayer.Lote>();
+                lista = new List<EntityLayer.Transportista>();
             }
 
             return lista;
         }
 
-        public List<EntityLayer.Lote> Listar(int IdLote)
+        public List<EntityLayer.Transportista> Listar(int IdTransportista)
         {
-            List<EntityLayer.Lote> lista = new List<EntityLayer.Lote>();
+            List<EntityLayer.Transportista> lista = new List<EntityLayer.Transportista>();
 
             try
             {
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "Select lt.IdLote, lt.IdAlmacen, a.NombreAlmacen, lt.IdEmpresa, emp.RazonSocial, lt.Descripcion, lt.NroLote, lt.Cantidad, lt.Peso, lt.IdEstado, est.NombreEstado from Lote lt join Almacen a on a.IdAlmacen = lt.IdAlmacen join Empresa emp on emp.IdEmpresa = lt.IdEmpresa join estado est on lt.IdEstado = est.IdEstado where lt.IdLote = @IdLote";
+                        "Select t.IdTransportista, t.Apellidos, t.Nombres, t.DNI, t.LicConducir, t.Telefono, t.IdEstado, e.NombreEstado from Transportista t join estado e on t.idestado = e.IdEstado where t.IdTransportista = @IdTransportista";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
-                    Cmd.Parameters.AddWithValue("IdLote", IdLote);
-                    Cmd.CommandType = CommandType.Text;
+                    Cmd.Parameters.AddWithValue("IdTransportista", IdTransportista);
+                    Cmd.CommandType = System.Data.CommandType.Text;
 
                     Cnx.Open();
                     using (SqlDataReader Dr = Cmd.ExecuteReader())
                     {
                         while (Dr.Read())
                         {
-                            lista.Add(new EntityLayer.Lote()
+                            lista.Add(new EntityLayer.Transportista()
                             {
-                                IdLote = Convert.ToInt32(Dr["IdLote"]),
-                                oAlmacen = new EntityLayer.Almacen()
-                                {
-                                    IdAlmacen = Convert.ToInt32(Dr["IdAlmacen"]),
-                                    NombreAlmacen = Dr["NombreAlmacen"].ToString()
-                                },
-                                oEmpresa = new EntityLayer.Empresa()
-                                {
-                                    IdEmpresa = Convert.ToInt32(Dr["IdEmpresa"]),
-                                    RazonSocial = Dr["RazonSocial"].ToString()
-                                },
-                                Descripcion = Dr["Descripcion"].ToString(),
-                                NroLote = Dr["NroLote"].ToString(),
-                                Cantidad = Convert.ToInt32(Dr["Cantidad"]),
-                                Peso = Convert.ToInt32(Dr["Peso"]),
+                                IdTransportista = Convert.ToInt32(Dr["IdTransportista"]),
+                                Apellidos = Dr["Apellidos"].ToString(),
+                                Nombres = Dr["Nombres"].ToString(),
+                                DNI = Dr["DNI"].ToString(),
+                                LicConducir = Dr["LicConducir"].ToString(),
+                                Telefono = Dr["Telefono"].ToString(),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -111,13 +93,13 @@ namespace Consolidados.DataLayer
             }
             catch
             {
-                lista = new List<EntityLayer.Lote>();
+                lista = new List<EntityLayer.Transportista>();
             }
 
             return lista;
         }
 
-        public int Registrar(EntityLayer.Lote obj, out string Mensaje)
+        public int Registrar(EntityLayer.Transportista obj, out string Mensaje)
         {
             int IdAutogenerado = 0;
 
@@ -126,13 +108,12 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_Lote_Registrar", Cnx);
-                    Cmd.Parameters.AddWithValue("IdAlmacen", obj.oAlmacen.IdAlmacen);
-                    Cmd.Parameters.AddWithValue("IdEmpresa", obj.oEmpresa.IdEmpresa);
-                    Cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
-                    Cmd.Parameters.AddWithValue("NroLote", obj.NroLote);
-                    Cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
-                    Cmd.Parameters.AddWithValue("Peso", obj.Peso);
+                    SqlCommand Cmd = new SqlCommand("sp_Transportista_Registrar", Cnx);
+                    Cmd.Parameters.AddWithValue("Apellidos", obj.Apellidos);
+                    Cmd.Parameters.AddWithValue("Nombres", obj.Apellidos);
+                    Cmd.Parameters.AddWithValue("DNI", obj.Apellidos);
+                    Cmd.Parameters.AddWithValue("LicConducir", obj.Apellidos);
+                    Cmd.Parameters.AddWithValue("Telefono", obj.Apellidos);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -154,7 +135,7 @@ namespace Consolidados.DataLayer
             return IdAutogenerado;
         }
 
-        public bool Editar(EntityLayer.Lote obj, out string Mensaje)
+        public bool Editar(EntityLayer.Transportista obj, out string Mensaje)
         {
             bool resultado = false;
             Mensaje = string.Empty;
@@ -163,14 +144,13 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_Lote_Editar", Cnx);
-                    Cmd.Parameters.AddWithValue("IdLote", obj.IdLote);
-                    Cmd.Parameters.AddWithValue("IdAlmacen", obj.oAlmacen.IdAlmacen);
-                    Cmd.Parameters.AddWithValue("IdEmpresa", obj.oEmpresa.IdEmpresa);
-                    Cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
-                    Cmd.Parameters.AddWithValue("NroLote", obj.NroLote);
-                    Cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
-                    Cmd.Parameters.AddWithValue("Peso", obj.Peso);
+                    SqlCommand Cmd = new SqlCommand("sp_Transportista_Editar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdTransportista", obj.IdTransportista);
+                    Cmd.Parameters.AddWithValue("Apellidos", obj.Apellidos);
+                    Cmd.Parameters.AddWithValue("Nombres", obj.Apellidos);
+                    Cmd.Parameters.AddWithValue("DNI", obj.Apellidos);
+                    Cmd.Parameters.AddWithValue("LicConducir", obj.Apellidos);
+                    Cmd.Parameters.AddWithValue("Telefono", obj.Apellidos);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -200,8 +180,8 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_Lote_Eliminar", Cnx);
-                    Cmd.Parameters.AddWithValue("@IdLote", id);
+                    SqlCommand Cmd = new SqlCommand("sp_Transportista_Eliminar", Cnx);
+                    Cmd.Parameters.AddWithValue("@IdTransportista", id);
                     Cmd.CommandType = CommandType.StoredProcedure;
                     Cnx.Open();
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;

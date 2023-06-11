@@ -63,6 +63,8 @@
     <Compile Include="ReporteLlenado.cs" />
     <Compile Include="TipoDocumento.cs" />
     <Compile Include="TipoMovimiento.cs" />
+    <Compile Include="Transportista.cs" />
+    <Compile Include="UnidadTransporte.cs" />
     <Compile Include="Usuario.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

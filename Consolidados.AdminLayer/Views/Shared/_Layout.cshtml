@@ -72,17 +72,20 @@
                                 <a class="nav-link" href="@Url.Action("Index", "Usuario")">Usuario</a>
                             </nav>
                         </div>
-                        @*<a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
+                        <div class="sb-sidenav-menu-heading">Operaciones</div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts3" aria-expanded="false" aria-controls="collapseLayouts3">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Operaciones
+                            Transporte
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                        </a>*@
-                        @*<div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        </a>
+                        <div class="collapse" id="collapseLayouts3" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                
-                                <a class="nav-link" href="@Url.Action("Index", "LlenadoContenedor")">Llenado de Contenedores</a>
+                                <a class="nav-link" href="@Url.Action("Index", "Transportista")">Transportista</a>
+                                <a class="nav-link" href="@Url.Action("Index", "UnidadTransporte")">Unidades de Transporte</a>
+                                <a class="nav-link" href="@Url.Action("Index", "ContratoLote")">Cargar Bigbags</a>
+                                <a class="nav-link" href="@Url.Action("Index", "ReporteTransporte")">Reporte Transporte</a>
                             </nav>
-                        </div>*@
+                        </div>
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
                             <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                             Operaciones
@@ -97,7 +100,6 @@
                                 </a>
                                 <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
                                     <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="@Url.Action("Index", "ContratoLote")">Lotes</a>
                                         <a class="nav-link" href="@Url.Action("Index", "ContratoContenedor")">Contenedores</a>
                                         <a class="nav-link" href="@Url.Action("Index", "LlenadoContenedor")">Llenado</a>
                                         <a class="nav-link" href="@Url.Action("Index", "ContratoFoto")">Fotos</a>
@@ -105,17 +107,17 @@
                                         <a class="nav-link" href="@Url.Action("Index", "ContratoPrecinto")">Precintos</a>
                                     </nav>
                                 </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                    Error
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="401.html">401 Page</a>
-                                        <a class="nav-link" href="404.html">404 Page</a>
-                                        <a class="nav-link" href="500.html">500 Page</a>
-                                    </nav>
-                                </div>
+                            </nav>
+                        </div>
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts4" aria-expanded="false" aria-controls="collapseLayouts4">
+                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                            Reportes
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts4" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="@Url.Action("Index", "Empresa")">Tickets de Peso</a>
+                                <a class="nav-link" href="@Url.Action("Index", "ContratoLote")">¿Cuántos quedan?</a>
                             </nav>
                         </div>
                         <div class="sb-sidenav-menu-heading">Addons</div>

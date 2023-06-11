@@ -249,7 +249,7 @@
                 success: function (data) {
                     if (data.data != null) {
                         $.each(data.data, function (index, item) {
-                            $("<option>").attr({ "value": item.IdLote }).text(item.NroLote).appendTo("#cbolote");
+                            $("<option>").attr({ "value": item.oLote.IdLote }).text(item.oLote.NroLote).appendTo("#cbolote");
                         })
                         ObtenerCantidadByLote();
                     }

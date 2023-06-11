@@ -1,16 +1,17 @@
-﻿@{
-    ViewBag.Title = "Lotes";
+﻿
+@{
+    ViewBag.Title = "Unidad de Transporte";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <ol class="breadcrumb mb-4 mt-4">
     <li class="breadcrumb-item"><a href="@Url.Action("Index", "Home")">Mantenimiento</a></li>
-    <li class="breadcrumb-item active">Lotes</li>
+    <li class="breadcrumb-item active">Unidad de Transporte</li>
 </ol>
 
 <div class="card">
     <div class="card-header">
-        <i class="fas fa-table me-1"></i>Lotes
+        <i class="fas fa-table me-1"></i>Unidades de Transporte
     </div>
     <div class="card-body">
         <div class="row">
@@ -22,13 +23,9 @@
         <table id="tabla" class="display cell-border" style="width: 100%">
             <thead>
                 <tr>
-                    <th>Nombre de Almacen</th>
-                    <th>Razon Social</th>
-                    <th>Descripción</th>
-                    <th>Nro. Lote</th>
-                    <th>Cantidad</th>
-                    <th>Peso</th>
-                    <th>Estado</th>
+                    <th>Nombre del Almacén</th>
+                    <th>Dirección del Almacén</th>
+                    <th>Estado del Almacén</th>
                     <th></th>
                 </tr>
             </thead>
@@ -41,38 +38,22 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header bg-dark text-white">
-                <h5 class="modal-title" id="exampleModalLabel">Nuevo Lote</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Nueva Unidad de Transporte</h5>
                 <button type="button" class="btn-close-white" data-bs-dismiss="modal" aria-label="Cerrar"></button>
             </div>
             <div class="modal-body">
                 <input id="txtid" type="hidden" value="0" />
                 <div class="row g-1">
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Almacen:</label>
-                        <select id="cboalmacen" class="form-select"></select>
-                    </div>
-                    <div class="col-sm-12">
-                        <label for="exampleFormControlInput1" class="form-label">Empresa:</label>
-                        <select id="cboempresa" class="form-select"></select>
-                    </div>
-                    <div class="col-sm-12">
-                        <label for="txtdescripcion" class="form-label">Descripción:</label>
-                        <input type="text" class="form-control" id="txtdescripcion" placeholder="Descripción" autocomplete="off">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="txtnrolote" class="form-label">Nro. Lote:</label>
-                        <input type="text" class="form-control" id="txtnrolote" placeholder="Nro. Lote" autocomplete="off">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="txtcantidad" class="form-label">Cantidad:</label>
-                        <input type="number" class="form-control" id="txtcantidad" autocomplete="off">
-                    </div>
-                    <div class="col-sm-4">
-                        <label for="txtpeso" class="form-label">Peso:</label>
-                        <input type="number" class="form-control" id="txtpeso" autocomplete="off">
+                        <label for="txtnombrealmacen" class="form-label">Almacen:</label>
+                        <input type="text" class="form-control" id="txtnombrealmacen" placeholder="Nombre del Almacen" autocomplete="off">
                     </div>
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Estado:</label>
+                        <label for="txtdireccion" class="form-label">Dirección:</label>
+                        <input type="text" class="form-control" id="txtdireccion" placeholder="Dirección del Almacen" autocomplete="off">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="exampleFormControlInput1" class="form-label">Estado</label>
                         <select id="cboestado" class="form-select"></select>
                     </div>
                 </div>
@@ -86,7 +67,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar Lote</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar Almacen</button>
             </div>
         </div>
     </div>
@@ -100,25 +81,13 @@
             responsive: true,
             ordering: false,
             "ajax": {
-                url: '@Url.Action("ListarLote", "Lote")',
+                url: '@Url.Action("ListarAlmacen", "Almacen")',
                 type: "GET",
                 dataType: "json"
             },
             "columns": [
-                {
-                    "data": "oAlmacen", "render": function (data) {
-                        return data.NombreAlmacen
-                    }
-                },
-                {
-                    "data": "oEmpresa", "render": function (data) {
-                        return data.RazonSocial
-                    }
-                },
-                { "data": "Descripcion" },
-                { "data": "NroLote" },
-                { "data": "Cantidad" },
-                { "data": "Peso" },
+                { "data": "NombreAlmacen" },
+                { "data": "Direccion" },
                 {
                     "data": "oEstado", "render": function (data) {
                         return data.NombreEstado
@@ -139,23 +108,15 @@
 
         function abrirModal(json) {
             $("#txtid").val(0);
-            $("#cboalmacen").val($("#cboalmacen option:first").val());
-            $("#cboempresa").val($("#cboempresa option:first").val());
-            $("#txtdescripcion").val("");
-            $("#txtnrolote").val("");
-            $("#txtcantidad").val("");
-            $("#txtpeso").val("");
+            $("#txtnombrealmacen").val("");
+            $("#txtdireccion").val("");
             $("#cboestado").val($("#cboestado option:first").val());
             $("#mensajeError").hide();
 
             if (json != null) {
-                $("#txtid").val(json.IdLote);
-                $("#cboalmacen").val(json.oAlmacen.IdAlmacen);
-                $("#cboempresa").val(json.oEmpresa.IdEmpresa);
-                $("#txtdescripcion").val(json.Descripcion);
-                $("#txtnrolote").val(json.NroLote);
-                $("#txtcantidad").val(json.Cantidad);
-                $("#txtpeso").val(json.Peso);
+                $("#txtid").val(json.IdAlmacen);
+                $("#txtnombrealmacen").val(json.NombreAlmacen);
+                $("#txtdireccion").val(json.Direccion);
                 $("#cboestado").val(json.oEstado.IdEstado);
             }
             $("#FormModal").modal("show");
@@ -182,48 +143,6 @@
             },
         });
 
-        /*Control de Lista Desplegable: Almacen*/
-        jQuery.ajax({
-            url: '@Url.Action("ListarAlmacen", "Almacen")',
-            type: "GET",
-            data: null,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboalmacen");
-                $.each(data.data, function (index, item) {
-                    $("<option>").attr({ "value": item.IdAlmacen }).text(item.NombreAlmacen).appendTo("#cboalmacen");
-                })
-            },
-            error: function(error) {
-                console.log(error)
-            },
-            beforeSend: function () {
-
-            },
-        });
-
-        /*Control de Lista Desplegable: Empresa*/
-        jQuery.ajax({
-            url: '@Url.Action("ListarEmpresa", "Empresa")',
-            type: "GET",
-            data: null,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboempresa");
-                $.each(data.data, function (index, item) {
-                    $("<option>").attr({ "value": item.IdEmpresa }).text(item.RazonSocial).appendTo("#cboempresa");
-                })
-            },
-            error: function(error) {
-                console.log(error)
-            },
-            beforeSend: function () {
-
-            },
-        });
-
         $("#tabla tbody").on("click", '.btn-editar', function () {
             filaSeleccionada = $(this).closest("tr");
             var data = tabladata.row(filaSeleccionada).data();
@@ -231,8 +150,8 @@
         })
 
         $("#tabla tbody").on("click", '.btn-eliminar', function () {
-            var loteseleccionado = $(this).closest("tr");
-            var data = tabladata.row(loteseleccionado).data();
+            var almacenseleccionado = $(this).closest("tr");
+            var data = tabladata.row(almacenseleccionado).data();
 
             swal({
                 title: "Consolidados",
@@ -247,13 +166,13 @@
             },
                 function () {
                     jQuery.ajax({
-                        url: '@Url.Action("EliminarLote", "Lote")',
+                        url: '@Url.Action("EliminarAlmacen", "Almacen")',
                         type: "POST",
-                        data: JSON.stringify({ id: data.IdLote }),
+                        data: JSON.stringify({ id: data.IdAlmacen }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (data) {
                             if (data.resultado) {
-                                tabladata.row(loteseleccionado).remove().draw();
+                                tabladata.row(almacenseleccionado).remove().draw();
                             } else {
                                 swal("No se pudo eliminar el registro", data.mensaje, "error")
                             }
@@ -271,20 +190,10 @@
         })
 
         function Guardar() {
-            var Lote = {
-                IdLote: $("#txtid").val(),
-                oAlmacen: {
-                    IdAlmacen: $("#cboalmacen option:selected").val(),
-                    NombreAlmacen: $("#cboalmacen option:selected").text()
-                },
-                oEmpresa: {
-                    IdEmpresa: $("#cboempresa option:selected").val(),
-                    RazonSocial: $("#cboempresa option:selected").text()
-                },
-                Descripcion: $("#txtdescripcion").val(),
-                NroLote: $("#txtnrolote").val(),
-                Cantidad: $("#txtcantidad").val(),
-                Peso: $("#txtpeso").val(),
+            var Almacen = {
+                IdAlmacen: $("#txtid").val(),
+                NombreAlmacen: $("#txtnombrealmacen").val(),
+                Direccion: $("#txtdireccion").val(),
                 oEstado: {
                     IdEstado: $("#cboestado option:selected").val(),
                     NombreEstado: $("#cboestado option:selected").text()
@@ -292,17 +201,17 @@
             }
 
             jQuery.ajax({
-                url: '@Url.Action("GuardarLote", "Lote")',
+                url: '@Url.Action("GuardarAlmacen", "Almacen")',
                 type: "POST",
-                data: JSON.stringify({ objeto: Lote }),
+                data: JSON.stringify({ objeto: Almacen }),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     $(".modal-body").LoadingOverlay("hide");
-                    if (Lote.IdLote == 0) {
+                    if (Almacen.IdAlmacen == 0) {
                         if (data.resultado != 0) {
-                            Lote.IdLote = data.resultado;
-                            tabladata.row.add(Lote).draw(false);
+                            Almacen.IdAlmacen = data.resultado;
+                            tabladata.row.add(Almacen).draw(false);
                             $("#FormModal").modal("hide");
                         } else {
                             $(".modal-body").LoadingOverlay("hide");
@@ -311,7 +220,7 @@
                         }
                     } else {
                         if (data.resultado) {
-                            tabladata.row(filaSeleccionada).data(Lote).draw(false);
+                            tabladata.row(filaSeleccionada).data(Almacen).draw(false);
                             filaSeleccionada = null;
                             $("#FormModal").modal("hide");
                         } else {

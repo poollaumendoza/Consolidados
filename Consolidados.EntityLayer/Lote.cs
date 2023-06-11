@@ -14,6 +14,7 @@ namespace Consolidados.EntityLayer
         public string Descripcion { get; set; }
         public string NroLote { get; set; }
         public int Cantidad { get; set; }
+        public int Peso { get; set; }
         public Estado oEstado { get; set; }
     }
 }
