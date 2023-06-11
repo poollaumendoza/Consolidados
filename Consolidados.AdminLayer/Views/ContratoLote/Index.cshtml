@@ -24,8 +24,10 @@
             <thead>
                 <tr>
                     <th># Contrato</th>
+                    <th>Unid. Transporte</th>
                     <th># Lote</th>
                     <th>Cantidad</th>
+                    <th>Peso</th>
                     <th>Estado</th>
                     <th></th>
                 </tr>
@@ -46,11 +48,15 @@
                 <input id="txtid" type="hidden" value="0" />
                 <div class="row g-1">
                     <div class="col-sm-12">
-                        <label for="exampleFormControlInput1" class="form-label">Contrato:</label>
+                        <label for="cbocontrato" class="form-label">Contrato:</label>
                         <select id="cbocontrato" class="form-select"></select>
                     </div>
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Lote:</label>
+                        <label for="cbotransporte" class="form-label">Transporte:</label>
+                        <select id="cbotransporte" class="form-select"></select>
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="cbolote" class="form-label">Lote:</label>
                         <select id="cbolote" class="form-select"></select>
                     </div>
                     <div class="col-sm-6">
@@ -58,7 +64,11 @@
                         <input type="number" class="form-control" id="txtcantidad" autocomplete="off">
                     </div>
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Estado:</label>
+                        <label for="txtpeso" class="form-label">Peso:</label>
+                        <input type="number" class="form-control" id="txtpeso" autocomplete="off">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="cboestado" class="form-label">Estado:</label>
                         <select id="cboestado" class="form-select"></select>
                     </div>
                 </div>
@@ -72,7 +82,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar Datos</button>
             </div>
         </div>
     </div>
@@ -97,11 +107,17 @@
                     }
                 },
                 {
+                    "data": "oUnidadTransporte", "render": function (data) {
+                        return data.PlacaTracto
+                    }
+                },
+                {
                     "data": "oLote", "render": function (data) {
                         return data.NroLote
                     }
                 },
                 { "data": "Cantidad" },
+                { "data": "Peso" },
                 {
                     "data": "oEstado", "render": function (data) {
                         return data.NombreEstado
@@ -123,16 +139,20 @@
         function abrirModal(json) {
             $("#txtid").val(0);
             $("#cbocontrato").val($("#cbocontrato option:first").val());
+            $("#cbotransporte").val($("#cbotransporte option:first").val());
             $("#cbolote").val($("#cbolote option:first").val());
             $("#txtcantidad").val("");
+            $("#txtpeso").val("");
             $("#cboestado").val($("#cboestado option:first").val());
             $("#mensajeError").hide();
 
             if (json != null) {
                 $("#txtid").val(json.IdContratoLote);
                 $("#cbocontrato").val(json.oContrato.IdContrato);
+                $("#cbotransporte").val(json.oUnidadTransporte.IdUnidadTransporte);
                 $("#cbolote").val(json.oLote.IdLote);
                 $("#txtcantidad").val(json.Cantidad);
+                $("#txtpeso").val(json.Peso);
                 $("#cboestado").val(json.oEstado.IdEstado);
             }
             $("#FormModal").modal("show");
@@ -170,6 +190,27 @@
                 $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontrato");
                 $.each(data.data, function (index, item) {
                     $("<option>").attr({ "value": item.IdContrato }).text(item.NroContratoLote).appendTo("#cbocontrato");
+                })
+            },
+            error: function(error) {
+                console.log(error)
+            },
+            beforeSend: function () {
+
+            },
+        });
+
+        /*Control de Lista Desplegable: UnidadTransporte*/
+        jQuery.ajax({
+            url: '@Url.Action("ListarUnidadTransporte", "ContratoLote")',
+            type: "GET",
+            data: null,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbotransporte");
+                $.each(data.data, function (index, item) {
+                    $("<option>").attr({ "value": item.IdUnidadTransporte }).text(item.PlacaTracto).appendTo("#cbotransporte");
                 })
             },
             error: function(error) {
@@ -254,11 +295,16 @@
                     IdContrato: $("#cbocontrato option:selected").val(),
                     NroContratoLote: $("#cbocontrato option:selected").text()
                 },
+                oUnidadTransporte: {
+                    IdUnidadTransporte: $("#cbotransporte option:selected").val(),
+                    PlacaTracto: $("#cbotransporte option:selected").text(),
+                },
                 oLote: {
                     IdLote: $("#cbolote option:selected").val(),
                     NroLote: $("#cbolote option:selected").text()
                 },
                 Cantidad: $("#txtcantidad").val(),
+                Peso: $("#txtpeso").val(),
                 oEstado: {
                     IdEstado: $("#cboestado option:selected").val(),
                     NombreEstado: $("#cboestado option:selected").text()

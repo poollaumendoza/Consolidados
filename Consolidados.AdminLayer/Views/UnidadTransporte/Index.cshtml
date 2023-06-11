@@ -23,9 +23,10 @@
         <table id="tabla" class="display cell-border" style="width: 100%">
             <thead>
                 <tr>
-                    <th>Nombre del Almacén</th>
-                    <th>Dirección del Almacén</th>
-                    <th>Estado del Almacén</th>
+                    <th>Empresa de Transporte</th>
+                    <th>Nombre del Chofer</th>
+                    <th>Placa</th>
+                    <th>Estado</th>
                     <th></th>
                 </tr>
             </thead>
@@ -45,15 +46,19 @@
                 <input id="txtid" type="hidden" value="0" />
                 <div class="row g-1">
                     <div class="col-sm-6">
-                        <label for="txtnombrealmacen" class="form-label">Almacen:</label>
-                        <input type="text" class="form-control" id="txtnombrealmacen" placeholder="Nombre del Almacen" autocomplete="off">
+                        <label for="cboentidad" class="form-label">Entidad:</label>
+                        <select id="cboentidad" class="form-select"></select>
                     </div>
                     <div class="col-sm-6">
-                        <label for="txtdireccion" class="form-label">Dirección:</label>
-                        <input type="text" class="form-control" id="txtdireccion" placeholder="Dirección del Almacen" autocomplete="off">
+                        <label for="cbotransportista" class="form-label">Transportista:</label>
+                        <select id="cbotransportista" class="form-select"></select>
                     </div>
                     <div class="col-sm-6">
-                        <label for="exampleFormControlInput1" class="form-label">Estado</label>
+                        <label for="txtplacatracto" class="form-label">Placa (Tracto):</label>
+                        <input type="text" class="form-control" id="txtplacatracto" placeholder="Tracto" autocomplete="off">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="cboestado" class="form-label">Estado:</label>
                         <select id="cboestado" class="form-select"></select>
                     </div>
                 </div>
@@ -67,7 +72,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar Almacen</button>
+                <button type="button" class="btn btn-primary" onclick="Guardar()">Guardar UT</button>
             </div>
         </div>
     </div>
@@ -77,17 +82,32 @@
         var tabladata;
         var filaSeleccionada;
 
+        $(document).ready(function () {
+            ListarEntidad();
+            ListarTransportista();
+            ListarEstado();
+        });
+
         tabladata = $("#tabla").DataTable({
             responsive: true,
             ordering: false,
             "ajax": {
-                url: '@Url.Action("ListarAlmacen", "Almacen")',
+                url: '@Url.Action("ListarUnidadTransporte", "UnidadTransporte")',
                 type: "GET",
                 dataType: "json"
             },
             "columns": [
-                { "data": "NombreAlmacen" },
-                { "data": "Direccion" },
+                {
+                    "data": "oEntidad", "render": function (data) {
+                        return data.RazonSocial
+                    }
+                },
+                {
+                    "data": "oTransportista", "render": function (data) {
+                        return data.NombreCompleto
+                    }
+                },
+                { "data": "PlacaTracto" },
                 {
                     "data": "oEstado", "render": function (data) {
                         return data.NombreEstado
@@ -108,40 +128,89 @@
 
         function abrirModal(json) {
             $("#txtid").val(0);
-            $("#txtnombrealmacen").val("");
-            $("#txtdireccion").val("");
+            $("#cboentidad").val($("#cboentidad option:first").val());
+            $("#cbotransportista").val($("#cbotransportista option:first").val());
+            $("#txtplacatracto").val("");
             $("#cboestado").val($("#cboestado option:first").val());
             $("#mensajeError").hide();
-
             if (json != null) {
-                $("#txtid").val(json.IdAlmacen);
-                $("#txtnombrealmacen").val(json.NombreAlmacen);
-                $("#txtdireccion").val(json.Direccion);
+                $("#txtid").val(json.IdTransportista);
+                $("#cboentidad").val(json.oEntidad.RazonSocial);
+                $("#cbotransportista").val(json.oTransportista.NombreCompleto);
+                $("#txtplacatracto").val(json.PlacaTracto);
                 $("#cboestado").val(json.oEstado.IdEstado);
             }
             $("#FormModal").modal("show");
         }
 
-        /*Control de Lista Desplegable: Estado*/
-        jQuery.ajax({
-            url: '@Url.Action("ListarEstados", "Estado")',
-            type: "GET",
-            data: null,
-            dataType: "json",
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboestado");
-                $.each(data.data, function (index, item) {
-                    $("<option>").attr({ "value": item.IdEstado }).text(item.NombreEstado).appendTo("#cboestado");
-                })
-            },
-            error: function(error) {
-                console.log(error)
-            },
-            beforeSend: function () {
+        /*Control de Lista Desplegable: Entidad*/
+        function ListarEntidad() {
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboentidad");
+            jQuery.ajax({
+                url: '@Url.Action("ListarEntidad", "UnidadTransporte")',
+                type: "GET",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $.each(data.data, function (index, item) {
+                        $("<option>").attr({ "value": item.IdEntidad }).text(item.RazonSocial).appendTo("#cboentidad");
+                    })
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
 
-            },
-        });
+                },
+            });
+        }
+
+        /*Control de Lista Desplegable: Entidad*/
+        function ListarTransportista() {
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbotransportista");
+            jQuery.ajax({
+                url: '@Url.Action("ListarTransportista", "UnidadTransporte")',
+                type: "GET",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $.each(data.data, function (index, item) {
+                        $("<option>").attr({ "value": item.IdTransportista }).text(item.NombreCompleto).appendTo("#cbotransportista");
+                    })
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            });
+        }
+
+        /*Control de Lista Desplegable: Estado*/
+        function ListarEstado() {
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cboestado");
+            jQuery.ajax({
+                url: '@Url.Action("ListarEstados", "Estado")',
+                type: "GET",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    $.each(data.data, function (index, item) {
+                        $("<option>").attr({ "value": item.IdEstado }).text(item.NombreEstado).appendTo("#cboestado");
+                    })
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            });
+        }
 
         $("#tabla tbody").on("click", '.btn-editar', function () {
             filaSeleccionada = $(this).closest("tr");
@@ -150,8 +219,8 @@
         })
 
         $("#tabla tbody").on("click", '.btn-eliminar', function () {
-            var almacenseleccionado = $(this).closest("tr");
-            var data = tabladata.row(almacenseleccionado).data();
+            var transportistaseleccionado = $(this).closest("tr");
+            var data = tabladata.row(transportistaseleccionado).data();
 
             swal({
                 title: "Consolidados",
@@ -166,13 +235,13 @@
             },
                 function () {
                     jQuery.ajax({
-                        url: '@Url.Action("EliminarAlmacen", "Almacen")',
+                        url: '@Url.Action("EliminarTransportista", "UnidadTransporte")',
                         type: "POST",
-                        data: JSON.stringify({ id: data.IdAlmacen }),
+                        data: JSON.stringify({ id: data.IdTransportista }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (data) {
                             if (data.resultado) {
-                                tabladata.row(almacenseleccionado).remove().draw();
+                                tabladata.row(transportistaseleccionado).remove().draw();
                             } else {
                                 swal("No se pudo eliminar el registro", data.mensaje, "error")
                             }
@@ -190,10 +259,17 @@
         })
 
         function Guardar() {
-            var Almacen = {
-                IdAlmacen: $("#txtid").val(),
-                NombreAlmacen: $("#txtnombrealmacen").val(),
-                Direccion: $("#txtdireccion").val(),
+            var UnidadTransporte = {
+                IdUnidadTransporte: $("#txtid").val(),
+                oEntidad: {
+                    IdEntidad: $("#cboentidad option:selected").val(),
+                    RazonSocial: $("#cboentidad option:selected").val()
+                },
+                oTransportista: {
+                    IdTransportista: $("#cbotransportista option:selected").val(),
+                    RazonSocial: $("#cbotransportista option:selected").val()
+                },
+                PlacaTracto: $("#txtplacatracto").val(),
                 oEstado: {
                     IdEstado: $("#cboestado option:selected").val(),
                     NombreEstado: $("#cboestado option:selected").text()
@@ -201,17 +277,17 @@
             }
 
             jQuery.ajax({
-                url: '@Url.Action("GuardarAlmacen", "Almacen")',
+                url: '@Url.Action("GuardarUnidadTransporte", "UnidadTransporte")',
                 type: "POST",
-                data: JSON.stringify({ objeto: Almacen }),
+                data: JSON.stringify({ objeto: UnidadTransporte }),
                 dataType: "json",
                 contentType: "application/json; charset=utf-8",
                 success: function (data) {
                     $(".modal-body").LoadingOverlay("hide");
-                    if (Almacen.IdAlmacen == 0) {
+                    if (UnidadTransporte.IdUnidadTransporte == 0) {
                         if (data.resultado != 0) {
-                            Almacen.IdAlmacen = data.resultado;
-                            tabladata.row.add(Almacen).draw(false);
+                            UnidadTransporte.IdUnidadTransporte = data.resultado;
+                            tabladata.row.add(UnidadTransporte).draw(false);
                             $("#FormModal").modal("hide");
                         } else {
                             $(".modal-body").LoadingOverlay("hide");
@@ -220,7 +296,7 @@
                         }
                     } else {
                         if (data.resultado) {
-                            tabladata.row(filaSeleccionada).data(Almacen).draw(false);
+                            tabladata.row(filaSeleccionada).data(UnidadTransporte).draw(false);
                             filaSeleccionada = null;
                             $("#FormModal").modal("hide");
                         } else {

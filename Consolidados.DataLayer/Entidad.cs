@@ -20,11 +20,9 @@ namespace Consolidados.DataLayer
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "Select ent.IdEntidad, ent.IdTipoDocumento, td.NombreTipoDocumento, ent.NroDocumento, ent.RazonSocial, " +
-                        "ent.Direccion, ent.Telefono, ent.Email, ent.IdEstado, est.NombreEstado from Entidad ent " +
-                        "join TipoDocumento td on ent.IdTipoDocumento = td.IdTipoDocumento join Estado est on est.IdEstado = " +
-                        "ent.IdEstado where ent.IdEstado = (Select IdEstado from Estado where NombreEstado = 'ACTIVO')";
+                        "Select ent.IdEntidad, ent.IdTipoDocumento, td.NombreTipoDocumento, ent.NroDocumento, ent.RazonSocial, ent.Direccion, ent.Telefono, ent.Email, ent.EsCliente, ent.EsProveedor, ent.EsTransportista, ent.IdEstado, est.NombreEstado from Entidad ent join TipoDocumento td on ent.IdTipoDocumento = td.IdTipoDocumento join Estado est on est.IdEstado = ent.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
+                    Cmd.CommandType = CommandType.Text;
 
                     Cnx.Open();
                     using (SqlDataReader Dr = Cmd.ExecuteReader())
@@ -44,6 +42,9 @@ namespace Consolidados.DataLayer
                                 Direccion = Dr["Direccion"].ToString(),
                                 Telefono = Dr["Telefono"].ToString(),
                                 Email = Dr["Email"].ToString(),
+                                EsCliente = Convert.ToBoolean(Dr["EsCliente"]),
+                                EsProveedor = Convert.ToBoolean(Dr["EsProveedor"]),
+                                EsTransportista = Convert.ToBoolean(Dr["EsTransportista"]),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -78,6 +79,9 @@ namespace Consolidados.DataLayer
                     Cmd.Parameters.AddWithValue("Direccion", obj.Direccion);
                     Cmd.Parameters.AddWithValue("Telefono", obj.Telefono);
                     Cmd.Parameters.AddWithValue("Email", obj.Email);
+                    Cmd.Parameters.AddWithValue("EsCliente", obj.EsCliente);
+                    Cmd.Parameters.AddWithValue("EsProveedor", obj.EsProveedor);
+                    Cmd.Parameters.AddWithValue("EsTransportista", obj.EsTransportista);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -116,6 +120,9 @@ namespace Consolidados.DataLayer
                     Cmd.Parameters.AddWithValue("Direccion", obj.Direccion);
                     Cmd.Parameters.AddWithValue("Telefono", obj.Telefono);
                     Cmd.Parameters.AddWithValue("Email", obj.Email);
+                    Cmd.Parameters.AddWithValue("EsCliente", obj.EsCliente);
+                    Cmd.Parameters.AddWithValue("EsProveedor", obj.EsProveedor);
+                    Cmd.Parameters.AddWithValue("EsTransportista", obj.EsTransportista);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;

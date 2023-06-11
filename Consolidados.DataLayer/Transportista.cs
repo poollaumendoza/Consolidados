@@ -20,7 +20,7 @@ namespace Consolidados.DataLayer
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "Select t.IdTransportista, t.Apellidos, t.Nombres, t.DNI, t.LicConducir, t.Telefono, t.IdEstado, e.NombreEstado from Transportista t join estado e on t.idestado = e.IdEstado";
+                        "Select t.IdTransportista, t.Apellidos, t.Nombres, CONCAT(t.Apellidos, ' ', t.Nombres)[NombreCompleto], t.DNI, t.LicConducir, t.Telefono, t.IdEstado, e.NombreEstado from Transportista t join estado e on t.idestado = e.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -33,6 +33,7 @@ namespace Consolidados.DataLayer
                                 IdTransportista = Convert.ToInt32(Dr["IdTransportista"]),
                                 Apellidos = Dr["Apellidos"].ToString(),
                                 Nombres = Dr["Nombres"].ToString(),
+                                NombreCompleto = Dr["NombreCompleto"].ToString(),
                                 DNI = Dr["DNI"].ToString(),
                                 LicConducir = Dr["LicConducir"].ToString(),
                                 Telefono = Dr["Telefono"].ToString(),
@@ -63,7 +64,7 @@ namespace Consolidados.DataLayer
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "Select t.IdTransportista, t.Apellidos, t.Nombres, t.DNI, t.LicConducir, t.Telefono, t.IdEstado, e.NombreEstado from Transportista t join estado e on t.idestado = e.IdEstado where t.IdTransportista = @IdTransportista";
+                        "Select t.IdTransportista, t.Apellidos, t.Nombres, CONCAT(t.Apellidos, ' ', t.Nombres)[NombreCompleto], t.DNI, t.LicConducir, t.Telefono, t.IdEstado, e.NombreEstado from Transportista t join estado e on t.idestado = e.IdEstado where t.IdTransportista = @IdTransportista";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
                     Cmd.Parameters.AddWithValue("IdTransportista", IdTransportista);
                     Cmd.CommandType = System.Data.CommandType.Text;
@@ -110,10 +111,10 @@ namespace Consolidados.DataLayer
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Transportista_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("Apellidos", obj.Apellidos);
-                    Cmd.Parameters.AddWithValue("Nombres", obj.Apellidos);
-                    Cmd.Parameters.AddWithValue("DNI", obj.Apellidos);
-                    Cmd.Parameters.AddWithValue("LicConducir", obj.Apellidos);
-                    Cmd.Parameters.AddWithValue("Telefono", obj.Apellidos);
+                    Cmd.Parameters.AddWithValue("Nombres", obj.Nombres);
+                    Cmd.Parameters.AddWithValue("DNI", obj.DNI);
+                    Cmd.Parameters.AddWithValue("LicConducir", obj.LicConducir);
+                    Cmd.Parameters.AddWithValue("Telefono", obj.Telefono);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -124,7 +125,6 @@ namespace Consolidados.DataLayer
 
                     IdAutogenerado = Convert.ToInt32(Cmd.Parameters["Resultado"].Value);
                     Mensaje = Cmd.Parameters["Mensaje"].Value.ToString();
-
                 }
             }
             catch (Exception ex)
@@ -147,10 +147,10 @@ namespace Consolidados.DataLayer
                     SqlCommand Cmd = new SqlCommand("sp_Transportista_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdTransportista", obj.IdTransportista);
                     Cmd.Parameters.AddWithValue("Apellidos", obj.Apellidos);
-                    Cmd.Parameters.AddWithValue("Nombres", obj.Apellidos);
-                    Cmd.Parameters.AddWithValue("DNI", obj.Apellidos);
-                    Cmd.Parameters.AddWithValue("LicConducir", obj.Apellidos);
-                    Cmd.Parameters.AddWithValue("Telefono", obj.Apellidos);
+                    Cmd.Parameters.AddWithValue("Nombres", obj.Nombres);
+                    Cmd.Parameters.AddWithValue("DNI", obj.DNI);
+                    Cmd.Parameters.AddWithValue("LicConducir", obj.LicConducir);
+                    Cmd.Parameters.AddWithValue("Telefono", obj.Telefono);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;

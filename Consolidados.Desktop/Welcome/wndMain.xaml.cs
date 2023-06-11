@@ -62,8 +62,8 @@ namespace Consolidados.Desktop.Welcome
 
         private void TlbReportes_Click(object sender, RoutedEventArgs e)
         {
-            oWindow = new Forms.Operaciones.Reportes.wndInfoContenedores();
-            oWindow.ShowDialog();
+            //oWindow = new Forms.Operaciones.Reportes.wndInfoContenedores();
+            //oWindow.ShowDialog();
         }
 
         private void TlbBusqueda_Click(object sender, RoutedEventArgs e)

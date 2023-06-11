@@ -35,7 +35,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.Reportes
 
         void CargarReporte(int IdContrato = 0)
         {
-            ReportDocument reporte = new ReportDocument();
+            
 
         }
 

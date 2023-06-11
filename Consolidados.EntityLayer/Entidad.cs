@@ -15,6 +15,9 @@ namespace Consolidados.EntityLayer
         public string Direccion { get; set; }
         public string Telefono { get; set;}
         public string Email { get; set; }
+        public bool EsCliente { get; set; }
+        public bool EsProveedor { get; set; }
+        public bool EsTransportista { get; set; }
         public Estado oEstado { get; set; }
     }
 }

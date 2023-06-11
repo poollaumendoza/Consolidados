@@ -30,8 +30,6 @@ namespace Consolidados.BusinessLayer
                 Mensaje = "Debe seleccionar un transportista";
             else if (string.IsNullOrEmpty(obj.PlacaTracto) || string.IsNullOrWhiteSpace(obj.PlacaTracto))
                 Mensaje = "La placa del tracto no puede ser vacía";
-            else if (string.IsNullOrEmpty(obj.PlacaCarreta) || string.IsNullOrWhiteSpace(obj.PlacaCarreta))
-                Mensaje = "La placa de la carreta no puede ser vacía";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado";
 
@@ -51,8 +49,6 @@ namespace Consolidados.BusinessLayer
                 Mensaje = "Debe seleccionar un transportista";
             else if (string.IsNullOrEmpty(obj.PlacaTracto) || string.IsNullOrWhiteSpace(obj.PlacaTracto))
                 Mensaje = "La placa del tracto no puede ser vacía";
-            else if (string.IsNullOrEmpty(obj.PlacaCarreta) || string.IsNullOrWhiteSpace(obj.PlacaCarreta))
-                Mensaje = "La placa de la carreta no puede ser vacía";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado";
 

@@ -73,6 +73,18 @@
                         <input type="text" class="form-control" id="txtemail" placeholder="Email" autocomplete="off">
                     </div>
                     <div class="col-sm-6">
+                        <label for="chkcliente" class="form-label">Es Cliente?</label>
+                        <input type="checkbox" class="select-checkbox" id="chkcliente" autocomplete="off">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="chkproveedor" class="form-label">Es Proveedor?</label>
+                        <input type="checkbox" class="select-checkbox" id="chkproveedor" autocomplete="off">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="chktransportista" class="form-label">Email:</label>
+                        <input type="checkbox" class="select-checkbox" id="chktransportista" autocomplete="off">
+                    </div>
+                    <div class="col-sm-6">
                         <label for="exampleFormControlInput1" class="form-label">Estado:</label>
                         <select id="cboestado" class="form-select"></select>
                     </div>
@@ -142,6 +154,9 @@
             $("#txtdireccion").val("");
             $("#txttelefono").val("");
             $("#txtemail").val("");
+            $("#chkcliente").val("");
+            $("#chkproveedor").val("");
+            $("#chktransportista").val("");
             $("#cboestado").val($("#cboestado option:first").val());
             $("#mensajeError").hide();
 
@@ -153,6 +168,9 @@
                 $("#txtdireccion").val(json.Direccion);
                 $("#txttelefono").val(json.Telefono);
                 $("#txtemail").val(json.Email);
+                $("#chkcliente").val(json.EsCliente);
+                $("#chkproveedor").val(json.EsProveedor);
+                $("#chktransportista").val(json.EsTransportista);
                 $("#cboestado").val(json.oEstado.IdEstado);
             }
             $("#FormModal").modal("show");
@@ -258,6 +276,9 @@
                 Direccion: $("#txtdireccion").val(),
                 Telefono: $("#txttelefono").val(),
                 Email: $("#txtemail").val(),
+                EsCliente: $("#chkcliente").val(),
+                EsProveedor: $("#chkproveedor").val(),
+                EsTransportista: $("#chktransportista").val(),
                 oEstado: {
                     IdEstado: $("#cboestado option:selected").val(),
                     NombreEstado: $("#cboestado option:selected").text()

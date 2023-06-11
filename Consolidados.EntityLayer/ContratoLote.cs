@@ -10,8 +10,10 @@ namespace Consolidados.EntityLayer
     {
         public int IdContratoLote { get; set; }
         public Contrato oContrato { get; set; }
+        public UnidadTransporte oUnidadTransporte { get; set; }
         public Lote oLote { get; set; }
         public int Cantidad { get; set; }
+        public int Peso { get; set; }
         public Estado oEstado { get; set; }
     }
 }

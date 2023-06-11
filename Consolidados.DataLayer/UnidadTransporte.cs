@@ -20,7 +20,7 @@ namespace Consolidados.DataLayer
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "select ut.IdUnidadTransporte, ut.IdEntidad, ent.RazonSocial, ut.IdTransportista, CONCAT(tr.Apellidos, ' ', tr.Nombres)[NombreCompleto], ut.Placa, ut.IdEstado, est.NombreEstado from UnidadTransporte ut join Entidad ent on ut.IdEntidad = ent.IdEntidad join Transportista tr on ut.IdTransportista = tr.IdTransportista join Estado est on ut.IdEstado = est.IdEstado";
+                        "Select ut.IdUnidadTransporte, ut.IdEntidad, ent.RazonSocial, ut.IdTransportista, CONCAT(tr.Apellidos, ' ', tr.Nombres)[NombreCompleto], ut.PlacaTracto, ut.IdEstado, est.NombreEstado from UnidadTransporte ut join Entidad ent on ut.IdEntidad = ent.IdEntidad join Transportista tr on ut.IdTransportista = tr.IdTransportista join Estado est on ut.IdEstado = est.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -42,7 +42,6 @@ namespace Consolidados.DataLayer
                                     NombreCompleto = Dr["NombreCompleto"].ToString()
                                 },
                                 PlacaTracto = Dr["PlacaTracto"].ToString(),
-                                PlacaCarreta = Dr["PlacaCarreta"].ToString(),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -70,7 +69,7 @@ namespace Consolidados.DataLayer
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "select ut.IdUnidadTransporte, ut.IdEntidad, ent.RazonSocial, ut.IdTransportista, CONCAT(tr.Apellidos, ' ', tr.Nombres)[NombreCompleto], ut.Placa, ut.IdEstado, est.NombreEstado from UnidadTransporte ut join Entidad ent on ut.IdEntidad = ent.IdEntidad join Transportista tr on ut.IdTransportista = tr.IdTransportista join Estado est on ut.IdEstado = est.IdEstado where ut.IdUnidadTransportista = @IdUnidadTransporte";
+                        "select ut.IdUnidadTransporte, ut.IdEntidad, ent.RazonSocial, ut.IdTransportista, CONCAT(tr.Apellidos, ' ', tr.Nombres)[NombreCompleto], ut.PlacaTracto, ut.IdEstado, est.NombreEstado from UnidadTransporte ut join Entidad ent on ut.IdEntidad = ent.IdEntidad join Transportista tr on ut.IdTransportista = tr.IdTransportista join Estado est on ut.IdEstado = est.IdEstado where ut.IdUnidadTransportista = @IdUnidadTransporte";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
                     Cmd.Parameters.AddWithValue("IdUnidadTransporte", IdUnidadTransporte);
                     Cmd.CommandType = CommandType.Text;
@@ -94,7 +93,6 @@ namespace Consolidados.DataLayer
                                     NombreCompleto = Dr["NombreCompleto"].ToString()
                                 },
                                 PlacaTracto = Dr["PlacaTracto"].ToString(),
-                                PlacaCarreta = Dr["PlacaCarreta"].ToString(),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -126,7 +124,6 @@ namespace Consolidados.DataLayer
                     Cmd.Parameters.AddWithValue("IdEntidad", obj.oEntidad.IdEntidad);
                     Cmd.Parameters.AddWithValue("IdTransportista", obj.oTransportista.IdTransportista);
                     Cmd.Parameters.AddWithValue("PlacaTracto", obj.PlacaTracto);
-                    Cmd.Parameters.AddWithValue("PlacaCarreta", obj.PlacaCarreta);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -162,7 +159,6 @@ namespace Consolidados.DataLayer
                     Cmd.Parameters.AddWithValue("IdEntidad", obj.oEntidad.IdEntidad);
                     Cmd.Parameters.AddWithValue("IdTransportista", obj.oTransportista.IdTransportista);
                     Cmd.Parameters.AddWithValue("PlacaTracto", obj.PlacaTracto);
-                    Cmd.Parameters.AddWithValue("PlacaCarreta", obj.PlacaCarreta);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;

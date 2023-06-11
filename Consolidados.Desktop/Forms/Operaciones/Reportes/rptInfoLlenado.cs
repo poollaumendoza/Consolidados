@@ -11,9 +11,6 @@
 namespace Consolidados.Desktop.Forms.Operaciones.Reportes {
     using System;
     using System.ComponentModel;
-    using CrystalDecisions.Shared;
-    using CrystalDecisions.ReportSource;
-    using CrystalDecisions.CrystalReports.Engine;
     
     
     public class rptInfoLlenado : ReportClass {

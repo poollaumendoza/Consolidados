@@ -29,6 +29,13 @@ namespace Consolidados.AdminLayer.Controllers
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult ListarUnidadTransporte()
+        {
+            List<EntityLayer.UnidadTransporte> oLista = new List<EntityLayer.UnidadTransporte>();
+            oLista = new BusinessLayer.UnidadTransporte().Listar();
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult GuardarContratoLote(EntityLayer.ContratoLote objeto)
         {

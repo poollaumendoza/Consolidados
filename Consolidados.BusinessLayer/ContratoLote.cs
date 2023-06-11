@@ -31,10 +31,14 @@ namespace Consolidados.BusinessLayer
 
             if (obj.oContrato.IdContrato == 0)
                 Mensaje = "Debe seleccionar un contrato";
+            else if (obj.oUnidadTransporte.IdUnidadTransporte == 0)
+                Mensaje = "Debe seleccionar una unidad de transporte";
             else if (obj.oLote.IdLote == 0)
                 Mensaje = "Debe seleccionar un lote";
             else if (obj.Cantidad == 0)
                 Mensaje = "La cantidad no puede ser cero";
+            else if (obj.Peso == 0)
+                Mensaje = "El peso no puede ser cero";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado";
 
@@ -50,10 +54,14 @@ namespace Consolidados.BusinessLayer
 
             if (obj.oContrato.IdContrato == 0)
                 Mensaje = "Debe seleccionar un contrato";
+            else if (obj.oUnidadTransporte.IdUnidadTransporte == 0)
+                Mensaje = "Debe seleccionar una unidad de transporte";
             else if (obj.oLote.IdLote == 0)
                 Mensaje = "Debe seleccionar un lote";
             else if (obj.Cantidad == 0)
                 Mensaje = "La cantidad no puede ser cero";
+            else if (obj.Peso == 0)
+                Mensaje = "El peso no puede ser cero";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado";
 

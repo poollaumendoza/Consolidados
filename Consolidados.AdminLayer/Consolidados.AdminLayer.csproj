@@ -127,7 +127,7 @@
     <Compile Include="Controllers\LoteController.cs" />
     <Compile Include="Controllers\MovimientoController.cs" />
     <Compile Include="Controllers\PersonaController.cs" />
-    <Compile Include="Controllers\ReporteTransporteController.cs" />
+    <Compile Include="Controllers\ReporteController.cs" />
     <Compile Include="Controllers\TipoDocumentoController.cs" />
     <Compile Include="Controllers\TipoMovimientoController.cs" />
     <Compile Include="Controllers\TransportistaController.cs" />
@@ -504,6 +504,7 @@
     <Content Include="Views\ClasificacionTipoDocumento\Index.cshtml" />
     <Content Include="Views\Transportista\Index.cshtml" />
     <Content Include="Views\UnidadTransporte\Index.cshtml" />
+    <Content Include="Views\Reporte\SegunContrato.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

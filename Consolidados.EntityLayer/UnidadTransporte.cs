@@ -12,7 +12,6 @@ namespace Consolidados.EntityLayer
         public Entidad oEntidad { get; set; }
         public Transportista oTransportista { get; set; }
         public string PlacaTracto { get; set; }
-        public string PlacaCarreta { get; set; }
         public Estado oEstado { get; set; }
     }
 }

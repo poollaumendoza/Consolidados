@@ -20,7 +20,7 @@ namespace Consolidados.DataLayer
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "Select cl.IdContratoLote, cl.IdContrato, c.NroContratoLote, cl.IdLote, l.NroLote, cl.Cantidad, cl.IdEstado, e.NombreEstado from ContratoLote cl join contrato c on cl.IdContrato = c.IdContrato join Lote l on cl.IdLote = l.IdLote join estado e on cl.IdEstado = e.IdEstado where cl.Cantidad > 0";
+                        "Select cl.IdContratoLote, cl.IdContrato, c.NroContratoLote, cl.IdUnidadTransporte, ut.PlacaTracto, cl.IdLote, l.NroLote, cl.Cantidad, cl.Peso, cl.IdEstado, e.NombreEstado from ContratoLote cl join Contrato c on c.IdContrato = cl.IdContrato join UnidadTransporte ut on cl.IdUnidadTransporte = ut.IdUnidadTransporte join Lote l on cl.IdLote = l.IdLote join Estado e on cl.IdEstado = e.IdEstado where cl.Cantidad > 0";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -36,12 +36,18 @@ namespace Consolidados.DataLayer
                                     IdContrato = Convert.ToInt32(Dr["IdContrato"]),
                                     NroContratoLote = Dr["NroContratoLote"].ToString()
                                 },
+                                oUnidadTransporte = new EntityLayer.UnidadTransporte()
+                                {
+                                    IdUnidadTransporte = Convert.ToInt32(Dr["IdUnidadTransporte"]),
+                                    PlacaTracto = Dr["PlacaTracto"].ToString()
+                                },
                                 oLote = new EntityLayer.Lote()
                                 {
                                     IdLote = Convert.ToInt32(Dr["IdLote"]),
                                     NroLote = Dr["NroLote"].ToString()
                                 },
                                 Cantidad = Convert.ToInt32(Dr["Cantidad"]),
+                                Peso = Convert.ToInt32(Dr["Peso"]),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -101,7 +107,7 @@ namespace Consolidados.DataLayer
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "Select cl.IdContratoLote, cl.IdContrato, c.NroContratoLote, cl.IdLote, l.NroLote, cl.Cantidad, cl.IdEstado, e.NombreEstado from ContratoLote cl join contrato c on cl.IdContrato = c.IdContrato join Lote l on cl.IdLote = l.IdLote join estado e on cl.IdEstado = e.IdEstado where cl.IdContrato = @IdContrato";
+                        "Select cl.IdContratoLote, cl.IdContrato, c.NroContratoLote, cl.IdUnidadTransporte, ut.PlacaTracto, cl.IdLote, l.NroLote, cl.Cantidad, cl.Peso, cl.IdEstado, e.NombreEstado from ContratoLote cl join Contrato c on c.IdContrato = cl.IdContrato join UnidadTransporte ut on cl.IdUnidadTransporte = ut.IdUnidadTransporte join Lote l on cl.IdLote = l.IdLote join Estado e on cl.IdEstado = e.IdEstado where cl.IdContrato = @IdContrato";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
                     Cmd.Parameters.AddWithValue("@IdContrato", IdContrato);
                     Cmd.CommandType = CommandType.Text;
@@ -119,12 +125,18 @@ namespace Consolidados.DataLayer
                                     IdContrato = Convert.ToInt32(Dr["IdContrato"]),
                                     NroContratoLote = Dr["NroContratoLote"].ToString()
                                 },
+                                oUnidadTransporte = new EntityLayer.UnidadTransporte()
+                                {
+                                    IdUnidadTransporte = Convert.ToInt32(Dr["IdUnidadTransporte"]),
+                                    PlacaTracto = Dr["PlacaTracto"].ToString()
+                                },
                                 oLote = new EntityLayer.Lote()
                                 {
                                     IdLote = Convert.ToInt32(Dr["IdLote"]),
                                     NroLote = Dr["NroLote"].ToString()
                                 },
                                 Cantidad = Convert.ToInt32(Dr["Cantidad"]),
+                                Peso = Convert.ToInt32(Dr["Peso"]),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -154,8 +166,10 @@ namespace Consolidados.DataLayer
                 {
                     SqlCommand Cmd = new SqlCommand("sp_ContratoLote_Registrar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
+                    Cmd.Parameters.AddWithValue("IdUnidadTransporte", obj.oUnidadTransporte.IdUnidadTransporte);
                     Cmd.Parameters.AddWithValue("IdLote", obj.oLote.IdLote);
                     Cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
+                    Cmd.Parameters.AddWithValue("Peso", obj.Peso);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -189,8 +203,10 @@ namespace Consolidados.DataLayer
                     SqlCommand Cmd = new SqlCommand("sp_ContratoLote_Editar", Cnx);
                     Cmd.Parameters.AddWithValue("IdContratoLote", obj.IdContratoLote);
                     Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
+                    Cmd.Parameters.AddWithValue("IdUnidadTransporte", obj.oUnidadTransporte.IdUnidadTransporte);
                     Cmd.Parameters.AddWithValue("IdLote", obj.oLote.IdLote);
                     Cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
+                    Cmd.Parameters.AddWithValue("Peso", obj.Peso);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;

@@ -1,0 +1,122 @@
+﻿
+@{
+    ViewBag.Title = "SegunContrato";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Según Contrato</h2>
+
+<div class="card col-sm-3">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>Según criterio
+    </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-12">
+                <label for="cbocontrato" class="form-label">Contrato:</label>
+                <select id="cbocontrato" class="form-select"></select>
+                <br />
+                <button id="btnreportar" name="btnreportar" type="button" class="btn btn-success">Reportar</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<br />
+<br />
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>Lista de Contenedores
+    </div>
+    <div class="card-body">
+        <table id="tablacontenedores" class="display cell-border" style="width: 100%">
+            <thead>
+                <tr>
+                    <th># Contrato</th>
+                    <th># Contenedor</th>
+                    <th>Payload</th>
+                    <th>Estado</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+@section scripts{
+    <script>
+        var tabladatacontenedores;
+
+        $(document).ready(function () {
+            ListarContratos();
+        });
+
+        $("#btnreportar").on("click", function () {
+            ListaContenedores();
+        });
+
+        function ListarContratos() {
+            $("<option>").attr({ "value": "0", "disabled": "true" }).text("Seleccionar").appendTo("#cbocontrato");
+            jQuery.ajax({
+                url: '@Url.Action("ListarContrato", "LlenadoContenedor")',
+                type: "POST",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    if (data.data != null) {
+                        $.each(data.data, function (index, item) {
+                            $("<option>").attr({ "value": item.IdContrato }).text(item.NroContratoLote).appendTo("#cbocontrato");
+                        })
+                    }
+                },
+                error: function(error) {
+                    console.log(error)
+                },
+                beforeSend: function () {
+
+                },
+            });
+        }
+
+        tabladatacontenedores = $("#tablacontenedores").DataTable({
+            responsive: true,
+            ordering: false,
+            "ajax": {
+                url: '@Url.Action("ListarContratoContenedor", "ContratoContenedor")',
+                type: "POST",
+                data: JSON.stringify({ IdContrato: data.IdContrato }),
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+            },
+            "columns": [
+                {
+                    "data": "oContrato", "render": function (data) {
+                        return data.NroContratoLote
+                    }
+                },
+                { "data": "NroContenedor" },
+                { "data": "Payload" },
+                {
+                    "data": "oEstado", "render": function (data) {
+                        return data.NombreEstado
+                    }
+                },
+                {
+                    "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
+                        '<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
+                    "orderable": false,
+                    "searchable": false,
+                    "width": "90px"
+                }
+            ],
+            "language": {
+                "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+            }
+        });
+
+
+
+    </script>
+
+}

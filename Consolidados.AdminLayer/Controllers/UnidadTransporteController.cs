@@ -21,6 +21,20 @@ namespace Consolidados.AdminLayer.Controllers
             return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult ListarEntidad()
+        {
+            List<EntityLayer.Entidad> oLista = new List<EntityLayer.Entidad>();
+            oLista = new BusinessLayer.Entidad().Listar();
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult ListarTransportista()
+        {
+            List<EntityLayer.Transportista> oLista = new List<EntityLayer.Transportista>();
+            oLista = new BusinessLayer.Transportista().Listar();
+            return Json(new { data = oLista }, JsonRequestBehavior.AllowGet);
+        }
+
         [HttpPost]
         public JsonResult GuardarUnidadTransporte(EntityLayer.UnidadTransporte objeto)
         {
