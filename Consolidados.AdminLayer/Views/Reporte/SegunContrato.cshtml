@@ -20,10 +20,29 @@
             </div>
         </div>
     </div>
-
 </div>
 <br />
-<br />
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>Lista de Lotes
+    </div>
+    <div class="card-body">
+        <table id="tablalotes" class="display cell-border" style="width: 100%">
+            <thead>
+                <tr>
+                    <th># Contrato</th>
+                    <th>Unid. Transporte</th>
+                    <th># Lote</th>
+                    <th>Cantidad</th>
+                    <th>Peso</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<br/>
 <div class="card">
     <div class="card-header">
         <i class="fas fa-table me-1"></i>Lista de Contenedores
@@ -36,6 +55,85 @@
                     <th># Contenedor</th>
                     <th>Payload</th>
                     <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<br/>
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>Lista de Fotos
+    </div>
+    <div class="card-body">
+        <table id="tablafotos" class="display cell-border" style="width: 100%">
+            <thead>
+                <tr>
+                    <th># Contrato</th>
+                    <th># Contenedor</th>
+                    <th>Nombre de Foto</th>
+                    <th>Foto</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<br/>
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>Llenado de Contenedores
+    </div>
+    <div class="card-body">
+        <table id="tablallenado" class="display cell-border" style="width: 100%">
+            <thead>
+                <tr>
+                    <th># Contrato</th>
+                    <th># Contenedor</th>
+                    <th># Lote</th>
+                    <th>Cantidad</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<br/>
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>Lista de Pesos
+    </div>
+    <div class="card-body">
+        <table id="tablapesos" class="display cell-border" style="width: 100%">
+            <thead>
+                <tr>
+                    <th># Contrato</th>
+                    <th># Contenedor</th>
+                    <th>Peso</th>
+                    <th>Estado del Almacén</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+<br/>
+<div class="card">
+    <div class="card-header">
+        <i class="fas fa-table me-1"></i>Lista de Precintos
+    </div>
+    <div class="card-body">
+        <table id="tablaprecinto" class="display cell-border" style="width: 100%">
+            <thead>
+                <tr>
+                    <th># Contrato</th>
+                    <th># Contenedor</th>
+                    <th># Precinto</th>
+                    <th>Estado del Almacén</th>
                     <th></th>
                 </tr>
             </thead>
@@ -45,7 +143,13 @@
 </div>
 @section scripts{
     <script>
+        var tabladatalote;
+        var tabladatatransporte;
         var tabladatacontenedores;
+        var tabladatallenado;
+        var tabladatafoto;
+        var tabladatapeso;
+        var tabladataprecinto;
 
         $(document).ready(function () {
             ListarContratos();
@@ -53,6 +157,10 @@
 
         $("#btnreportar").on("click", function () {
             ListaContenedores();
+            ListaLotes();
+            ListaFotos();
+            ListaLlenado();
+            ListaPesos();
         });
 
         function ListarContratos() {
@@ -79,15 +187,16 @@
             });
         }
 
-        tabladatacontenedores = $("#tablacontenedores").DataTable({
+        function ListaLotes() {
+            var URL = '@Url.Action("ListarContratoLote", "Reporte")' + "?IdContrato=" + $("#cbocontrato option:selected").val()
+
+            tabladatalote = $("#tablalotes").DataTable({
             responsive: true,
             ordering: false,
             "ajax": {
-                url: '@Url.Action("ListarContratoContenedor", "ContratoContenedor")',
-                type: "POST",
-                data: JSON.stringify({ IdContrato: data.IdContrato }),
-                dataType: "json",
-                contentType: "application/json; charset=utf-8",
+                url: URL,
+                type: "GET",
+                dataType: "json"
             },
             "columns": [
                 {
@@ -95,27 +204,206 @@
                         return data.NroContratoLote
                     }
                 },
-                { "data": "NroContenedor" },
-                { "data": "Payload" },
+                {
+                    "data": "oUnidadTransporte", "render": function (data) {
+                        return data.PlacaTracto
+                    }
+                },
+                {
+                    "data": "oLote", "render": function (data) {
+                        return data.NroLote
+                    }
+                },
+                { "data": "Cantidad" },
+                { "data": "Peso" },
                 {
                     "data": "oEstado", "render": function (data) {
                         return data.NombreEstado
                     }
-                },
-                {
-                    "defaultContent": '<button type="button" class="btn btn-primary btn-sm btn-editar"><i class="fas fa-pen"></i></button>' +
-                        '<button type="button" class="btn btn-danger btn-sm ms-2 btn-eliminar"><i class="fas fa-trash"></i></button>',
-                    "orderable": false,
-                    "searchable": false,
-                    "width": "90px"
                 }
             ],
             "language": {
                 "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
             }
         });
+        }
 
+        function ListaContenedores() {
+            var URL = '@Url.Action("ListarContratoContenedor", "Reporte")' + "?IdContrato=" + $("#cbocontrato option:selected").val()
 
+            tabladatacontenedores = $("#tablacontenedores").DataTable({
+                responsive: true,
+                ordering: false,
+                "ajax": {
+                    url: URL,
+                    type: "GET",
+                    dataType: "json"
+                },
+                "columns": [
+                    {
+                        "data": "oContrato", "render": function (data) {
+                            return data.NroContratoLote
+                        }
+                    },
+                    { "data": "NroContenedor" },
+                    { "data": "Payload" },
+                    {
+                        "data": "oEstado", "render": function (data) {
+                            return data.NombreEstado
+                        }
+                    }
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                }
+            });
+        }
+
+        function ListaFotos() {
+            var URL = '@Url.Action("ListarContratoFoto", "Reporte")' + "?IdContrato=" + $("#cbocontrato option:selected").val()
+
+            tabladatafoto = $("#tablafotos").DataTable({
+                responsive: true,
+                ordering: false,
+                "ajax": {
+                    url: URL,
+                    type: "GET",
+                    dataType: "json"
+                },
+                "columns": [
+                    {
+                        "data": "oContrato", "render": function (data) {
+                            return data.NroContratoLote
+                        }
+                    },
+                    {
+                        "data": "oContratoContenedor", "render": function (data) {
+                            return data.NroContenedor
+                        }
+                    },
+                    { "data": "Foto" },
+                    {
+                        "data": "oEstado", "render": function (data) {
+                            return data.NombreEstado
+                        }
+                    },
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                }
+            });
+        }
+
+        function ListaLlenado() {
+            var URL = '@Url.Action("ListarLlenadoContenedor", "Reporte")' + "?IdContrato=" + $("#cbocontrato option:selected").val()
+
+            tabladatallenado = $("#tablallenado").DataTable({
+                responsive: true,
+                ordering: false,
+                "ajax": {
+                    url: URL,
+                    type: "GET",
+                    dataType: "json"
+                },
+                "columns": [
+                    {
+                        "data": "oContrato", "render": function (data) {
+                            return data.NroContratoLote
+                        }
+                    },
+                    {
+                        "data": "oContratoContenedor", "render": function (data) {
+                            return data.NroContenedor
+                        }
+                    },
+                    {
+                        "data": "oLote", "render": function (data) {
+                            return data.NroLote
+                        }
+                    },
+                    { "data": "Cantidad" },
+                    {
+                        "data": "oEstado", "render": function (data) {
+                            return data.NombreEstado
+                        }
+                    },
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                }
+            });
+        }
+
+        function ListaPesos() {
+            var URL = '@Url.Action("ListarContratoPeso", "Reporte")' + "?IdContrato=" + $("#cbocontrato option:selected").val()
+
+            tabladatapeso = $("#tablapesos").DataTable({
+                responsive: true,
+                ordering: false,
+                "ajax": {
+                    url: URL,
+                    type: "GET",
+                    dataType: "json"
+                },
+                "columns": [
+                    {
+                        "data": "oContrato", "render": function (data) {
+                            return data.NroContratoLote
+                        }
+                    },
+                    {
+                        "data": "oContratoContenedor", "render": function (data) {
+                            return data.NroContenedor
+                        }
+                    },
+                    { "data": "PesoTotal" },
+                    {
+                        "data": "oEstado", "render": function (data) {
+                            return data.NombreEstado
+                        }
+                    },
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                }
+            });
+        }
+
+        function ListaPrecintos()
+        {
+            var URL = '@Url.Action("ListarContratoPrecinto", "Reporte")' + "?IdContrato=" + $("#cbocontrato option:selected").val()
+
+            tabladatapeso = $("#tablapesos").DataTable({
+                responsive: true,
+                ordering: false,
+                "ajax": {
+                    url: URL,
+                    type: "GET",
+                    dataType: "json"
+                },
+                "columns": [
+                    {
+                        "data": "oContrato", "render": function (data) {
+                            return data.NroContratoLote
+                        }
+                    },
+                    {
+                        "data": "oContratoContenedor", "render": function (data) {
+                            return data.NroContenedor
+                        }
+                    },
+                    { "data": "NroPrecinto" },
+                    {
+                        "data": "oEstado", "render": function (data) {
+                            return data.NombreEstado
+                        }
+                    },
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                }
+            });
+        }
 
     </script>
 

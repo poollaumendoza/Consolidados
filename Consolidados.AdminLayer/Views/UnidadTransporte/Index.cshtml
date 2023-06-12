@@ -235,9 +235,9 @@
             },
                 function () {
                     jQuery.ajax({
-                        url: '@Url.Action("EliminarTransportista", "UnidadTransporte")',
+                        url: '@Url.Action("EliminarUnidadTransporte", "UnidadTransporte")',
                         type: "POST",
-                        data: JSON.stringify({ id: data.IdTransportista }),
+                        data: JSON.stringify({ id: data.IdUnidadTransporte }),
                         contentType: "application/json; charset=UTF-8",
                         success: function (data) {
                             if (data.resultado) {
@@ -263,11 +263,11 @@
                 IdUnidadTransporte: $("#txtid").val(),
                 oEntidad: {
                     IdEntidad: $("#cboentidad option:selected").val(),
-                    RazonSocial: $("#cboentidad option:selected").val()
+                    RazonSocial: $("#cboentidad option:selected").text()
                 },
                 oTransportista: {
                     IdTransportista: $("#cbotransportista option:selected").val(),
-                    RazonSocial: $("#cbotransportista option:selected").val()
+                    RazonSocial: $("#cbotransportista option:selected").text()
                 },
                 PlacaTracto: $("#txtplacatracto").val(),
                 oEstado: {

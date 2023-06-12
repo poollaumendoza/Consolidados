@@ -31,8 +31,6 @@ namespace Consolidados.BusinessLayer
 
             if (obj.oContrato.IdContrato == 0)
                 Mensaje = "Debe seleccionar un contrato";
-            else if (obj.oUnidadTransporte.IdUnidadTransporte == 0)
-                Mensaje = "Debe seleccionar una unidad de transporte";
             else if (obj.oLote.IdLote == 0)
                 Mensaje = "Debe seleccionar un lote";
             else if (obj.Cantidad == 0)
@@ -54,8 +52,6 @@ namespace Consolidados.BusinessLayer
 
             if (obj.oContrato.IdContrato == 0)
                 Mensaje = "Debe seleccionar un contrato";
-            else if (obj.oUnidadTransporte.IdUnidadTransporte == 0)
-                Mensaje = "Debe seleccionar una unidad de transporte";
             else if (obj.oLote.IdLote == 0)
                 Mensaje = "Debe seleccionar un lote";
             else if (obj.Cantidad == 0)

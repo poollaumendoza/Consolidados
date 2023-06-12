@@ -119,6 +119,7 @@
     <Compile Include="Controllers\ContratoLoteController.cs" />
     <Compile Include="Controllers\ContratoPesoController.cs" />
     <Compile Include="Controllers\ContratoPrecintoController.cs" />
+    <Compile Include="Controllers\ContratoTransporteController.cs" />
     <Compile Include="Controllers\EmpresaController.cs" />
     <Compile Include="Controllers\EntidadController.cs" />
     <Compile Include="Controllers\EstadoController.cs" />
@@ -505,6 +506,7 @@
     <Content Include="Views\Transportista\Index.cshtml" />
     <Content Include="Views\UnidadTransporte\Index.cshtml" />
     <Content Include="Views\Reporte\SegunContrato.cshtml" />
+    <Content Include="Views\ContratoTransporte\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

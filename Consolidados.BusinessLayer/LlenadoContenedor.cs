@@ -15,6 +15,11 @@ namespace Consolidados.BusinessLayer
             return dLlenadoContenedor.Listar();
         }
 
+        public List<EntityLayer.LlenadoContenedor> Listar(int IdContrato)
+        {
+            return dLlenadoContenedor.Listar(IdContrato);
+        }
+
         public int Registrar(EntityLayer.LlenadoContenedor obj, out string Mensaje)
         {
             Mensaje = string.Empty;

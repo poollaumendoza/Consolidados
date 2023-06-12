@@ -1,26 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Data;
 using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
+using Consolidados.EntityLayer;
 
 namespace Consolidados.DataLayer
 {
-    public class UnidadTransporte
+    public class ContratoTransporte
     {
-        public List<EntityLayer.UnidadTransporte> Listar()
+        public List<EntityLayer.ContratoTransporte> Listar()
         {
-            List<EntityLayer.UnidadTransporte> lista = new List<EntityLayer.UnidadTransporte>();
+            List<EntityLayer.ContratoTransporte> lista = new List<EntityLayer.ContratoTransporte>();
 
             try
             {
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "Select ut.IdUnidadTransporte, ut.IdEntidad, ent.RazonSocial, ut.IdTransportista, CONCAT(tr.Apellidos, ' ', tr.Nombres)[NombreCompleto], ut.PlacaTracto, ut.IdEstado, est.NombreEstado from UnidadTransporte ut join Entidad ent on ut.IdEntidad = ent.IdEntidad join Transportista tr on ut.IdTransportista = tr.IdTransportista join Estado est on ut.IdEstado = est.IdEstado";
+                        "Select ct.IdContratoTransporte, ct.IdContrato, c.NroContratoLote, ct.IdUnidadTransporte, ut.PlacaTracto, ct.IdLote, l.NroLote, ct.Cantidad, ct.Peso, ct.IdEstado, e.NombreEstado from ContratoTransporte ct join Contrato c on ct.IdContrato = c.IdContrato join UnidadTransporte ut on ct.IdUnidadTransporte = ut.IdUnidadTransporte join lote l on ct.IdLote = l.IdLote join Estado e on ct.IdEstado = e.IdEstado";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
 
                     Cnx.Open();
@@ -28,20 +30,21 @@ namespace Consolidados.DataLayer
                     {
                         while (Dr.Read())
                         {
-                            lista.Add(new EntityLayer.UnidadTransporte()
+                            lista.Add(new EntityLayer.ContratoTransporte()
                             {
-                                IdUnidadTransporte = Convert.ToInt32(Dr["IdUnidadTransporte"]),
-                                oEntidad = new EntityLayer.Entidad()
+                                IdContratoTransporte = Convert.ToInt32(Dr["IdContratoTransporte"]),
+                                oContrato = new EntityLayer.Contrato()
                                 {
-                                    IdEntidad = Convert.ToInt32(Dr["IdEntidad"]),
-                                    RazonSocial = Dr["RazonSocial"].ToString()
+                                    IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                    NroContratoLote = Dr["NroContratoLote"].ToString()
                                 },
-                                oTransportista = new EntityLayer.Transportista()
+                                oLote = new EntityLayer.Lote()
                                 {
-                                    IdTransportista = Convert.ToInt32(Dr["IdTransportista"]),
-                                    NombreCompleto = Dr["NombreCompleto"].ToString()
+                                    IdLote = Convert.ToInt32(Dr["IdLote"]),
+                                    NroLote = Dr["NroLote"].ToString()
                                 },
-                                PlacaTracto = Dr["PlacaTracto"].ToString(),
+                                Cantidad = Convert.ToInt32(Dr["Cantidad"]),
+                                Peso = Convert.ToInt32(Dr["Peso"]),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -54,24 +57,24 @@ namespace Consolidados.DataLayer
             }
             catch
             {
-                lista = new List<EntityLayer.UnidadTransporte>();
+                lista = new List<EntityLayer.ContratoTransporte>();
             }
 
             return lista;
         }
 
-        public List<EntityLayer.UnidadTransporte> Listar(int IdUnidadTransporte)
+        public List<EntityLayer.ContratoTransporte> Listar(int IdContrato)
         {
-            List<EntityLayer.UnidadTransporte> lista = new List<EntityLayer.UnidadTransporte>();
+            List<EntityLayer.ContratoTransporte> lista = new List<EntityLayer.ContratoTransporte>();
 
             try
             {
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
                     string query =
-                        "select ut.IdUnidadTransporte, ut.IdEntidad, ent.RazonSocial, ut.IdTransportista, CONCAT(tr.Apellidos, ' ', tr.Nombres)[NombreCompleto], ut.PlacaTracto, ut.IdEstado, est.NombreEstado from UnidadTransporte ut join Entidad ent on ut.IdEntidad = ent.IdEntidad join Transportista tr on ut.IdTransportista = tr.IdTransportista join Estado est on ut.IdEstado = est.IdEstado where ut.IdUnidadTransportista = @IdUnidadTransporte";
+                        "Select ct.IdContratoTransporte, ct.IdContrato, c.NroContratoLote, ct.IdUnidadTransporte, ut.PlacaTracto, ct.IdLote, l.NroLote, ct.Cantidad, ct.Peso, ct.IdEstado, e.NombreEstado from ContratoTransporte ct join Contrato c on ct.IdContrato = c.IdContrato join UnidadTransporte ut on ct.IdUnidadTransporte = ut.IdUnidadTransporte join lote l on ct.IdLote = l.IdLote join Estado e on ct.IdEstado = e.IdEstado where ct.IdContrato = @IdContrato";
                     SqlCommand Cmd = new SqlCommand(query, Cnx);
-                    Cmd.Parameters.AddWithValue("IdUnidadTransporte", IdUnidadTransporte);
+                    Cmd.Parameters.AddWithValue("IdContrato", IdContrato);
                     Cmd.CommandType = CommandType.Text;
 
                     Cnx.Open();
@@ -79,20 +82,26 @@ namespace Consolidados.DataLayer
                     {
                         while (Dr.Read())
                         {
-                            lista.Add(new EntityLayer.UnidadTransporte()
+                            lista.Add(new EntityLayer.ContratoTransporte()
                             {
-                                IdUnidadTransporte = Convert.ToInt32(Dr["IdUnidadTransporte"]),
-                                oEntidad = new EntityLayer.Entidad()
+                                IdContratoTransporte = Convert.ToInt32(Dr["IdContratoTransporte"]),
+                                oUnidadTransporte = new EntityLayer.UnidadTransporte()
                                 {
-                                    IdEntidad = Convert.ToInt32(Dr["IdEntidad"]),
-                                    RazonSocial = Dr["RazonSocial"].ToString()
+                                    IdUnidadTransporte = Convert.ToInt32(Dr["IdUnidadTransporte"]),
+                                    PlacaTracto = Dr["PlacaTracto"].ToString()
                                 },
-                                oTransportista = new EntityLayer.Transportista()
+                                oContrato = new EntityLayer.Contrato()
                                 {
-                                    IdTransportista = Convert.ToInt32(Dr["IdTransportista"]),
-                                    NombreCompleto = Dr["NombreCompleto"].ToString()
+                                    IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                    NroContratoLote = Dr["NroContratoLote"].ToString()
                                 },
-                                PlacaTracto = Dr["PlacaTracto"].ToString(),
+                                oLote = new EntityLayer.Lote()
+                                {
+                                    IdLote = Convert.ToInt32(Dr["IdLote"]),
+                                    NroLote = Dr["NroLote"].ToString()
+                                },
+                                Cantidad = Convert.ToInt32(Dr["Cantidad"]),
+                                Peso = Convert.ToInt32(Dr["Peso"]),
                                 oEstado = new EntityLayer.Estado()
                                 {
                                     IdEstado = Convert.ToInt32(Dr["IdEstado"]),
@@ -105,13 +114,13 @@ namespace Consolidados.DataLayer
             }
             catch
             {
-                lista = new List<EntityLayer.UnidadTransporte>();
+                lista = new List<EntityLayer.ContratoTransporte>();
             }
 
             return lista;
         }
 
-        public int Registrar(EntityLayer.UnidadTransporte obj, out string Mensaje)
+        public int Registrar(EntityLayer.ContratoTransporte obj, out string Mensaje)
         {
             int IdAutogenerado = 0;
 
@@ -120,10 +129,12 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_UnidadTransporte_Registrar", Cnx);
-                    Cmd.Parameters.AddWithValue("IdEntidad", obj.oEntidad.IdEntidad);
-                    Cmd.Parameters.AddWithValue("IdTransportista", obj.oTransportista.IdTransportista);
-                    Cmd.Parameters.AddWithValue("PlacaTracto", obj.PlacaTracto);
+                    SqlCommand Cmd = new SqlCommand("sp_ContratoTransporte_Registrar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdUnidadTransporte", obj.oUnidadTransporte.IdUnidadTransporte);
+                    Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
+                    Cmd.Parameters.AddWithValue("IdLote", obj.oLote.IdLote);
+                    Cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
+                    Cmd.Parameters.AddWithValue("Peso", obj.Peso);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -145,7 +156,7 @@ namespace Consolidados.DataLayer
             return IdAutogenerado;
         }
 
-        public bool Editar(EntityLayer.UnidadTransporte obj, out string Mensaje)
+        public bool Editar(EntityLayer.ContratoTransporte obj, out string Mensaje)
         {
             bool resultado = false;
             Mensaje = string.Empty;
@@ -154,11 +165,13 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_UnidadTransporte_Editar", Cnx);
-                    Cmd.Parameters.AddWithValue("IdUnidadTransporte", obj.IdUnidadTransporte);
-                    Cmd.Parameters.AddWithValue("IdEntidad", obj.oEntidad.IdEntidad);
-                    Cmd.Parameters.AddWithValue("IdTransportista", obj.oTransportista.IdTransportista);
-                    Cmd.Parameters.AddWithValue("PlacaTracto", obj.PlacaTracto);
+                    SqlCommand Cmd = new SqlCommand("sp_ContratoTransporte_Editar", Cnx);
+                    Cmd.Parameters.AddWithValue("IdContratoTransporte", obj.IdContratoTransporte);
+                    Cmd.Parameters.AddWithValue("IdUnidadTransporte", obj.oUnidadTransporte.IdUnidadTransporte);
+                    Cmd.Parameters.AddWithValue("IdContrato", obj.oContrato.IdContrato);
+                    Cmd.Parameters.AddWithValue("IdLote", obj.oLote.IdLote);
+                    Cmd.Parameters.AddWithValue("Cantidad", obj.Cantidad);
+                    Cmd.Parameters.AddWithValue("Peso", obj.Peso);
                     Cmd.Parameters.AddWithValue("IdEstado", obj.oEstado.IdEstado);
                     Cmd.Parameters.Add("Resultado", SqlDbType.Int).Direction = ParameterDirection.Output;
                     Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
@@ -188,14 +201,11 @@ namespace Consolidados.DataLayer
             {
                 using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
                 {
-                    SqlCommand Cmd = new SqlCommand("sp_UnidadTransporte_Eliminar", Cnx);
-                    Cmd.Parameters.AddWithValue("@IdUnidadTransporte", id);
-                    Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
+                    SqlCommand Cmd = new SqlCommand("sp_ContratoTransporte_Eliminar", Cnx);
+                    Cmd.Parameters.AddWithValue("@IdContratoTransporte", id);
                     Cmd.CommandType = CommandType.StoredProcedure;
                     Cnx.Open();
-
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;
-                    Mensaje = Cmd.Parameters["Mensaje"].Value.ToString();
                 }
             }
             catch (Exception ex)

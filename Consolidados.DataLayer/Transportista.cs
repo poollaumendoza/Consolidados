@@ -182,9 +182,12 @@ namespace Consolidados.DataLayer
                 {
                     SqlCommand Cmd = new SqlCommand("sp_Transportista_Eliminar", Cnx);
                     Cmd.Parameters.AddWithValue("@IdTransportista", id);
+                    Cmd.Parameters.Add("Mensaje", SqlDbType.VarChar, 500).Direction = ParameterDirection.Output;
                     Cmd.CommandType = CommandType.StoredProcedure;
                     Cnx.Open();
+
                     resultado = Cmd.ExecuteNonQuery() > 0 ? true : false;
+                    Mensaje = Cmd.Parameters["Mensaje"].Value.ToString();
                 }
             }
             catch (Exception ex)

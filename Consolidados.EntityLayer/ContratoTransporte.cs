@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 
 namespace Consolidados.EntityLayer
 {
-    public class ContratoLote
+    public class ContratoTransporte
     {
-        public int IdContratoLote { get; set; }
+        public int IdContratoTransporte { get; set; }
+        public UnidadTransporte oUnidadTransporte { get; set; }
         public Contrato oContrato { get; set; }
         public Lote oLote { get; set; }
         public int Cantidad { get; set; }

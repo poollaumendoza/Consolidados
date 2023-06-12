@@ -55,6 +55,7 @@
     <Compile Include="ContratoLote.cs" />
     <Compile Include="ContratoPeso.cs" />
     <Compile Include="ContratoPrecinto.cs" />
+    <Compile Include="ContratoTransporte.cs" />
     <Compile Include="Empresa.cs" />
     <Compile Include="Entidad.cs" />
     <Compile Include="Estado.cs" />

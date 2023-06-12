@@ -62,6 +62,56 @@ namespace Consolidados.DataLayer
             return lista;
         }
 
+        public List<EntityLayer.ContratoFoto> Listar(int IdContrato)
+        {
+            List<EntityLayer.ContratoFoto> lista = new List<EntityLayer.ContratoFoto>();
+
+            try
+            {
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
+                {
+                    string query =
+                        "Select cf.IdContratoFoto, cf.IdContrato, c.NroContratoLote, cf.IdContratoContenedor, cc.NroContenedor, cf.Foto, cf.IdEstado, e.NombreEstado from ContratoFoto cf join Contrato c on cf.IdContrato = c.IdContrato join ContratoContenedor cc on cf.IdContratoContenedor = cc.IdContratoContenedor join Estado e on cf.IdEstado = e.IdEstado where cf.IdContrato = @IdContrato";
+                    SqlCommand Cmd = new SqlCommand(query, Cnx);
+
+                    Cnx.Open();
+                    using (SqlDataReader Dr = Cmd.ExecuteReader())
+                    {
+                        while (Dr.Read())
+                        {
+                            lista.Add(new EntityLayer.ContratoFoto()
+                            {
+                                IdContratoFoto = Convert.ToInt32(Dr["IdContratoFoto"]),
+                                oContrato = new EntityLayer.Contrato()
+                                {
+                                    IdContrato = Convert.ToInt32(Dr["IdContrato"]),
+                                    NroContratoLote = Dr["NroContratoLote"].ToString()
+                                },
+                                oContratoContenedor = new EntityLayer.ContratoContenedor()
+                                {
+                                    IdContratoContenedor = Convert.ToInt32(Dr["IdContratoContenedor"]),
+                                    NroContenedor = Dr["NroContenedor"].ToString()
+                                },
+                                Foto = Dr["Foto"].ToString(),
+                                oEstado = new EntityLayer.Estado()
+                                {
+                                    IdEstado = Convert.ToInt32(Dr["IdEstado"]),
+                                    NombreEstado = Dr["NombreEstado"].ToString()
+                                }
+                            });
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                string mensaje = ex.Message;
+                lista = new List<EntityLayer.ContratoFoto>();
+            }
+
+            return lista;
+        }
+
         public List<EntityLayer.ContratoFoto> Listar(string objeto, object valor)
         {
             List<EntityLayer.ContratoFoto> lista = new List<EntityLayer.ContratoFoto>();

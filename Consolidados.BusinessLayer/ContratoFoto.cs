@@ -11,6 +11,11 @@ namespace Consolidados.BusinessLayer
             return dContratoFoto.Listar();
         }
 
+        public List<EntityLayer.ContratoFoto> Listar(int IdContrato)
+        {
+            return dContratoFoto.Listar(IdContrato);
+        }
+
         public List<EntityLayer.ContratoFoto> Listar(string objeto, object valor)
         {
             return dContratoFoto.Listar(objeto, valor);
