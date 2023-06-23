@@ -5,70 +5,71 @@
                  Title="Principal" Height="500" Width="900" WindowState="Maximized">
     <Grid>
         <Menu Height="auto" VerticalAlignment="Top">
-            <MenuItem Header="Sistema">
-                <MenuItem Header="Opciones"/>
+            <MenuItem Header="{DynamicResource MenuSistema}">
+                <MenuItem Name="mnuSistemaOpciones" Header="{DynamicResource MenuSistemaOpciones}" Click="MnuSistemaOpciones_Click"/>
                 <Separator/>
-                <MenuItem Header="Salir"/>
+                <MenuItem Name="munSistemaSalir" Header="{DynamicResource MenuSistemaSalir}" Click="MunSistemaSalir_Click"/>
             </MenuItem>
-            <MenuItem Header="Operaciones">
-                <MenuItem Header="Contrato"/>
-                <MenuItem Header="Lotes"/>
-                <MenuItem Header="Contenedores"/>
-                <MenuItem Header="Peso"/>
-                <MenuItem Header="Precinto"/>
-                <MenuItem Header="Fotos"/>
+            <MenuItem Header="{DynamicResource MenuOperaciones}">
+                <MenuItem Header="{DynamicResource MenuOperacionesContratos}"/>
+                <MenuItem Header="{DynamicResource MenuOperacionesLotes}"/>
+                <MenuItem Header="{DynamicResource MenuOperacionesContenedores}"/>
+                <MenuItem Header="{DynamicResource MenuOperacionesPesos}"/>
+                <MenuItem Header="{DynamicResource MenuOperacionesPrecintos}"/>
+                <MenuItem Header="{DynamicResource MenuOperacionesFotos}"/>
+                <MenuItem Header="{DynamicResource MenuOperacionesReportes}"/>
                 <Separator/>
-                <MenuItem Header="Reportes"/>
+                <MenuItem Header="{DynamicResource MenuOperacionesBúsqueda}"/>
             </MenuItem>
         </Menu>
         <ToolBar Height="auto" Margin="0,30,0,0" VerticalAlignment="Top">
             <Button Name="tlbContratos" Click="TlbContratos_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/folder.png" Width="32"/>
-                    <Label Content="Contratos" VerticalContentAlignment="Center"/>
+                    <Label Content="{DynamicResource MenuOperacionesContratos}" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Button>
             <Button Name="tlbLotes" Click="TlbLotes_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/note_book.png" Width="32"/>
-                    <Label Content="Lotes" VerticalContentAlignment="Center"/>
+                    <Label Content="{DynamicResource MenuOperacionesLotes}" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Button>
             <Button Name="tlbContenedores" Click="TlbContenedores_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/package.png" Width="32"/>
-                    <Label Content="Contenedores" VerticalContentAlignment="Center"/>
+                    <Label Content="{DynamicResource MenuOperacionesContenedores}" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Button>
             <Button Name="tlbPesos" Click="TlbPesos_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/truck.png" Width="32"/>
-                    <Label Content="Pesos" VerticalContentAlignment="Center"/>
+                    <Label Content="{DynamicResource MenuOperacionesPesos}" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Button>
             <Button Name="tlbPrecintos" Click="TlbPrecintos_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/barcode.png" Width="32"/>
-                    <Label Content="Precintos" VerticalContentAlignment="Center"/>
+                    <Label Content="{DynamicResource MenuOperacionesPrecintos}" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Button>
             <Button Name="tlbFotos" Click="TlbFotos_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/image.png" Width="32"/>
-                    <Label Content="Fotos" VerticalContentAlignment="Center"/>
+                    <Label Content="{DynamicResource MenuOperacionesFotos}" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Button>
             <Button Name="tlbReportes" Click="TlbReportes_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/note.png" Width="32"/>
-                    <Label Content="Reportes" VerticalContentAlignment="Center"/>
+                    <Label Content="{DynamicResource MenuOperacionesReportes}" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Button>
             <Separator/>
             <Button Name="tlbBusqueda" Click="TlbBusqueda_Click">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="/Resources/search.png" Width="32"/>
-                    <Label Content="Búsqueda" VerticalContentAlignment="Center"/>
+                    <Label Content="{DynamicResource MenuOperacionesBúsqueda}" VerticalContentAlignment="Center"/>
                 </StackPanel>
             </Button>
         </ToolBar>

@@ -67,6 +67,7 @@
     <Compile Include="TipoMovimiento.cs" />
     <Compile Include="Transportista.cs" />
     <Compile Include="UnidadTransporte.cs" />
+    <Compile Include="Usuario.cs" />
     <Compile Include="_Util.cs" />
   </ItemGroup>
   <ItemGroup>

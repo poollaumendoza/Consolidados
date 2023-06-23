@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Consolidados.Desktop.Resources"
+                    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="FormsOperacionesContratoEmpresa">商业</system:String>
+    <system:String x:Key="FormsOperacionesContratoEstado">地位</system:String>
+    <system:String x:Key="FormsOperacionesContratoFechaCarga">上传日期</system:String>
+    <system:String x:Key="FormsOperacionesContratoFechaContrato">合约日期</system:String>
+    <system:String x:Key="FormsOperacionesContratoFechaDescarga">下载日期</system:String>
+    <system:String x:Key="FormsOperacionesContratoLugarCarga">上传地点</system:String>
+    <system:String x:Key="FormsOperacionesContratoLugarDescarga">下载地点</system:String>
+    <system:String x:Key="FormsOperacionesContratoNroContrato">合同号码</system:String>
+    <system:String x:Key="FormsOperacionesContratoNroLote">批号</system:String>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <system:String x:Key="MenuOperaciones">操作</system:String>
+    <system:String x:Key="MenuOperacionesBúsqueda">搜寻</system:String>
+    <system:String x:Key="MenuOperacionesContenedores">集装箱</system:String>
+    <system:String x:Key="MenuOperacionesContratos">合约</system:String>
+    <system:String x:Key="MenuOperacionesFotos">相片</system:String>
+    <system:String x:Key="MenuOperacionesLotes">批</system:String>
+    <system:String x:Key="MenuOperacionesPesos">重量</system:String>
+    <system:String x:Key="MenuOperacionesPrecintos">海豹</system:String>
+    <system:String x:Key="MenuOperacionesReportes">报告</system:String>
+    <system:String x:Key="MenuSistema">应用</system:String>
+    <system:String x:Key="MenuSistemaOpciones">选项</system:String>
+    <system:String x:Key="MenuSistemaSalir">出去</system:String>
+    <system:String x:Key="SistemaCancelar">取消</system:String>
+    <system:String x:Key="SistemaCerrar">结尾</system:String>
+    <system:String x:Key="SistemaContraseña">密码</system:String>
+    <system:String x:Key="SistemaEditar">编辑</system:String>
+    <system:String x:Key="SistemaEliminar">排除</system:String>
+    <system:String x:Key="SistemaGuardarDatos">保存数据</system:String>
+    <system:String x:Key="SistemaIngresar">登录</system:String>
+    <system:String x:Key="SistemaLenguaje">语言</system:String>
+    <system:String x:Key="SistemaNombreAplicacion">合并</system:String>
+    <system:String x:Key="SistemaUsuario">用户</system:String>
+    <system:String x:Key="ToolbarBúsqueda">搜寻</system:String>
+    <system:String x:Key="ToolbarContenedores">集装箱</system:String>
+    <system:String x:Key="ToolbarContratos">合约</system:String>
+    <system:String x:Key="ToolbarFotos">相片</system:String>
+    <system:String x:Key="ToolbarLotes">批</system:String>
+    <system:String x:Key="ToolbarPesos">重量</system:String>
+    <system:String x:Key="ToolbarPrecintos">海豹</system:String>
+    <system:String x:Key="ToolbarReportes">报告</system:String>
+</ResourceDictionary>

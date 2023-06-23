@@ -26,7 +26,7 @@ namespace Consolidados.BusinessLayer
             else if(string.IsNullOrEmpty(obj.Direccion) || string.IsNullOrWhiteSpace(obj.Direccion))
                 Mensaje = "La dirección del almacén no puede ser vacío";
             else if (obj.oEstado.IdEstado == 0)
-                Mensaje = "Debe seleccionar un estado para este almacen";
+                Mensaje = "Debe seleccionar un estado";
 
             if (string.IsNullOrEmpty(Mensaje))
                 return dAlmacen.Registrar(obj, out Mensaje);

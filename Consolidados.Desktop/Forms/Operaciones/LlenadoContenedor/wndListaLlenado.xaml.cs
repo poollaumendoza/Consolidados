@@ -20,6 +20,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.LlenadoContenedor
         public wndListaLlenado()
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
         }
     }
 }

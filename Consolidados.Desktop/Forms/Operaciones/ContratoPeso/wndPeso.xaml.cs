@@ -19,7 +19,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoPeso
         public wndPeso(int IdPeso = 0)
         {
             InitializeComponent();
-
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarContrato();
             CargarContenedor();
             CargarEstado();

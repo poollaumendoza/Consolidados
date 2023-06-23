@@ -28,6 +28,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoFoto
         public wndEmpaquetar()
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarContrato();
         }
 

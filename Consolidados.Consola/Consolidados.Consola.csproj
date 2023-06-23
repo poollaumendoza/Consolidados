@@ -4,16 +4,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{B3FF104C-AC95-4F06-948C-A15B2619A699}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Consolidados.BusinessLayer</RootNamespace>
-    <AssemblyName>Consolidados.BusinessLayer</AssemblyName>
+    <ProjectGuid>{F2288832-AF25-40A4-9363-811AA0FFBDAC}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Consolidados.Consola</RootNamespace>
+    <AssemblyName>Consolidados.Consola</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -41,41 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Almacen.cs" />
-    <Compile Include="Archivo.cs" />
-    <Compile Include="Busqueda.cs" />
-    <Compile Include="ClasificacionTipoDocumento.cs" />
-    <Compile Include="Contrato.cs" />
-    <Compile Include="ContratoContenedor.cs" />
-    <Compile Include="ContratoFoto.cs" />
-    <Compile Include="ContratoLote.cs" />
-    <Compile Include="ContratoPeso.cs" />
-    <Compile Include="ContratoPrecinto.cs" />
-    <Compile Include="ContratoTransporte.cs" />
-    <Compile Include="Empresa.cs" />
-    <Compile Include="Entidad.cs" />
-    <Compile Include="Estado.cs" />
-    <Compile Include="LlenadoContenedor.cs" />
-    <Compile Include="Lote.cs" />
-    <Compile Include="Persona.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Recursos.cs" />
-    <Compile Include="TipoDocumento.cs" />
-    <Compile Include="TipoMovimiento.cs" />
-    <Compile Include="Transportista.cs" />
-    <Compile Include="UnidadTransporte.cs" />
-    <Compile Include="Usuario.cs" />
-    <Compile Include="_Util.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Consolidados.DataLayer\Consolidados.DataLayer.csproj">
-      <Project>{87b82823-a7c2-404c-958f-69a9e49fbc66}</Project>
-      <Name>Consolidados.DataLayer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Consolidados.EntityLayer\Consolidados.EntityLayer.csproj">
-      <Project>{0261c96a-676f-48a2-aee8-4deaaca4396c}</Project>
-      <Name>Consolidados.EntityLayer</Name>
-    </ProjectReference>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

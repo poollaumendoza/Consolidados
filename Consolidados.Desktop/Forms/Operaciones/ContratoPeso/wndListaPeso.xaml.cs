@@ -25,6 +25,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoPeso
         public wndListaPeso()
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarPesos();
         }
 

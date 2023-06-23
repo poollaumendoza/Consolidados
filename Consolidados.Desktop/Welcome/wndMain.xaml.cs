@@ -22,6 +22,7 @@ namespace Consolidados.Desktop.Welcome
         public wndMain()
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
         }
 
         private void TlbContratos_Click(object sender, RoutedEventArgs e)
@@ -70,6 +71,16 @@ namespace Consolidados.Desktop.Welcome
         {
             oWindow = new Forms.Operaciones.Búsqueda.wndBúsqueda();
             oWindow.ShowDialog();
+        }
+
+        private void MnuSistemaOpciones_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void MunSistemaSalir_Click(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

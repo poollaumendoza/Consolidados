@@ -14,14 +14,12 @@ using System.Windows.Shapes;
 
 namespace Consolidados.Desktop.Forms.Operaciones.LlenadoContenedor
 {
-    /// <summary>
-    /// Interaction logic for wndLlenadoContenedor.xaml
-    /// </summary>
     public partial class wndLlenadoContenedor : Window
     {
         public wndLlenadoContenedor()
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
         }
     }
 }

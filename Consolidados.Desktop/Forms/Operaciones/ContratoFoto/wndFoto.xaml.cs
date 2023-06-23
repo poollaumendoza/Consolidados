@@ -153,6 +153,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoFoto
         {
             InitializeComponent();
 
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarContrato();
             CargarContenedor();
             CargarEstado();

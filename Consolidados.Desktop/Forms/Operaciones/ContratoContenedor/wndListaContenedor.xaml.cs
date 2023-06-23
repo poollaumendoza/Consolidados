@@ -25,6 +25,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoContenedor
         public wndListaContenedor()
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarContenedores();
         }
 

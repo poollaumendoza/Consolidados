@@ -46,5 +46,17 @@ namespace Consolidados.Desktop.Properties {
                 this["Photos"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("es")]
+        public string languageCode {
+            get {
+                return ((string)(this["languageCode"]));
+            }
+            set {
+                this["languageCode"] = value;
+            }
+        }
     }
 }

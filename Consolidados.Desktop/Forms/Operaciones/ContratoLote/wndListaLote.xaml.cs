@@ -25,6 +25,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoLote
         public wndListaLote()
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarLotes();
         }
 

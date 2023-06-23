@@ -26,6 +26,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoFoto
         public wndListaFoto()
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarFoto();
         }
 

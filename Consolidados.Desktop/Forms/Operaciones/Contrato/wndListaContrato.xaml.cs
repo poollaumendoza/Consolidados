@@ -23,6 +23,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.Contrato
         public wndListaContrato()
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarContratos();
         }
 

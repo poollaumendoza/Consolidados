@@ -25,6 +25,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoPrecinto
         public wndListaPrecinto()
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarPrecintos();
         }
 

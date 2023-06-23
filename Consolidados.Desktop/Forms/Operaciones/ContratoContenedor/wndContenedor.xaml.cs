@@ -16,6 +16,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoContenedor
         public wndContenedor(int IdContratoContenedor = 0)
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarContrato();
             CargarEstado();
 

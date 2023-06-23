@@ -28,6 +28,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoLote
         public wndLote(int IdLote = 0)
         {
             InitializeComponent();
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarAlmacen();
             CargarEmpresa();
             CargarEstado();

@@ -1,12 +1,27 @@
-﻿<Window x:Class="Consolidados.Desktop.Welcome.wndLogin"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Consolidados.Desktop.Welcome"
-        mc:Ignorable="d"
-        Title="wndLogin" Height="450" Width="800">
+﻿<mah:MetroWindow x:Class="Consolidados.Desktop.Welcome.wndLogin"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+                 Title="Consolidados: Login" Height="280" Width="520"
+                 WindowStartupLocation="CenterScreen">
     <Grid>
-        
+        <Label Content="{DynamicResource ResourceKey=SistemaUsuario}" HorizontalAlignment="Left" Margin="242,62,0,0" VerticalAlignment="Top"/>
+        <TextBox Name="txtNombreUsuario" HorizontalAlignment="Left" Height="23" Margin="366,62,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="{DynamicResource ResourceKey=SistemaContraseña}" HorizontalAlignment="Left" Margin="242,100,0,0" VerticalAlignment="Top"/>
+        <PasswordBox Name="txtContraseña" HorizontalAlignment="Left" Margin="366,103,0,0" VerticalAlignment="Top" Width="120"/>
+        <Label Content="{DynamicResource ResourceKey=SistemaLenguaje}" HorizontalAlignment="Left" Margin="242,145,0,0" VerticalAlignment="Top"/>
+        <ComboBox Name="cboLenguaje" HorizontalAlignment="Left" Margin="366,145,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="CboLenguaje_SelectionChanged">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding Path=Bandera}" Width="16"/>
+                        <Label Content="{Binding Path=NombrePais}" VerticalContentAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Button Name="btnIngresar" Content="{DynamicResource SistemaIngresar}" HorizontalAlignment="Left" Margin="242,201,0,0" VerticalAlignment="Top" Width="75" Click="BtnIngresar_Click"/>
+        <Button Name="btnSalir" Content="{DynamicResource SistemaCerrar}" HorizontalAlignment="Left" Margin="411,201,0,0" VerticalAlignment="Top" Width="75" Click="BtnSalir_Click"/>
+        <Image Source="/Resources/lock.png" HorizontalAlignment="Left" Margin="22,19,0,0" VerticalAlignment="Top" Height="200" Width="200"/>
     </Grid>
-</Window>
+</mah:MetroWindow>

@@ -28,7 +28,7 @@ namespace Consolidados.Desktop.Forms.Operaciones.ContratoPrecinto
         public wndPrecinto(int IdPrecinto = 0)
         {
             InitializeComponent();
-
+            Resources.MergedDictionaries.Add(App.diccionario);
             CargarContrato();
             CargarContenedor();
             CargarEstado();
