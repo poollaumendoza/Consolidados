@@ -67,6 +67,7 @@
     <Compile Include="Transportista.cs" />
     <Compile Include="UnidadTransporte.cs" />
     <Compile Include="Usuario.cs" />
+    <Compile Include="ViewModelBase.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

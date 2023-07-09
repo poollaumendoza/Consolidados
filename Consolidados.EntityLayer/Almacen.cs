@@ -1,16 +1,59 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
 
 namespace Consolidados.EntityLayer
 {
-    public class Almacen
+    public class Almacen : ViewModelBase
     {
-        public int IdAlmacen { get; set; }
-        public string NombreAlmacen { get; set; }
-        public string Direccion { get; set; }
-        public Estado oEstado { get; set; }
+        int _IdAlmacen;
+        string _NombreAlmacen;
+        string _Direccion;
+        Estado _oEstado;
+        ObservableCollection<Almacen> _ListaAlmacen;
+
+        public int IdAlmacen
+        {
+            get { return _IdAlmacen; }
+            set
+            {
+                _IdAlmacen = value;
+                OnPropertyChanged("IdAlmacen");
+            }
+        }
+
+        public string NombreAlmacen
+        {
+            get { return _NombreAlmacen; }
+            set
+            {
+                _NombreAlmacen = value;
+                OnPropertyChanged("NombreAlmacen");
+            }
+        }
+
+        public string Direccion
+        {
+            get { return _Direccion; }
+            set
+            {
+                _Direccion = value;
+                OnPropertyChanged("Direccion");
+            }
+        }
+
+        public Estado oEstado
+        {
+            get { return _oEstado; }
+            set
+            {
+                _oEstado = value;
+                OnPropertyChanged("oEstado");
+            }
+        }
+
+        public ObservableCollection<Almacen> ListaAlmacen
+        {
+            get { return _ListaAlmacen; }
+            set { _ListaAlmacen = value; OnPropertyChanged("ListaAlmacen"); }
+        }
     }
 }

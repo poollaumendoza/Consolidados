@@ -23,7 +23,8 @@
         <table id="tabla" class="display cell-border" style="width: 100%">
             <thead>
                 <tr>
-                    <th>Apellidos</th>
+                    <th>Apellido Paterno</th>
+                    <th>Apellido Materno</th>
                     <th>Nombres</th>
                     <th>Licencia de Conducir</th>
                     <th>Teléfono</th>
@@ -46,17 +47,22 @@
             <div class="modal-body">
                 <input id="txtid" type="hidden" value="0" />
                 <div class="row g-1">
+                    <div class="col-sm-12">
+                        <label for="txtdni" class="form-label">DNI:</label>
+                        <input type="text" class="form-control" id="txtdni" name="dni" placeholder="DNI" autocomplete="off">
+                        <input type="button" id="btnObtenerDNI" value="Consultar" class="btn btn-outline-primary" onclick="ObtenerDNI()" />
+                    </div>
                     <div class="col-sm-6">
-                        <label for="txtapellidos" class="form-label">Apellidos:</label>
-                        <input type="text" class="form-control" id="txtapellidos" placeholder="Apellidos" autocomplete="off">
+                        <label for="txtapellidopaterno" class="form-label">Apellido Paterno:</label>
+                        <input type="text" class="form-control" id="txtapellidopaterno" placeholder="Apellido Paterno" autocomplete="off">
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="txtapellidomaterno" class="form-label">Apellido Paterno:</label>
+                        <input type="text" class="form-control" id="txtapellidomaterno" placeholder="Apellido Materno" autocomplete="off">
                     </div>
                     <div class="col-sm-6">
                         <label for="txtnombres" class="form-label">Nombres:</label>
                         <input type="text" class="form-control" id="txtnombres" placeholder="Nombres" autocomplete="off">
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="txtDNI" class="form-label">DNI:</label>
-                        <input type="text" class="form-control" id="txtdni" placeholder="DNI" autocomplete="off">
                     </div>
                     <div class="col-sm-6">
                         <label for="txtlicencia" class="form-label">Licencia:</label>
@@ -86,10 +92,32 @@
         </div>
     </div>
 </div>
-@section scripts{
+@section scripts
+    {
     <script>
         var tabladata;
         var filaSeleccionada;
+
+        function ObtenerDNI() {
+            jQuery.ajax({
+                url: 'https://dniruc.apisperu.com/api/v1/dni/' + $("#txtdni").val() + '?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6InBvb2xsYXVtZW5kb3phQG91dGxvb2suY29tIn0.4-S7Y2ZKu_IfOZkXvAPahYdi7q5PLpc_3tZVCnvQD-0',
+                type: "POST",
+                data: null,
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                sucess: function (resultado) {
+                    if (resultado.sucess === "false") {
+                    } else {
+                        $("#txtapellidopaterno").val(resultado.apellidoPaterno);
+                        $("#txtapellidomaterno").val(resultado.apellidoMaterno);
+                        $("#txtnombres").val(resultado.nombres);
+                    }
+                },
+                error: function (resultado) {
+                    alert("Error en la solicitud: " + resultado.mensaje);
+                }
+            });
+        }
 
         tabladata = $("#tabla").DataTable({
             responsive: true,
@@ -100,7 +128,8 @@
                 dataType: "json"
             },
             "columns": [
-                { "data": "Apellidos" },
+                { "data": "ApellidoPaterno" },
+                { "data": "ApellidoMaterno" },
                 { "data": "Nombres" },
                 { "data": "LicConducir" },
                 { "data": "Telefono" },
@@ -124,7 +153,8 @@
 
         function abrirModal(json) {
             $("#txtid").val(0);
-            $("#txtapellidos").val("");
+            $("#txtapellidopaterno").val("");
+            $("#txtapellidomaterno").val("");
             $("#txtnombres").val("");
             $("#txtdni").val("");
             $("#txtlicencia").val("");
@@ -134,7 +164,8 @@
 
             if (json != null) {
                 $("#txtid").val(json.IdTransportista);
-                $("#txtapellidos").val(json.Apellidos);
+                $("#txtapellidopaterno").val(json.ApellidoPaterno);
+                $("#txtapellidomaterno").val(json.ApellidoMaterno);
                 $("#txtnombres").val(json.Nombres);
                 $("#txtdni").val(json.DNI);
                 $("#txtlicencia").val(json.LicConducir);
@@ -214,7 +245,8 @@
         function Guardar() {
             var Transportista = {
                 IdTransportista: $("#txtid").val(),
-                Apellidos: $("#txtapellidos").val(),
+                ApellidoPaterno: $("#txtapellidopaterno").val(),
+                ApellidoMaterno: $("#txtapellidomaterno").val(),
                 Nombres: $("#txtnombres").val(),
                 DNI: $("#txtdni").val(),
                 LicConducir: $("#txtlicencia").val(),

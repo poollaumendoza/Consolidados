@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Consolidados.BusinessLayer;
-using Consolidados.EntityLayer;
+﻿using System.Collections.Generic;
 
 namespace Consolidados.BusinessLayer
 {
@@ -17,13 +11,18 @@ namespace Consolidados.BusinessLayer
             return dAlmacen.Listar();
         }
 
+        public EntityLayer.Almacen Listar(int IdAlmacen)
+        {
+            return dAlmacen.Listar(IdAlmacen);
+        }
+
         public int Registrar(EntityLayer.Almacen obj, out string Mensaje)
         {
             Mensaje = string.Empty;
 
             if (string.IsNullOrEmpty(obj.NombreAlmacen) || string.IsNullOrWhiteSpace(obj.NombreAlmacen))
                 Mensaje = "El nombre del almacén no puede ser vacío";
-            else if(string.IsNullOrEmpty(obj.Direccion) || string.IsNullOrWhiteSpace(obj.Direccion))
+            else if (string.IsNullOrEmpty(obj.Direccion) || string.IsNullOrWhiteSpace(obj.Direccion))
                 Mensaje = "La dirección del almacén no puede ser vacío";
             else if (obj.oEstado.IdEstado == 0)
                 Mensaje = "Debe seleccionar un estado";

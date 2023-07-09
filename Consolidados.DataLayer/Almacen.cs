@@ -51,6 +51,48 @@ namespace Consolidados.DataLayer
             return lista;
         }
 
+        public EntityLayer.Almacen Listar(int IdAlmacen)
+        {
+            EntityLayer.Almacen almacen = new EntityLayer.Almacen();
+
+            try
+            {
+                using (SqlConnection Cnx = new SqlConnection(ConfigurationManager.ConnectionStrings["CadenaConexion"].ToString()))
+                {
+                    string query =
+                        "Select a.IdAlmacen, a.NombreAlmacen, a.Direccion, e.IdEstado, e.NombreEstado from Almacen a join Estado e on a.IdEstado = e.IdEstado where a.IdAlmacen = @IdAlmacen";
+                    SqlCommand Cmd = new SqlCommand(query, Cnx);
+                    Cmd.Parameters.AddWithValue("IdAlmacen", IdAlmacen);
+                    Cmd.CommandType = CommandType.Text;
+
+                    Cnx.Open();
+                    using (SqlDataReader Dr = Cmd.ExecuteReader())
+                    {
+                        while (Dr.Read())
+                        {
+                            almacen = new EntityLayer.Almacen()
+                            {
+                                IdAlmacen = Convert.ToInt32(Dr["IdAlmacen"]),
+                                NombreAlmacen = Dr["NombreAlmacen"].ToString(),
+                                Direccion = Dr["Direccion"].ToString(),
+                                oEstado = new EntityLayer.Estado()
+                                {
+                                    IdEstado = Convert.ToInt32(Dr["IdEstado"]),
+                                    NombreEstado = Dr["NombreEstado"].ToString()
+                                }
+                            };
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                almacen = new EntityLayer.Almacen();
+            }
+
+            return almacen;
+        }
+
         public int Registrar(EntityLayer.Almacen obj, out string Mensaje)
         {
             int IdAutogenerado = 0;
